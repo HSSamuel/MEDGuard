@@ -1,0 +1,97 @@
+{% extends "base.html" %} {% block content %}
+<style>
+  .about-content {
+    color: #ffffff;
+    line-height: 1.7; /* Increased line height for better readability */
+  }
+  .about-content p {
+    text-align: justify; /* Justify paragraph text */
+    margin-bottom: 1.5em;
+  }
+  .about-content h2,
+  .about-content h3 {
+    text-align: center; /* Center the main headings */
+  }
+  .about-content ul {
+    padding-left: 20px;
+  }
+  .about-content li {
+    margin-bottom: 10px;
+  }
+  .center-container {
+    text-align: center; /* Center the button container */
+    margin-top: 30px;
+  }
+  .btn-home {
+    background-color: #4caf50;
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+  }
+
+  /* Responsive styles for mobile screens */
+  @media (max-width: 600px) {
+    .about-content p {
+      text-align: left; /* Justification can be hard to read on narrow screens */
+    }
+  }
+</style>
+
+<div class="panel">
+  <div style="text-align: center; margin-bottom: 20px">
+    <img
+      src="{{ url_for('static', filename='images/logo.png') }}"
+      alt="MedGuard Logo"
+      style="max-height: 80px"
+    />
+    <h2 style="color: #ffffff; margin-top: 10px">About MedGuard</h2>
+  </div>
+
+  <div class="about-content">
+    <p>
+      <strong>MedGuard</strong> is a comprehensive web application designed with
+      a singular, critical mission: to detect, report, and manage counterfeit
+      drugs, thereby safeguarding public health across Nigeria. It serves as a
+      vital bridge between the public and regulatory bodies like NAFDAC,
+      empowering every citizen to become a guardian of our nation's medicine
+      supply.
+    </p>
+
+    <h3 style="color: #ffffff">Our Features</h3>
+    <ul>
+      <li>
+        <strong>Instant QR Code Verification:</strong> Scan a drug's packaging
+        to instantly validate its authenticity against our secure, central
+        database.
+      </li>
+      <li>
+        <strong>Anonymous Counterfeit Reporting:</strong> Easily submit reports
+        of suspicious medications, including batch numbers, locations, and
+        photographic evidence to alert authorities.
+      </li>
+      <li>
+        <strong>Admin Dashboard for Regulators:</strong> A powerful dashboard
+        for authorities to view, filter, and manage all submitted reports in
+        real-time.
+      </li>
+      <li>
+        <strong>SMS & Offline Functionality:</strong> Verify drugs even without
+        an internet connection, ensuring accessibility for all Nigerians,
+        regardless of their location or device.
+      </li>
+    </ul>
+
+    <h3 style="color: #ffffff">Our Technology</h3>
+    <p>
+      MedGuard is built on a reliable and scalable technology stack, featuring a
+      Python Flask backend and a dynamic HTML, CSS, and JavaScript frontend.
+      This modern architecture ensures the platform is both robust for
+      regulators and easy to use for the general public.
+    </p>
+
+    <div class="center-container">
+      <a href="/" class="btn btn-home">Return to Home</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

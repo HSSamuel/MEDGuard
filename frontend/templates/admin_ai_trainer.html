@@ -1,0 +1,195 @@
+{% extends "base.html" %} {% block content %}
+<div class="panel">
+  <h2>🧠 AI Training Center</h2>
+  <p>
+    Here you can meticulously and dynamically expand the AI's knowledge base.
+    Add, edit, or remove question & answer pairs to train the MedGuard
+    Assistant.
+  </p>
+</div>
+
+<div class="panel">
+  <div id="knowledge-base-container">
+    <p>Loading knowledge base...</p>
+  </div>
+  <div style="margin-top: 20px">
+    <button id="add-entry-btn" class="btn btn-yellow">➕ Add New Entry</button>
+    <button
+      id="save-changes-btn"
+      class="btn"
+      style="background-color: #28a745; color: white"
+    >
+      💾 Save All Changes
+    </button>
+  </div>
+</div>
+
+<style>
+  .kb-entry {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  .kb-entry label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  .kb-entry input,
+  .kb-entry textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .kb-entry textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  .delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+  }
+</style>
+{% endblock %} {% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("knowledge-base-container");
+    const addBtn = document.getElementById("add-entry-btn");
+    const saveBtn = document.getElementById("save-changes-btn");
+
+    let knowledgeBase = {};
+
+    // Function to render the entire knowledge base UI
+    const renderKnowledgeBase = () => {
+      container.innerHTML = ""; // Clear current view
+      for (const intent in knowledgeBase) {
+        const entry = knowledgeBase[intent];
+        const entryDiv = document.createElement("div");
+        entryDiv.classList.add("kb-entry");
+        entryDiv.dataset.intent = intent;
+
+        entryDiv.innerHTML = `
+                <button class="delete-btn">Delete</button>
+                <label>Intent Name (a unique key, e.g., "about_medguard"):</label>
+                <input type="text" class="intent-key" value="${intent}">
+                
+                <label>Keywords (comma-separated, e.g., "about, purpose, goal"):</label>
+                <input type="text" class="keywords" value="${entry.keywords.join(
+                  ", "
+                )}">
+                
+                <label>Answer:</label>
+                <textarea class="answer">${entry.answer}</textarea>
+            `;
+        container.appendChild(entryDiv);
+      }
+
+      // Add event listeners to delete buttons
+      document.querySelectorAll(".delete-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const entryDiv = e.target.closest(".kb-entry");
+          const intentKey = entryDiv.dataset.intent;
+          if (
+            confirm(`Are you sure you want to delete the "${intentKey}" entry?`)
+          ) {
+            entryDiv.remove();
+          }
+        });
+      });
+    };
+
+    // Fetch the knowledge base from the backend
+    fetch("/api/ai/knowledge")
+      .then((response) => response.json())
+      .then((data) => {
+        knowledgeBase = data;
+        renderKnowledgeBase();
+      })
+      .catch((error) => {
+        container.innerHTML =
+          '<p style="color: red;">Error loading knowledge base.</p>';
+        console.error("Fetch error:", error);
+      });
+
+    // Handle adding a new entry
+    addBtn.addEventListener("click", () => {
+      const newIntentKey = `new_intent_${Date.now()}`;
+      knowledgeBase[newIntentKey] = { keywords: [], answer: "" };
+      renderKnowledgeBase();
+      // Scroll to the new entry
+      container.lastChild.scrollIntoView({ behavior: "smooth" });
+    });
+
+    // Handle saving all changes
+    saveBtn.addEventListener("click", () => {
+      const newKb = {};
+      let hasError = false;
+      document.querySelectorAll(".kb-entry").forEach((entryDiv) => {
+        const oldIntent = entryDiv.dataset.intent;
+        const newIntent = entryDiv.querySelector(".intent-key").value.trim();
+        const keywords = entryDiv
+          .querySelector(".keywords")
+          .value.split(",")
+          .map((k) => k.trim())
+          .filter(Boolean);
+        const answer = entryDiv.querySelector(".answer").value.trim();
+
+        if (!newIntent) {
+          alert("Intent Name cannot be empty.");
+          hasError = true;
+          return;
+        }
+        if (newKb[newIntent]) {
+          alert(
+            `Duplicate Intent Name found: "${newIntent}". Please use unique names.`
+          );
+          hasError = true;
+          return;
+        }
+
+        newKb[newIntent] = { keywords, answer };
+      });
+
+      if (hasError) return;
+
+      saveBtn.textContent = "Saving...";
+      saveBtn.disabled = true;
+
+      fetch("/api/ai/knowledge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newKb),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            alert("Knowledge base saved successfully!");
+            // Reload data to reflect changes
+            knowledgeBase = newKb;
+            renderKnowledgeBase();
+          } else {
+            alert(`Error: ${data.message}`);
+          }
+        })
+        .catch((error) => {
+          console.error("Save error:", error);
+          alert("An error occurred while saving.");
+        })
+        .finally(() => {
+          saveBtn.textContent = "💾 Save All Changes";
+          saveBtn.disabled = false;
+        });
+    });
+  });
+</script>
+{% endblock %}

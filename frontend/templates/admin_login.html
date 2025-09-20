@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="panel">
+  <h2>🔐 Regulator Login</h2>
+  {% if error %}
+    <div class="result-box result-counterfeit"><div class="msg">{{ error }}</div></div>
+  {% endif %}
+  <form method="POST" class="inline-form" style="flex-direction:column; gap:10px; max-width:360px;">
+    <input name="email" class="input" type="email" placeholder="Official email" required>
+    <input name="password" class="input" type="password" placeholder="Password" required>
+    <input type="hidden" name="csrf" value="{{ session.csrf }}">
+    <button class="btn btn-yellow" type="submit">Sign in</button>
+  </form>
+</div>
+{% endblock %}

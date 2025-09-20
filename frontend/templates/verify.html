@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .card {
+        max-width: 500px;
+        margin: 40px auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        padding: 20px;
+        font-family: Arial, sans-serif;
+    }
+    .valid { background: #e8f5e9; color: #1b5e20; }     /* light green */
+    .expired { background: #fff8e1; color: #856404; }   /* light yellow */
+    .notfound { background: #ffebee; color: #c62828; }  /* light red */
+
+    .drug-name {
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        display: inline-block;
+        padding-bottom: 5px;
+        border-bottom: 3px solid;
+    }
+    .status-ok {
+        color: #1b5e20;
+        border-color: #2e7d32;
+    }
+    .status-fail {
+        color: #c62828;
+        border-color: #c62828;
+    }
+    .details-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        color: #333; /* Darker text for readability on light backgrounds */
+    }
+    .details-table td {
+        padding: 8px;
+    }
+    .details-table tr:nth-child(even) {
+        background: rgba(0,0,0,0.02);
+    }
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .subtle {
+        font-size: 0.95em;
+        color: #555;
+    }
+    .verified-on {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 0.9em;
+        color: #777;
+    }
+    .btn {
+        display: inline-block;
+        background: #2e7d32;
+        color: #fff;
+        padding: 10px 18px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.2s ease;
+    }
+    .btn:hover {
+        background: #1b5e20;
+    }
+    .alert-error {
+        padding: 12px;
+        border-radius: 6px;
+        text-align: center;
+    }
+</style>
+
+<div class="card {{ status }}">
+    <div class="header">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" 
+             alt="MedGuard Logo" style="max-height: 60px; margin-bottom: 10px;">
+        <h2 style="color: #2e7d32; margin: 0;">✅ Batch Verification</h2>
+        <p class="subtle">Official MEDGuard Verification Result</p>
+    </div>
+
+    {% if error %}
+        <div class="alert-error">
+            <strong>{{ error }}</strong>
+            <p class="verified-on">Checked on {{ verified_on }}</p>
+        </div>
+    {% else %}
+        <div class="drug-name status-ok">
+            {{ batch.drug_name }}
+        </div>
+
+        <table class="details-table">
+            <tr>
+                <td style="font-weight: bold;">Batch Number:</td>
+                <td>{{ batch.batch_number }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">Manufacturing Date:</td>
+                <td>{{ batch.mfg_date }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">Expiry Date:</td>
+                <td>{{ batch.expiry_date }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">Manufacturer:</td>
+                <td>{{ batch.manufacturer }}</td>
+            </tr>
+        </table>
+
+        <div class="verified-on">
+            Verified on {{ verified_on }}
+        </div>
+    {% endif %}
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="btn">📷 Scan Another Code</a>
+    </div>
+</div>
+{% endblock %}

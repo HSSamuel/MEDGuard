@@ -1,0 +1,11 @@
+flask==3.0.3
+flask-cors==4.0.1
+qrcode==7.4.2
+pillow==10.4.0
+reportlab>=4.0.0
+python-docx==1.1.2
+gunicorn==22.0.0
+waitress==2.1.2           # For local Windows development
+werkzeug==3.0.1           # For check_password_hash
+python-dotenv==1.0.1      # For environment variable loading (if used)
+twilio==8.0.0             # For sending SMS notifications
