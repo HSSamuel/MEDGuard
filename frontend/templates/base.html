@@ -57,7 +57,7 @@
       header.mg-header {
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: space-between; /* Changed for hamburger menu */
         gap: 15px;
       }
 
@@ -180,6 +180,7 @@
         padding: 0 20px;
         border-radius: 8px;
         margin-top: -20px; /* Pull it up to fill the gap */
+        position: relative; /* Needed for mobile menu positioning */
       }
       .nav-list {
         display: flex;
@@ -188,10 +189,6 @@
         list-style: none;
         padding: 0;
         margin: 0;
-      }
-      .nav-left {
-        display: flex;
-        align-items: center;
       }
       .nav-item a,
       .nav-item .btn {
@@ -207,6 +204,51 @@
       .nav-item .btn {
         padding: 8px 15px;
       }
+
+      /* Hamburger Menu */
+      .hamburger {
+        display: none;
+        cursor: pointer;
+      }
+      .hamburger div {
+        width: 25px;
+        height: 3px;
+        background-color: white;
+        margin: 5px 0;
+      }
+
+      /* UPDATED MEDIA QUERY FOR MOBILE NAVIGATION */
+      @media (max-width: 960px) {
+        .hamburger {
+          display: block;
+        }
+        .nav-list {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          flex-direction: column;
+          background: rgba(40, 60, 60, 0.95);
+          backdrop-filter: blur(5px);
+          padding: 10px 0;
+          border-radius: 0 0 10px 10px;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+          z-index: 100;
+        }
+        .nav-list.active {
+          display: flex;
+        }
+        .nav-item {
+          width: 100%;
+          text-align: center;
+        }
+        .nav-item a,
+        .nav-item .btn {
+          width: 100%;
+          padding: 15px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -219,102 +261,89 @@
       <div class="brand">
         <p id="tagline" class="tagline"></p>
       </div>
+      <div class="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </header>
 
     <nav class="navbar container">
+      <!-- SIMPLIFIED UL STRUCTURE -->
       <ul class="nav-list">
-        <div class="nav-left">
-          <li class="nav-item"><a href="{{ url_for('root') }}">Home</a></li>
-          <li class="nav-item">
-            <a href="{{ url_for('about_page') }}">About</a>
-          </li>
+        <li class="nav-item"><a href="{{ url_for('root') }}">Home</a></li>
+        <li class="nav-item">
+          <a href="{{ url_for('about_page') }}">About</a>
+        </li>
 
-          {% if session.user_id %}
-          <li class="nav-item">
-            <a href="{{ url_for('auth.my_reports') }}">My Reports</a>
-          </li>
-          {% endif %} {% if session.admin_id %}
-          <li class="nav-item">
-            <a href="{{ url_for('admin_api.admin_dashboard') }}">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url_for('admin_api.public_db_manager_page') }}"
-              >Public DB Manager</a
-            >
-          </li>
-          <li class="nav-item">
-            <a href="{{ url_for('admin_api.hotspot_map_page') }}"
-              >Hotspot Map</a
-            >
-          </li>
-          {% endif %}
-        </div>
+        {% if session.user_id %}
+        <li class="nav-item">
+          <a href="{{ url_for('auth.my_reports') }}">My Reports</a>
+        </li>
+        {% endif %} {% if session.admin_id %}
+        <li class="nav-item">
+          <a href="{{ url_for('admin_api.admin_dashboard') }}">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('admin_api.public_db_manager_page') }}"
+            >Public DB Manager</a
+          >
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('admin_api.hotspot_map_page') }}">Hotspot Map</a>
+        </li>
+        {% endif %}
 
-        <div class="nav-right" style="display: flex; align-items: center">
-          {% if session.admin_id %} {# This is for the REGULATOR admin session
-          #}
-          <li class="nav-item">
-            <form
-              action="{{ url_for('admin_logout') }}"
-              method="post"
-              style="
-                margin: 0;
-                display: flex;
-                align-items: center;
-                height: 100%;
-              "
-            >
-              <input type="hidden" name="csrf" value="{{ session.csrf }}" />
-              <button
-                type="submit"
-                class="btn"
-                style="background: #dc3545; color: white"
-              >
-                Admin Logout
-              </button>
-            </form>
-          </li>
-          {% elif session.user_id %} {# This is for a logged-in PUBLIC user #}
-          <li class="nav-item">
-            <span style="padding: 15px 20px; color: white"
-              >Welcome, {{ session.user_name }}</span
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              href="{{ url_for('auth.logout') }}"
+        <!-- Auth buttons are now direct children -->
+        {% if session.admin_id %}
+        <li class="nav-item">
+          <form
+            action="{{ url_for('admin_logout') }}"
+            method="post"
+            style="margin: 0"
+          >
+            <input type="hidden" name="csrf" value="{{ session.csrf }}" />
+            <button
+              type="submit"
               class="btn"
-              style="background-color: #dc3545"
-              >Logout</a
+              style="background: #dc3545; color: white; width: 100%"
             >
-          </li>
-          {% else %} {# This is for guests (no one is logged in) #}
-          <li class="nav-item">
-            <a
-              href="{{ url_for('auth.login') }}"
-              class="btn"
-              style="background-color: #360fd3"
-              >User Login</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              href="{{ url_for('auth.register') }}"
-              class="btn"
-              style="background-color: #4caf50"
-              >Register</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              href="{{ url_for('admin_login') }}"
-              class="btn"
-              style="background-color: #6c757d"
-              >Admin Login</a
-            >
-          </li>
-          {% endif %}
-        </div>
+              Admin Logout
+            </button>
+          </form>
+        </li>
+        {% elif session.user_id %}
+        <li class="nav-item">
+          <span style="padding: 15px 20px; color: white"
+            >Welcome, {{ session.user_name }}</span
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            href="{{ url_for('auth.logout') }}"
+            class="btn"
+            style="background-color: #dc3545"
+            >Logout</a
+          >
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a
+            href="{{ url_for('auth.login') }}"
+            class="btn"
+            style="background-color: #360fd358"
+            >User Login</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            href="{{ url_for('auth.register') }}"
+            class="btn"
+            style="background-color: #04700774"
+            >Register</a
+          >
+        </li>
+        {% endif %}
       </ul>
     </nav>
 
@@ -353,6 +382,12 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        const hamburger = document.querySelector(".hamburger");
+        const navList = document.querySelector(".nav-list");
+
+        hamburger.addEventListener("click", () => {
+          navList.classList.toggle("active");
+        });
         const chatToggleBtn = document.getElementById("chat-toggle-btn");
         const chatContainer = document.getElementById("chat-container");
         const chatCloseBtn = document.getElementById("chat-close-btn");
@@ -363,7 +398,9 @@
         if (chatToggleBtn) {
           const toggleChat = () => chatContainer.classList.toggle("hidden");
           chatToggleBtn.addEventListener("click", toggleChat);
-          chatCloseBtn.addEventListener("click", toggleChat);
+          if (chatCloseBtn) {
+            chatCloseBtn.addEventListener("click", toggleChat);
+          }
         }
 
         const addMessage = (text, sender) => {

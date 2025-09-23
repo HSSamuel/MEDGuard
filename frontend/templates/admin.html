@@ -20,13 +20,6 @@
     h2 {
       font-size: 1.2em;
     }
-    #logout-form {
-      position: static;
-      margin-bottom: 15px;
-    }
-    #logout-btn {
-      width: 100%;
-    }
   }
 
   /* Responsive navigation shortcuts */
@@ -65,38 +58,6 @@
     }
   }
 </style>
-
-<form
-  id="logout-form"
-  action="{{ url_for('admin_logout') }}"
-  method="post"
-  style="position: fixed; top: 15px; right: 20px; z-index: 10000; margin: 0"
->
-  <input type="hidden" name="csrf" value="{{ session['csrf'] }}" />
-  <button
-    type="submit"
-    id="logout-btn"
-    class="btn"
-    style="background: #dc3545; color: white"
-  >
-    🚪 <span class="desktop-only">Logout</span>
-  </button>
-</form>
-
-<div
-  id="session-timer"
-  class="panel"
-  style="
-    background: #ffeb3b;
-    border-left: 5px solid #f57c00;
-    font-weight: bold;
-    font-size: 1.1em;
-    color: #000;
-    text-align: center;
-  "
->
-  ⏳ Session expires in <span id="time-left">05:00</span> due to inactivity.
-</div>
 
 <div class="panel">
   <h2>🛠 Admin — Register New Drug Batch</h2>
@@ -253,10 +214,10 @@
       class="btn btn-yellow"
       >Today’s Reports
       <span
-        id="report-count"
+        id="new-report-badge"
         class="badge"
-        style="background: #dc3545; color: white"
-        >{{ reports|length if reports is defined else 0 }}</span
+        style="background: #dc3545; color: white; display: none; margin-left: 8px;"
+        >0</span
       ></a
     >
     <a
@@ -289,16 +250,16 @@
     <table class="table" id="reports-table">
       <thead>
         <tr>
-          <th data-sort="number">ID</th>
-          <th data-sort="string">Drug Name</th>
-          <th data-sort="string">Batch</th>
-          <th data-sort="string">Location</th>
-          <th data-sort="string">Note</th>
-          <th>Image</th>
-          <th>Analysis</th>
-          <th data-sort="date">Date</th>
-          <th data-sort="string">Reporter</th>
-          <th>Status</th>
+          <th data-label="ID">ID</th>
+          <th data-label="Drug Name">Drug Name</th>
+          <th data-label="Batch">Batch</th>
+          <th data-label="Location">Location</th>
+          <th data-label="Note">Note</th>
+          <th data-label="Image">Image</th>
+          <th data-label="Analysis">Analysis</th>
+          <th data-label="Date">Date</th>
+          <th data-label="Reporter">Reporter</th>
+          <th data-label="Status">Status</th>
         </tr>
       </thead>
       <tbody id="reports-body">
@@ -307,12 +268,12 @@
           class="report-row {% if report.status == 0 %}new{% endif %}"
           data-id="{{ report.id }}"
         >
-          <td>{{ report.id }}</td>
-          <td>{{ report.drug_name or "-" }}</td>
-          <td>{{ report.batch_number }}</td>
-          <td>{{ report.location or "-" }}</td>
-          <td class="note-column">{{ report.note or "-" }}</td>
-          <td>
+          <td data-label="ID">{{ report.id }}</td>
+          <td data-label="Drug Name">{{ report.drug_name or "-" }}</td>
+          <td data-label="Batch">{{ report.batch_number }}</td>
+          <td data-label="Location">{{ report.location or "-" }}</td>
+          <td data-label="Note" class="note-column">{{ report.note or "-" }}</td>
+          <td data-label="Image">
             {% if report.image_filename %}
             <a
               href="{{ url_for('static', filename='uploads/' + report.image_filename) }}"
@@ -326,7 +287,7 @@
             </a>
             {% else %} No Image {% endif %}
           </td>
-          <td>
+          <td data-label="Analysis">
             <div class="analysis-container" id="analysis-{{ report.id }}">
               {% if report.image_analysis_result %}
               <p>{{ report.image_analysis_result }}</p>
@@ -340,9 +301,9 @@
               {% else %} N/A {% endif %}
             </div>
           </td>
-          <td>{{ report.reported_on.split(' ')[0] }}</td>
-          <td>{{ report.submitted_by or "Anonymous" }}</td>
-          <td>
+          <td data-label="Date">{{ report.reported_on.split(' ')[0] }}</td>
+          <td data-label="Reporter">{{ report.submitted_by or "Anonymous" }}</td>
+          <td data-label="Status">
             {% if report.status == 0 %}
             <span class="badge badge-new">New</span>
             {% else %}
@@ -361,56 +322,84 @@
     </table>
   </div>
 </div>
-
-<div
-  id="timeout-modal"
-  style="
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-    align-items: center;
-    justify-content: center;
-  "
->
-  <div
-    style="
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 300px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    "
-  >
-    <h3>⚠️ Session Expiring</h3>
-    <p>
-      Your session will expire in <span id="modal-time-left">30</span> seconds.
-    </p>
-    <button id="stay-logged-in" class="btn btn-yellow" style="margin-top: 10px">
-      Stay Logged In
-    </button>
-  </div>
-</div>
 {% endblock %} {% block scripts %}
 <script src="{{ url_for('static', filename='admin.js') }}"></script>
-<script src="{{ url_for('static', filename='admin_timer.js') }}"></script>
 <script>
-  window.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", () => {
+    // --- Real-Time Notification System ---
+    let currentNewReportCount = 0;
+    const badge = document.getElementById("new-report-badge");
+    let audioCtx; // To be initialized on first user interaction
+
+    // Function to play a notification sound
+    const playNotificationSound = () => {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // A sharp, clear beep
+      gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioCtx.currentTime + 0.5
+      );
+      oscillator.start(audioCtx.currentTime);
+      oscillator.stop(audioCtx.currentTime + 0.5);
+    };
+
+    // Function to check for new reports
+    const checkNewReports = () => {
+      fetch("{{ url_for('admin_api.reports_count') }}")
+        .then((response) => response.json())
+        .then((data) => {
+          const newCount = data.count;
+          if (newCount > 0) {
+            badge.textContent = newCount;
+            badge.style.display = "inline-block";
+            if (newCount > currentNewReportCount) {
+              playNotificationSound();
+            }
+          } else {
+            badge.style.display = "none";
+          }
+          currentNewReportCount = newCount;
+        })
+        .catch((error) =>
+          console.error("Error checking for new reports:", error)
+        );
+    };
+
+    // Initialize on page load and then check every 10 seconds
+    checkNewReports();
+    setInterval(checkNewReports, 10000);
+
+    // One-time event listener to initialize AudioContext on user interaction
+    document.body.addEventListener(
+      "click",
+      () => {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+      },
+      { once: true }
+    );
+
+    // --- Other page scripts ---
     const startInput = document.getElementById("start");
     const endInput = document.getElementById("end");
     const rangeBtn = document.getElementById("range-reports-btn");
 
     if (rangeBtn) {
-      rangeBtn.addEventListener("click", () => {
+      rangeBtn.addEventListener("click", (e) => {
+        e.preventDefault();
         const start = startInput.value;
         const end = endInput.value;
         if (!start || !end) {
-          alert("Please select start and end dates");
+          alert("Please select both a start and end date.");
           return;
         }
         window.location.href = `{{ url_for('admin_api.admin_reports_range') }}?start=${start}&end=${end}&scroll=reports`;
@@ -430,3 +419,4 @@
   });
 </script>
 {% endblock %}
+

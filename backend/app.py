@@ -16,10 +16,8 @@
 # --- Core Python Libraries ---
 import logging
 import secrets
-import time  # Used for tracking session activity timestamps
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
-from datetime import timedelta
 
 # --- Flask and Third-Party Libraries ---
 from flask import (
@@ -90,8 +88,6 @@ def create_app() -> Flask:
         SESSION_COOKIE_HTTPONLY=True,
         SESSION_COOKIE_SAMESITE="Lax",
         SESSION_COOKIE_SECURE=not cfg.DEBUG,
-        PERMANENT_SESSION_LIFETIME=timedelta(
-            minutes=15),  # 15 min inactivity timeout
         SESSION_REFRESH_EACH_REQUEST=False
     )
 
@@ -105,18 +101,6 @@ def create_app() -> Flask:
     def teardown_db(exception):
         """Ensures the database connection is closed after each request to free up resources."""
         close_db()
-
-    @app.before_request
-    def check_session_timeout():
-        """Before every request, this function checks for user inactivity and resets the timer."""
-        if "last_activity" in session:
-            now = time.time()
-            last = session["last_activity"]
-            # If more than 5 minutes have passed, clear the session and force a re-login
-            if now - last > 300:
-                session.clear()
-                return redirect(url_for("admin_login"))
-        session["last_activity"] = time.time()
 
     # =============================================================================
     # C O R E   R O U T E S
@@ -162,7 +146,6 @@ def create_app() -> Flask:
                 session["admin_id"] = user["id"]
                 session["admin_role"] = user["role"]
                 session["csrf"] = secrets.token_urlsafe(32)
-                session["last_activity"] = time.time()
                 return redirect(url_for("admin_api.admin_dashboard"))
             else:
                 return render_template("admin_login.html", error="Invalid credentials")
@@ -247,4 +230,3 @@ if __name__ == "__main__":
         port=app.config.get("PORT", 5000),
         debug=app.config.get("DEBUG", True),
     )
-

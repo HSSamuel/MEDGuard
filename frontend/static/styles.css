@@ -22,28 +22,16 @@ body {
 .mg-header {
   display: flex;
   align-items: center;
+  justify-content: space-between; /* Ensures logo and hamburger are on opposite ends */
   gap: 12px;
   padding: 16px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #0a7e57, #1a3c34);
-  position: relative;
-}
-
-.logo::after {
-  content: "+";
-  position: absolute;
-  color: #fff;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -56%);
-  font-weight: 800;
-  font-size: 20px;
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .brand h1 {
@@ -128,6 +116,11 @@ body {
   padding: 10px 14px;
   font-weight: 700;
   transition: all 0.2s ease;
+  text-decoration: none !important;
+}
+
+a.btn {
+  text-decoration: none !important;
 }
 
 .btn-yellow {
@@ -149,6 +142,58 @@ body {
 
 .btn-outline:hover {
   background: rgba(255, 255, 255, 0.1);
+}
+
+/* NAVIGATION BAR */
+.navbar {
+  padding: 0;
+  position: relative; /* Establishes stacking context */
+  z-index: 1000; /* Ensures navbar is on top of other content */
+}
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-item a,
+.nav-item .btn {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px; /* Reduced padding for compactness */
+  display: block;
+  transition: background 0.2s;
+  font-size: 0.9rem;
+}
+.nav-item a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.nav-form {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.welcome-user {
+  padding: 10px 15px;
+  font-size: 0.9rem;
+}
+
+/* HAMBURGER MENU */
+.hamburger {
+  display: none;
+  cursor: pointer;
+  padding: 10px;
+}
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 5px 0;
+  transition: all 0.3s;
 }
 
 /* RESULTS */
@@ -298,6 +343,21 @@ body {
   margin-right: auto;
 }
 
+/* Report actions centering */
+.report-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.report-actions .input {
+  max-width: 350px;
+  width: 100%;
+}
+
 /* --- Toast Notification Styles --- */
 .toast-notification {
   position: fixed;
@@ -322,4 +382,91 @@ body {
 
 .toast-notification.error {
   background-color: #dc3545; /* Red for errors */
+}
+
+/* MOBILE RESPONSIVE STYLES */
+@media (max-width: 960px) {
+  .hamburger {
+    display: block;
+  }
+  .nav-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background: rgba(47, 79, 79, 0.95);
+    backdrop-filter: blur(5px);
+    padding: 5px 0; /* Reduced padding for compactness */
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  .nav-list.active {
+    display: flex;
+  }
+  .nav-item {
+    width: 100%;
+    text-align: center;
+  }
+  .nav-item a,
+  .nav-item .btn,
+  .welcome-user {
+    width: 100%;
+    padding: 10px 15px; /* Example: Change to '10px 15px' for less space */
+  }
+}
+
+@media (max-width: 768px) {
+  .panel {
+    padding: 15px;
+  }
+
+  .inline-form {
+    flex-direction: column;
+  }
+
+  .inline-form .input,
+  .inline-form .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .nav-shortcuts .btn {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 15px;
+  }
+
+  .table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: bold;
+    text-align: left;
+  }
 }

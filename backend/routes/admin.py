@@ -25,13 +25,13 @@ def admin_dashboard():
     try:
         conn = get_db()
         rows = conn.execute("""
-            SELECT r.id, r.drug_name, r.batch_number, r.location, r.note, r.image_filename,
+            SELECT r.id, r.drug_name, r.batch_number, r.location, r.note, r.image_filename, r.image_analysis_result,
                    strftime('%Y-%m-%d %H:%M:%S', r.reported_on) AS reported_on, r.status,
                    u.email AS submitted_by
             FROM reports r
             LEFT JOIN users u ON r.user_id = u.id
             ORDER BY r.reported_on DESC
-            LIMIT 5
+            LIMIT 20
         """).fetchall()
         reports = [dict(r) for r in rows]
         return render_template('admin.html', reports=reports)
@@ -75,7 +75,7 @@ def admin_register():
                    strftime('%Y-%m-%d %H:%M:%S', reported_on) AS reported_on, status
             FROM reports
             ORDER BY reported_on DESC
-            LIMIT 5
+            LIMIT 20
         """).fetchall()
         reports = [dict(r) for r in rows]
         return render_template("admin.html", qr_image=qr_base64, reports=reports, scroll='qr')
@@ -114,7 +114,7 @@ def admin_drugs():
             params.extend([start, end])
         total = conn.execute(f"SELECT COUNT(*) {base_query}", params).fetchone()[0]
         rows = conn.execute(f"""
-            SELECT name, batch_number, manufacturer, mfg_date, expiry_date, created_at
+            SELECT id, name, batch_number, manufacturer, mfg_date, expiry_date, created_at
             {base_query}
             ORDER BY created_at DESC
             LIMIT ? OFFSET ?
@@ -136,6 +136,23 @@ def admin_drugs():
         print("Error in /drugs:", e)
         traceback.print_exc()
         return jsonify({"error": f"Server error: {str(e)}"}), 500
+
+# =========================
+# Delete a registered drug
+# =========================
+@admin_bp.delete("/drugs/<int:drug_id>")
+def delete_drug(drug_id):
+    if not session.get("admin_id"):
+        return jsonify({"error": "Authentication required"}), 401
+    try:
+        conn = get_db()
+        conn.execute("DELETE FROM drugs WHERE id = ?", (drug_id,))
+        conn.commit()
+        return jsonify({"success": True, "message": "Drug deleted successfully."})
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": f"Server error: {str(e)}"}), 500
+
 
 # =========================
 # Export Registered Drugs (Word)
@@ -363,53 +380,25 @@ def admin_reports_range():
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 # =========================
-# Reports Count (Unread Today Only)
+# Reports Count (Unread)
 # =========================
 @admin_bp.get("/reports/count")
 def reports_count():
+    if not session.get("admin_id"):
+        return jsonify({"error": "Authentication required"}), 401
     try:
         conn = get_db()
-        row = conn.execute("""
-            SELECT COUNT(*) AS total
-            FROM reports
-            WHERE status = 0
-              AND date(reported_on) = date('now','localtime')
-        """).fetchone()
-        return jsonify({"count": row["total"]})
+        row = conn.execute("SELECT COUNT(*) as count FROM reports WHERE status = 0").fetchone()
+        return jsonify({"count": row["count"] if row else 0})
     except Exception as e:
-        print("Error in /reports/count:", e)
         traceback.print_exc()
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 # =========================
-# Reports Preview (Today Only)
-# =========================
-@admin_bp.get("/reports/preview")
-def reports_preview():
-    try:
-        conn = get_db()
-        rows = conn.execute("""
-            SELECT id, drug_name, batch_number, location, note, image_filename,
-                   strftime('%Y-%m-%d %H:%M:%S', reported_on) AS reported_on, status
-            FROM reports
-            WHERE date(reported_on) = date('now','localtime')
-            ORDER BY reported_on DESC
-            LIMIT 5
-        """).fetchall()
-        return jsonify([dict(r) for r in rows])
-    except Exception as e:
-        print("Error in /reports/preview:", e)
-        traceback.print_exc()
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-# =========================
-# API for Hotspot Map Data (WITH SECURITY CHECK)
+# API for Hotspot Map Data
 # =========================
 @admin_bp.route('/reports/locations')
 def get_report_locations():
-    """
-    Provides a JSON feed of all counterfeit reports with geolocation data.
-    """
     if not session.get("admin_id"):
         return jsonify({"error": "Authentication required"}), 401
     conn = get_db()
@@ -426,12 +415,10 @@ def get_report_locations():
 # =========================
 @admin_bp.route('/hotspot-map')
 def hotspot_map_page():
-    """Renders the Live Counterfeit Hotspot Map page."""
     return render_template('admin_map.html')
 
 @admin_bp.route('/public-db-manager')
 def public_db_manager_page():
-    """Renders the page where admins can edit the public drug database."""
     return render_template('admin_public_db.html')
 
 
@@ -440,9 +427,6 @@ def public_db_manager_page():
 # =========================
 @admin_bp.route('/reports/analytics')
 def get_report_analytics():
-    """
-    Provides a JSON feed of counterfeit report counts grouped by day.
-    """
     if not session.get("admin_id"):
         return jsonify({"error": "Authentication required"}), 401
 
@@ -456,3 +440,4 @@ def get_report_analytics():
 
     analytics_data = [{"date": row["report_date"], "count": row["report_count"]} for row in rows]
     return jsonify(analytics_data)
+
