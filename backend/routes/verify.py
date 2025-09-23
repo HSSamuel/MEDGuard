@@ -1,7 +1,8 @@
 import requests
-from flask import Blueprint, render_template, request, url_for
+from flask import Blueprint, render_template, request, url_for, current_app
 from backend.database import get_db
 from datetime import datetime
+from backend.emdex import get_drug_info_from_emdex # Import the new function
 
 # The blueprint is already registered with a '/verify' prefix in app.py
 verify_bp = Blueprint("verify", __name__)
@@ -33,7 +34,19 @@ def verify_smart_scan(scanned_data):
         except (ValueError, TypeError):
             return render_template("verify.html", status="notfound", error="Could not parse expiry date.", verified_on=verified_on_str)
 
-    # --- NEW: Logic Path 2: Check the (Simulated) NAFDAC Public API ---
+    # --- UPDATED: Logic Path 2: Call the EMDEX Service ---
+    try:
+        api_key = current_app.config.get("EMDEX_API_KEY")
+        public_data = get_drug_info_from_emdex(api_key, data)
+        
+        if public_data:
+            # We found public info from our trusted source.
+            return render_template("verify.html", status="public_info_found", public_data=public_data, verified_on=verified_on_str)
+
+    except Exception as e:
+        print(f"An error occurred while calling the EMDEX service: {e}")
+        # If the service fails, we continue to the next logic path.
+
     # This block runs only if the drug was not found in the MedGuard database.
     try:
         nafdac_api_url = url_for('nafdac_api.lookup_drug', batch_number=data, _external=True)
@@ -45,7 +58,6 @@ def verify_smart_scan(scanned_data):
             return render_template("verify.html", status="public_info_found", public_data=public_data, verified_on=verified_on_str)
     except requests.exceptions.RequestException as e:
         print(f"Could not connect to the simulated NAFDAC API: {e}")
-        # If the API is down, we just continue to the next logic path.
 
     # --- Logic Path 3: Check if it's a URL to an external website ---
     if data.lower().startswith("http://") or data.lower().startswith("https://"):
@@ -58,4 +70,3 @@ def verify_smart_scan(scanned_data):
         scanned_content=data,
         verified_on=verified_on_str
     )
-

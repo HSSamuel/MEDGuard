@@ -57,20 +57,34 @@ def init_db():
             created_at TEXT DEFAULT (datetime('now'))
         )
     """)
+    
+    # Create users table for the public
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            full_name TEXT NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            password_hash TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT (datetime('now'))
+        )
+    """)
 
-    # Create reports table with new location columns for the hotspot map
+    # Create reports table with user_id foreign key
     c.execute("""
         CREATE TABLE IF NOT EXISTS reports (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            drug_name TEXT,
-            batch_number TEXT NOT NULL,
-            location TEXT,
-            note TEXT,
-            image_filename TEXT,
-            latitude REAL,
-            longitude REAL,
-            reported_on TIMESTAMP DEFAULT (datetime('now')),
-            status INTEGER DEFAULT 0
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        drug_name TEXT,
+        batch_number TEXT NOT NULL,
+        location TEXT,
+        note TEXT,
+        image_filename TEXT,
+        latitude REAL,
+        longitude REAL,
+        image_analysis_result TEXT, -- THIS IS THE NEW COLUMN --
+        reported_on TIMESTAMP DEFAULT (datetime('now')),
+        status INTEGER DEFAULT 0,
+        FOREIGN KEY (user_id) REFERENCES users (id)
         )
     """)
 
@@ -106,4 +120,3 @@ if __name__ == "__main__":
     print(f"Initializing database at: {cfg.DB_PATH}")
     init_db()
     print("✅ Database initialized successfully with clean schema.")
-

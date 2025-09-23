@@ -1,8 +1,9 @@
 import os
-from flask import Blueprint, jsonify, request, current_app
+from flask import Blueprint, jsonify, request, current_app, session
 from werkzeug.utils import secure_filename
 from backend.database import get_db
 from datetime import datetime
+from backend.notifications import send_sms_alert # Import the new function
 
 report_bp = Blueprint("report_api", __name__)
 
@@ -14,10 +15,13 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # =========================
-# POST: Save a new counterfeit report (now with location data)
+# POST: Save a new counterfeit report (now with location data and user tracking)
 # =========================
 @report_bp.post("/report")
 def create_report():
+    # Get the user_id from the session if a user is logged in
+    user_id = session.get("user_id")
+    
     # Form data is now multipart/form-data, not JSON
     drug_name = request.form.get("drug_name")
     batch_number = request.form.get("batch_number")
@@ -40,15 +44,23 @@ def create_report():
         image_file.save(os.path.join(upload_folder, image_filename))
 
     conn = get_db()
-    # UPDATED: The INSERT statement now includes latitude and longitude
+    # UPDATED: The INSERT statement now includes user_id, latitude and longitude
     conn.execute(
         """
-        INSERT INTO reports (drug_name, batch_number, location, note, image_filename, latitude, longitude, reported_on, status)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO reports (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, reported_on, status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
-        (drug_name, batch_number, location, note, image_filename, latitude, longitude, datetime.now(), 0)
+        (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, datetime.now(), 0)
     )
     conn.commit()
+
+    # --- NEW: Trigger SMS Alert ---
+    report_data_for_alert = {
+        "drug_name": drug_name,
+        "batch_number": batch_number,
+    }
+    send_sms_alert(report_data_for_alert)
+    # ----------------------------
 
     return jsonify({"message": "🚨 Report received. Thank you for helping keep patients safe."}), 201
 
@@ -113,4 +125,3 @@ def count_new_reports():
     conn = get_db()
     row = conn.execute("SELECT COUNT(*) as count FROM reports WHERE status = 0").fetchone()
     return jsonify({"count": row["count"] if row else 0})
-

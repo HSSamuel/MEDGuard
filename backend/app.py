@@ -45,6 +45,8 @@ from backend.routes.admin import admin_bp
 from backend.routes.nafdac_api import nafdac_api_bp # For the external lookup simulation
 from backend.routes.parser import parser_bp
 from backend.routes.public_db_admin import public_db_admin_bp
+from backend.routes.auth import auth_bp
+from backend.routes.analysis import analysis_bp
 
 # A flag to check if the admin blueprint was imported successfully
 HAS_ADMIN = True
@@ -192,6 +194,8 @@ def create_app() -> Flask:
     app.register_blueprint(verify_bp, url_prefix="/verify") # User-facing, so no /api prefix
     app.register_blueprint(parser_bp, url_prefix="/api")
     app.register_blueprint(public_db_admin_bp, url_prefix="/api")
+    app.register_blueprint(auth_bp)  # No prefix, handles /login, /register, etc.
+    app.register_blueprint(analysis_bp, url_prefix="/api")
 
     if HAS_ADMIN:
         app.register_blueprint(admin_bp, url_prefix="/admin")

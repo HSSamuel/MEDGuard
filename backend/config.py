@@ -34,6 +34,9 @@ class Config:
     TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
     TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
     TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER")
+    
+    # Comprehensive Database of NAFDAC-registered drugs is through the EMDEX API (api.emdex.org).
+    EMDEX_API_KEY = os.getenv("EMDEX_API_KEY", "your_default_key_for_dev")
 
 
 class ProdConfig(Config):

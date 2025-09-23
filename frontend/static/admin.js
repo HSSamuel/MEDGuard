@@ -119,4 +119,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (startBtn) startBtn.addEventListener("click", startScanner);
   if (stopBtn) stopBtn.addEventListener("click", stopScanner);
+
+  // --- NEW: Image Analysis Handler ---
+  const handleAnalysisClick = (event) => {
+    if (!event.target.classList.contains("analyze-btn")) return;
+
+    const reportId = event.target.dataset.id;
+    const container = document.getElementById(`analysis-${reportId}`);
+    container.innerHTML = "<p><em>Analyzing...</em></p>";
+
+    fetch(`/api/analyze-image/${reportId}`, {
+      method: "POST",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          container.innerHTML = `<p style="color: red;">${data.error}</p>`;
+        } else {
+          const confidence = (data.confidence * 100).toFixed(1);
+          container.innerHTML = `<p><strong>${data.label}</strong><br><em>(Confidence: ${confidence}%)</em></p>`;
+        }
+      })
+      .catch((error) => {
+        console.error("Analysis error:", error);
+        container.innerHTML = `<p style="color: red;">Analysis failed.</p>`;
+      });
+  };
+
+  const reportsTable = document.getElementById("reports-table");
+  if (reportsTable) {
+    reportsTable.addEventListener("click", handleAnalysisClick);
+  }
+
+  // --- NEW: Real-Time Report Search ---
+  const handleReportSearch = () => {
+    const searchInput = document.getElementById("report-search");
+    if (!searchInput) return;
+
+    searchInput.addEventListener("keyup", () => {
+      const searchTerm = searchInput.value.toLowerCase();
+      const tableBody = document.getElementById("reports-body");
+      const rows = tableBody.getElementsByTagName("tr");
+
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const rowText = row.textContent.toLowerCase();
+
+        if (rowText.includes(searchTerm)) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      }
+    });
+  };
+
+  handleReportSearch();
 });

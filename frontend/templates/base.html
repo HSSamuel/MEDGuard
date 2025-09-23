@@ -6,13 +6,14 @@
     <title>MedGuard</title>
     <link
       rel="icon"
-      href="{{ url_for('static', filename='images/favicon.ico') }}"
+      href="{{ url_for('static', filename='images/favicon.ico.png') }}"
     />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='styles.css') }}"
     />
     <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
       /* Background image with dark overlay */
       body {
@@ -228,8 +229,11 @@
             <a href="{{ url_for('about_page') }}">About</a>
           </li>
 
-          <!-- Admin-only links are now streamlined -->
-          {% if session.admin_id %}
+          {% if session.user_id %}
+          <li class="nav-item">
+            <a href="{{ url_for('auth.my_reports') }}">My Reports</a>
+          </li>
+          {% endif %} {% if session.admin_id %}
           <li class="nav-item">
             <a href="{{ url_for('admin_api.admin_dashboard') }}">Dashboard</a>
           </li>
@@ -246,8 +250,9 @@
           {% endif %}
         </div>
 
-        <div class="nav-right">
-          {% if session.admin_id %}
+        <div class="nav-right" style="display: flex; align-items: center">
+          {% if session.admin_id %} {# This is for the REGULATOR admin session
+          #}
           <li class="nav-item">
             <form
               action="{{ url_for('admin_logout') }}"
@@ -265,17 +270,47 @@
                 class="btn"
                 style="background: #dc3545; color: white"
               >
-                Logout
+                Admin Logout
               </button>
             </form>
           </li>
-          {% else %}
+          {% elif session.user_id %} {# This is for a logged-in PUBLIC user #}
+          <li class="nav-item">
+            <span style="padding: 15px 20px; color: white"
+              >Welcome, {{ session.user_name }}</span
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="{{ url_for('auth.logout') }}"
+              class="btn"
+              style="background-color: #dc3545"
+              >Logout</a
+            >
+          </li>
+          {% else %} {# This is for guests (no one is logged in) #}
+          <li class="nav-item">
+            <a
+              href="{{ url_for('auth.login') }}"
+              class="btn"
+              style="background-color: #360fd3"
+              >User Login</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="{{ url_for('auth.register') }}"
+              class="btn"
+              style="background-color: #4caf50"
+              >Register</a
+            >
+          </li>
           <li class="nav-item">
             <a
               href="{{ url_for('admin_login') }}"
               class="btn"
-              style="background-color: #4caf50"
-              >Regulator Login</a
+              style="background-color: #6c757d"
+              >Admin Login</a
             >
           </li>
           {% endif %}

@@ -1,5 +1,71 @@
 {% extends "base.html" %} {% block content %}
-<!-- Fixed Logout Button with Confirmation -->
+<style>
+  /* General mobile adjustments */
+  @media (max-width: 768px) {
+    .panel {
+      padding: 15px;
+    }
+    .inline-form {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .inline-form .input,
+    .inline-form .btn {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .desktop-only {
+      display: none;
+    }
+    h2 {
+      font-size: 1.2em;
+    }
+    #logout-form {
+      position: static;
+      margin-bottom: 15px;
+    }
+    #logout-btn {
+      width: 100%;
+    }
+  }
+
+  /* Responsive navigation shortcuts */
+  .nav-shortcuts {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+  }
+  @media (max-width: 768px) {
+    .nav-shortcuts {
+      flex-direction: column;
+    }
+    .nav-shortcuts .btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  /* Responsive date filters */
+  .date-filters {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 768px) {
+    .date-filters {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .date-filters .input,
+    .date-filters .btn {
+      width: 100%;
+    }
+  }
+</style>
+
 <form
   id="logout-form"
   action="{{ url_for('admin_logout') }}"
@@ -10,30 +76,19 @@
   <button
     type="submit"
     id="logout-btn"
-    style="
-      background: #dc3545;
-      color: #fff;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-      transition: background 0.2s ease, transform 0.1s ease;
-    "
+    class="btn"
+    style="background: #dc3545; color: white"
   >
-    🚪 Logout
+    🚪 <span class="desktop-only">Logout</span>
   </button>
 </form>
 
-<!-- Session Timer Banner -->
 <div
   id="session-timer"
   class="panel"
   style="
     background: #ffeb3b;
     border-left: 5px solid #f57c00;
-    margin-bottom: 15px;
     font-weight: bold;
     font-size: 1.1em;
     color: #000;
@@ -43,7 +98,6 @@
   ⏳ Session expires in <span id="time-left">05:00</span> due to inactivity.
 </div>
 
-<!-- ADMIN DASHBOARD HEADER -->
 <div class="panel">
   <h2>🛠 Admin — Register New Drug Batch</h2>
   <p style="opacity: 0.85; margin-top: 0">
@@ -52,8 +106,7 @@
   </p>
 </div>
 
-<!-- NAVIGATION SHORTCUTS -->
-<div class="panel" style="margin-bottom: 15px; text-align: right">
+<div class="panel nav-shortcuts">
   <a href="{{ url_for('admin_api.admin_drugs') }}" class="btn"
     >💊 Registered Drugs</a
   >
@@ -62,11 +115,9 @@
   >
 </div>
 
-<!-- REGISTRATION FORM -->
 <div class="panel">
   <h2>📦 Batch Details</h2>
 
-  <!-- Scanner Section for Pre-filling -->
   <div
     id="registration-scanner-container"
     style="display: none; margin-bottom: 20px; text-align: center"
@@ -95,7 +146,6 @@
     method="post"
   >
     <div class="inline-form" style="margin-bottom: 8px">
-      <!-- ADDED id="drug-name" -->
       <input
         id="drug-name"
         name="name"
@@ -103,7 +153,6 @@
         placeholder="Drug name"
         required
       />
-      <!-- ADDED id="batch-number" -->
       <input
         id="batch-number"
         name="batch_number"
@@ -119,7 +168,6 @@
           style="display: block; font-weight: bold; margin-bottom: 4px"
           >Mfg Date</label
         >
-        <!-- ADDED id="mfg-date" -->
         <input
           id="mfg-date"
           name="mfg_date"
@@ -134,7 +182,6 @@
           style="display: block; font-weight: bold; margin-bottom: 4px"
           >Expiry Date</label
         >
-        <!-- ADDED id="expiry-date" -->
         <input
           id="expiry-date"
           name="expiry_date"
@@ -145,7 +192,6 @@
       </div>
     </div>
     <div class="inline-form" style="margin-bottom: 8px">
-      <!-- ADDED id="manufacturer" -->
       <input
         id="manufacturer"
         name="manufacturer"
@@ -154,11 +200,10 @@
         required
       />
     </div>
-    <div style="margin-top: 10px">
+    <div style="margin-top: 20px" class="inline-form">
       <button type="submit" class="btn btn-yellow">
         Register &amp; Get QR
       </button>
-      <!-- ADDED Scan to Pre-fill button -->
       <button
         type="button"
         id="start-reg-scan-btn"
@@ -171,7 +216,6 @@
   </form>
 </div>
 
-<!-- QR CODE DISPLAY -->
 <div
   id="qr-result"
   class="panel"
@@ -200,70 +244,40 @@
   {% endif %}
 </div>
 
-<!-- ========================= -->
-<!-- COUNTERFEIT REPORTS -->
-<!-- ========================= -->
 <div class="panel" id="counterfeit-reports">
   <h2>🚨 Counterfeit Reports</h2>
-
-  <!-- Navigation buttons (now redirect to server-rendered routes) -->
-  <div style="margin-bottom: 15px; text-align: right">
-    <a
-      href="{{ url_for('admin_api.admin_reports') }}?scroll=reports"
-      id="new-reports-btn"
-      class="btn btn-red"
-    >
-      🔔 View All Reports
-    </a>
+  <div class="nav-shortcuts" style="margin-bottom: 15px">
     <a
       href="{{ url_for('admin_api.admin_reports_today') }}?scroll=reports"
       id="new-reports-btn-today"
       class="btn btn-yellow"
+      >Today’s Reports
+      <span
+        id="report-count"
+        class="badge"
+        style="background: #dc3545; color: white"
+        >{{ reports|length if reports is defined else 0 }}</span
+      ></a
     >
-      Today’s Reports
-    </a>
-    <span
-      id="report-count"
-      style="
-        margin-left: 6px;
-        background: #fff;
-        color: #dc3545;
-        padding: 2px 6px;
-        border-radius: 50%;
-        font-weight: bold;
-      "
+    <a
+      href="{{ url_for('admin_api.admin_reports') }}?scroll=reports"
+      id="new-reports-btn"
+      class="btn btn-outline"
+      >View All Reports</a
     >
-      {{ reports|length if reports is defined else 0 }}
-    </span>
   </div>
 
-  <!-- Search box (disabled for now, will need API support) -->
-  <div style="margin-bottom: 10px">
+  <div style="margin-bottom: 20px">
     <input
       type="text"
       id="report-search"
       class="input"
       placeholder="🔍 Search reports..."
-      disabled
+      style="width: 100%"
     />
   </div>
 
-  <!-- Filter buttons (redirect to server-rendered routes) -->
-  <div style="margin-bottom: 12px; text-align: right">
-    <a
-      href="{{ url_for('admin_api.admin_reports') }}?scroll=reports"
-      class="btn btn-outline"
-      >All Reports (History)</a
-    >
-    <a
-      href="{{ url_for('admin_api.admin_reports_today') }}?scroll=reports"
-      class="btn btn-yellow"
-      >Today’s Reports</a
-    >
-  </div>
-
-  <!-- Date Range Filter (redirect to server-rendered route) -->
-  <div style="margin-bottom: 12px; text-align: right">
+  <div class="date-filters" style="margin-bottom: 20px">
     <label for="start" style="font-weight: bold">From:</label>
     <input type="date" id="start" name="start" class="input" required />
     <label for="end" style="font-weight: bold">To:</label>
@@ -271,68 +285,83 @@
     <a id="range-reports-btn" href="#" class="btn btn-yellow">Filter</a>
   </div>
 
-  <!-- Reports table -->
-  <table class="table" id="reports-table">
-    <thead>
-      <tr>
-        <th data-sort="number">ID</th>
-        <th data-sort="string">Drug Name</th>
-        <th data-sort="string">Batch Number</th>
-        <th data-sort="string">Location</th>
-        <th data-sort="string">Note</th>
-        <th>Image</th>
-        <th data-sort="date">Reported On</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody id="reports-body">
-      {# Server-render fallback: if the backend renders `reports` this will show
-      initially #} {% if reports is defined and reports %} {% for report in
-      reports %}
-      <tr
-        class="report-row {% if report.status == 0 %}new{% endif %}"
-        data-id="{{ report.id }}"
-      >
-        <td>{{ report.id }}</td>
-        <td>{{ report.drug_name or "-" }}</td>
-        <td>{{ report.batch_number }}</td>
-        <td>{{ report.location or "-" }}</td>
-        <td>{{ report.note or "-" }}</td>
-        <td>
-          {% if report.image_filename %}
-          <a
-            href="{{ url_for('static', filename='uploads/' + report.image_filename) }}"
-            target="_blank"
-          >
-            <img
-              src="{{ url_for('static', filename='uploads/'  + report.image_filename) }}"
-              width="100"
-              alt="Report Image"
-            />
-          </a>
-          {% else %} No Image {% endif %}
-        </td>
-        <td>{{ report.reported_on }}</td>
-        <td>
-          {% if report.status == 0 %}
-          <span class="badge badge-new">New</span>
-          {% else %}
-          <span class="badge badge-checked">Checked</span>
-          {% endif %}
-        </td>
-      </tr>
-      {% endfor %} {% else %}
-      <tr>
-        <td colspan="8" style="text-align: center">
-          No reports submitted yet.
-        </td>
-      </tr>
-      {% endif %}
-    </tbody>
-  </table>
+  <div style="overflow-x: auto; -webkit-overflow-scrolling: touch">
+    <table class="table" id="reports-table">
+      <thead>
+        <tr>
+          <th data-sort="number">ID</th>
+          <th data-sort="string">Drug Name</th>
+          <th data-sort="string">Batch</th>
+          <th data-sort="string">Location</th>
+          <th data-sort="string">Note</th>
+          <th>Image</th>
+          <th>Analysis</th>
+          <th data-sort="date">Date</th>
+          <th data-sort="string">Reporter</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="reports-body">
+        {% if reports is defined and reports %} {% for report in reports %}
+        <tr
+          class="report-row {% if report.status == 0 %}new{% endif %}"
+          data-id="{{ report.id }}"
+        >
+          <td>{{ report.id }}</td>
+          <td>{{ report.drug_name or "-" }}</td>
+          <td>{{ report.batch_number }}</td>
+          <td>{{ report.location or "-" }}</td>
+          <td class="note-column">{{ report.note or "-" }}</td>
+          <td>
+            {% if report.image_filename %}
+            <a
+              href="{{ url_for('static', filename='uploads/' + report.image_filename) }}"
+              target="_blank"
+            >
+              <img
+                src="{{ url_for('static', filename='uploads/' + report.image_filename) }}"
+                width="80"
+                alt="Report Image"
+              />
+            </a>
+            {% else %} No Image {% endif %}
+          </td>
+          <td>
+            <div class="analysis-container" id="analysis-{{ report.id }}">
+              {% if report.image_analysis_result %}
+              <p>{{ report.image_analysis_result }}</p>
+              {% elif report.image_filename %}
+              <button
+                class="btn btn-outline analyze-btn"
+                data-id="{{ report.id }}"
+              >
+                Analyze
+              </button>
+              {% else %} N/A {% endif %}
+            </div>
+          </td>
+          <td>{{ report.reported_on.split(' ')[0] }}</td>
+          <td>{{ report.submitted_by or "Anonymous" }}</td>
+          <td>
+            {% if report.status == 0 %}
+            <span class="badge badge-new">New</span>
+            {% else %}
+            <span class="badge badge-checked">Checked</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %} {% else %}
+        <tr>
+          <td colspan="10" style="text-align: center">
+            No reports submitted yet.
+          </td>
+        </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
-<!-- Session Timeout Modal -->
 <div
   id="timeout-modal"
   style="
@@ -370,68 +399,12 @@
 {% endblock %} {% block scripts %}
 <script src="{{ url_for('static', filename='admin.js') }}"></script>
 <script src="{{ url_for('static', filename='admin_timer.js') }}"></script>
-
-<style>
-  .blink {
-    animation: blink 1s infinite;
-  }
-  @keyframes blink {
-    50% {
-      opacity: 0.4;
-    }
-  }
-
-  .btn-red {
-    background: #dc3545;
-    color: #fff;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 4px;
-  }
-  .btn-yellow {
-    background: #ffeb3b;
-    color: #000;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 4px;
-  }
-  .btn-outline {
-    background: transparent;
-    color: #000;
-    border: 1px solid #000;
-    padding: 7px 13px;
-    border-radius: 4px;
-  }
-
-  .badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 12px;
-  }
-  .badge-new {
-    background: #fff3cd;
-    color: #856404;
-    border: 1px solid #ffeeba;
-  } /* yellow */
-  .badge-checked {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-  } /* green */
-  .report-row.new {
-    background: #fffdf3;
-  } /* optional highlight for new rows */
-</style>
-
 <script>
   window.addEventListener("DOMContentLoaded", () => {
     const startInput = document.getElementById("start");
     const endInput = document.getElementById("end");
     const rangeBtn = document.getElementById("range-reports-btn");
 
-    // Handle date range filter redirect with scroll
     if (rangeBtn) {
       rangeBtn.addEventListener("click", () => {
         const start = startInput.value;
@@ -444,18 +417,14 @@
       });
     }
 
-    // Handle scroll on page load based on URL parameter
     const urlParams = new URLSearchParams(window.location.search);
     const scrollTo = urlParams.get("scroll");
     if (scrollTo) {
-      if (scrollTo === "qr") {
-        document
-          .getElementById("qr-result")
-          .scrollIntoView({ behavior: "smooth" });
-      } else if (scrollTo === "reports") {
-        document
-          .getElementById("counterfeit-reports")
-          .scrollIntoView({ behavior: "smooth" });
+      const element = document.getElementById(
+        scrollTo === "qr" ? "qr-result" : "counterfeit-reports"
+      );
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
       }
     }
   });

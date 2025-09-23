@@ -25,16 +25,17 @@ def admin_dashboard():
     try:
         conn = get_db()
         rows = conn.execute("""
-            SELECT id, drug_name, batch_number, location, note, image_filename,
-                   strftime('%Y-%m-%d %H:%M:%S', reported_on) AS reported_on, status
-            FROM reports
-            ORDER BY reported_on DESC
+            SELECT r.id, r.drug_name, r.batch_number, r.location, r.note, r.image_filename,
+                   strftime('%Y-%m-%d %H:%M:%S', r.reported_on) AS reported_on, r.status,
+                   u.email AS submitted_by
+            FROM reports r
+            LEFT JOIN users u ON r.user_id = u.id
+            ORDER BY r.reported_on DESC
             LIMIT 5
         """).fetchall()
         reports = [dict(r) for r in rows]
         return render_template('admin.html', reports=reports)
     except Exception as e:
-        print("Error in /admin/dashboard:", e)
         traceback.print_exc()
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
@@ -303,16 +304,17 @@ def admin_reports():
     try:
         conn = get_db()
         rows = conn.execute("""
-            SELECT id, drug_name, batch_number, location, note, image_filename,
-                   strftime('%Y-%m-%d %H:%M:%S', reported_on) AS reported_on, status
-            FROM reports
-            ORDER BY reported_on DESC, id DESC
+            SELECT r.id, r.drug_name, r.batch_number, r.location, r.note, r.image_filename,
+                   strftime('%Y-%m-%d %H:%M:%S', r.reported_on) AS reported_on, r.status,
+                   u.email AS submitted_by
+            FROM reports r
+            LEFT JOIN users u ON r.user_id = u.id
+            ORDER BY r.reported_on DESC, r.id DESC
         """).fetchall()
         conn.execute("UPDATE reports SET status = 1 WHERE status = 0")
         conn.commit()
         return render_template("admin.html", reports=rows, scroll='reports')
     except Exception as e:
-        print("Error in /reports:", e)
         traceback.print_exc()
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
@@ -432,3 +434,25 @@ def public_db_manager_page():
     """Renders the page where admins can edit the public drug database."""
     return render_template('admin_public_db.html')
 
+
+# =========================
+# Analytics Endpoint
+# =========================
+@admin_bp.route('/reports/analytics')
+def get_report_analytics():
+    """
+    Provides a JSON feed of counterfeit report counts grouped by day.
+    """
+    if not session.get("admin_id"):
+        return jsonify({"error": "Authentication required"}), 401
+
+    conn = get_db()
+    rows = conn.execute("""
+        SELECT date(reported_on) as report_date, COUNT(*) as report_count
+        FROM reports
+        GROUP BY report_date
+        ORDER BY report_date
+    """).fetchall()
+
+    analytics_data = [{"date": row["report_date"], "count": row["report_count"]} for row in rows]
+    return jsonify(analytics_data)

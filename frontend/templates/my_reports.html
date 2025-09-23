@@ -1,0 +1,47 @@
+{% extends "base.html" %} {% block content %}
+<div class="panel">
+  <h2>My Submitted Reports</h2>
+  <p>Here is a history of the counterfeit drug reports you have submitted.</p>
+
+  <table class="table" style="margin-top: 20px">
+    <thead>
+      <tr>
+        <th>Drug Name</th>
+        <th>Batch Number</th>
+        <th>Date Reported</th>
+        <th>Regulator Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for report in reports %}
+      <tr>
+        <td>{{ report.drug_name or "-" }}</td>
+        <td>{{ report.batch_number }}</td>
+        <td>{{ report.reported_on.strftime('%Y-%m-%d %H:%M') }}</td>
+        <td>
+          {% if report.status == 0 %}
+          <span
+            class="badge badge-new"
+            style="background-color: #ffc107; color: #000"
+            >Pending Review</span
+          >
+          {% else %}
+          <span
+            class="badge badge-checked"
+            style="background-color: #28a745; color: #fff"
+            >Reviewed</span
+          >
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="4" style="text-align: center">
+          You have not submitted any reports yet.
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
