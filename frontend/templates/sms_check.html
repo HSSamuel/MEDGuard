@@ -1,0 +1,90 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="panel">
+  <h2>Offline / SMS Verification Simulation</h2>
+  <p>
+    This simulates sending an SMS with a batch number and receiving a text reply
+    from the MedGuard system.
+  </p>
+
+  <form class="inline-form" id="sms-form">
+    <input
+      id="sms-batch"
+      class="input"
+      placeholder="Enter batch number"
+      required
+    />
+    <button id="sms-verify-btn" type="submit" class="btn btn-yellow">
+      Simulate SMS
+    </button>
+  </form>
+</div>
+
+<div class="panel" id="sms-result-panel" style="display: none">
+  <h3>📲 Simulated SMS Reply:</h3>
+  <pre
+    id="sms-result-box"
+    style="
+      white-space: pre-wrap;
+      background: #eee;
+      color: #333;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: monospace;
+    "
+  ></pre>
+</div>
+
+{% endblock %} {% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const smsForm = document.getElementById("sms-form");
+
+    if (smsForm) {
+      smsForm.addEventListener("submit", (event) => {
+        event.preventDefault(); // This stops the page from reloading
+
+        const batchInput = document.getElementById("sms-batch");
+        const resultPanel = document.getElementById("sms-result-panel");
+        const resultBox = document.getElementById("sms-result-box");
+
+        if (!batchInput.value) {
+          alert("Please enter a batch number to simulate.");
+          return;
+        }
+
+        // We use 'Body' to match the parameter name Twilio uses
+        const formData = new URLSearchParams();
+        formData.append("Body", batchInput.value.trim());
+
+        // Send the data to our backend SMS endpoint
+        fetch("{{ url_for('sms_api.sms_reply') }}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: formData,
+        })
+          .then((response) => response.text()) // Twilio replies with XML text
+          .then((text) => {
+            // We need to parse the XML to get the message inside
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(text, "text/xml");
+            const message =
+              xmlDoc.getElementsByTagName("Message")[0].childNodes[0].nodeValue;
+
+            // Display the result
+            resultBox.textContent = message;
+            resultPanel.style.display = "block";
+          })
+          .catch((err) => {
+            console.error("SMS Simulation Error:", err);
+            resultBox.textContent =
+              "Error: Could not get a reply from the server.";
+            resultPanel.style.display = "block";
+          });
+      });
+    }
+  });
+</script>
+{% endblock %}

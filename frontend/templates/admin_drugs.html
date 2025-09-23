@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="panel" style="color:#000;">
+  <h2>💊 Registered Drugs</h2>
+  <p style="opacity:0.8;">Search, filter, or export registered drug batches.</p>
+
+  <form method="get" action="{{ url_for('admin_api.admin_drugs') }}" 
+        style="margin-bottom:15px; display:flex; gap:10px; flex-wrap:wrap;">
+    <input type="text" name="search" value="{{ search }}" 
+           placeholder="Search by name or batch number" 
+           class="input" style="flex:2; min-width:200px; color:#000;">
+    <select name="status" class="input" style="flex:1; min-width:150px; color:#000;">
+      <option value="">-- All --</option>
+      <option value="valid" {% if status=='valid' %}selected{% endif %}>Valid</option>
+      <option value="expired" {% if status=='expired' %}selected{% endif %}>Expired</option>
+      <option value="soon" {% if status=='soon' %}selected{% endif %}>Expiring Soon</option>
+    </select>
+    <button type="submit" class="btn btn-yellow">🔍 Search</button>
+  </form>
+
+  <form method="get" action="{{ url_for('admin_api.admin_drugs') }}" 
+        style="margin-bottom:15px; display:flex; gap:10px; flex-wrap:wrap;">
+    <input type="hidden" name="search" value="{{ search }}">
+    <input type="hidden" name="status" value="{{ status }}">
+    <label for="start" style="font-weight:bold; align-self:center;">From:</label>
+    <input type="date" id="start" name="start" value="{{ start }}" class="input" style="color:#000;">
+    <label for="end" style="font-weight:bold; align-self:center;">To:</label>
+    <input type="date" id="end" name="end" value="{{ end }}" class="input" style="color:#000;">
+    <button type="submit" class="btn btn-yellow">📅 Apply</button>
+  </form>
+
+  <div style="margin-bottom:15px; text-align:right;">
+    <a href="{{ url_for('admin_api.export_drugs_word', search=search, status=status, start=start, end=end) }}" class="btn btn-outline">⬇ Export Word</a>
+    <a href="{{ url_for('admin_api.export_drugs_pdf', search=search, status=status, start=start, end=end) }}" class="btn btn-outline">⬇ Export PDF</a>
+  </div>
+
+  <table style="width:100%; border-collapse: collapse; margin-top:15px; color:#000;">
+    <thead style="background:#f4f4f4;">
+      <tr>
+        <th style="padding:10px; border-bottom:2px solid #ccc; text-align:left;">Name</th>
+        <th style="padding:10px; border-bottom:2px solid #ccc; text-align:left;">Batch #</th>
+        <th style="padding:10px; border-bottom:2px solid #ccc; text-align:left;">Manufacturer</th>
+        <th style="padding:10px; border-bottom:2px solid #ccc; text-align:left;">Mfg Date</th>
+        <th style="padding:10px; border-bottom:2px solid #ccc; text-align:left;">Expiry Date</th>
+        <th style="padding:10px; border-bottom:2px solid #ccc; text-align:left;">Status</th>
+        <th style="padding:10px; border-bottom:2px solid #ccc; text-align:left;">Registered On</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for drug in drugs %}
+      <tr style="border-bottom:1px solid #eee;">
+        <td style="padding:8px;">{{ drug.name }}</td>
+        <td style="padding:8px;">{{ drug.batch_number }}</td>
+        <td style="padding:8px;">{{ drug.manufacturer }}</td>
+        <td style="padding:8px;">{{ drug.mfg_date }}</td>
+        <td style="padding:8px;">{{ drug.expiry_date }}</td>
+        <td style="padding:8px;">
+          {% if drug.expiry_date < current_date %}
+            <span style="background:#ffdddd; color:#a00; padding:3px 8px; border-radius:12px; font-size:0.85em;">
+              Expired
+            </span>
+          {% elif drug.expiry_date <= soon_date %}
+            <span style="background:#fff3cd; color:#856404; padding:3px 8px; border-radius:12px; font-size:0.85em;">
+              Expiring Soon
+            </span>
+          {% else %}
+            <span style="background:#ddffdd; color:#060; padding:3px 8px; border-radius:12px; font-size:0.85em;">
+              Valid
+            </span>
+          {% endif %}
+        </td>
+        <td style="padding:8px;">{{ drug.created_at }}</td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="7" style="padding:12px; text-align:center; color:#777;">
+          No drugs found.
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if total_pages > 1 %}
+  <div style="margin-top:20px; text-align:center;">
+    {% if page > 1 %}
+      <a href="{{ url_for('admin_api.admin_drugs', search=search, status=status, start=start, end=end, page=page-1) }}" class="btn">⬅ Prev</a>
+    {% endif %}
+    <span style="margin:0 10px;">Page {{ page }} of {{ total_pages }}</span>
+    {% if page < total_pages %}
+      <a href="{{ url_for('admin_api.admin_drugs', search=search, status=status, start=start, end=end, page=page+1) }}" class="btn">Next ➡</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div style="margin-top:20px; text-align:center;">
+    <a href="{{ url_for('admin_api.admin_dashboard') }}" class="btn">⬅ Back to Dashboard</a>
+  </div>
+</div>
+{% endblock %}

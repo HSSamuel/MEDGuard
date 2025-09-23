@@ -1,0 +1,88 @@
+{% extends "base.html" %} {% block content %}
+<div class="panel">
+  <h2>📍 Live Counterfeit Hotspot Map</h2>
+  <p>
+    This map displays the real-time locations of all submitted counterfeit drug
+    reports. Use this intelligence to identify clusters and potential hotspots
+    for targeted investigation.
+  </p>
+</div>
+
+<div class="panel">
+  <div id="hotspot-map"></div>
+</div>
+
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""
+/>
+<style>
+  #hotspot-map {
+    height: 600px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+</style>
+{% endblock %} {% block scripts %}
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""
+></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const map = L.map("hotspot-map").setView([9.082, 8.6753], 6);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    // --- UPDATED FETCH LOGIC ---
+    fetch("{{ url_for('admin_api.get_report_locations') }}")
+      .then((response) => {
+        // NEW: Check if the user is unauthorized (logged out)
+        if (response.status === 401) {
+          // If so, redirect them to the login page
+          alert(
+            "Your session has expired. Please log in again to view the map."
+          );
+          window.location.href = "{{ url_for('admin_login') }}";
+          return; // Stop further processing
+        }
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((locations) => {
+        if (!locations) return; // In case the redirect happened
+
+        if (locations.length === 0) {
+          console.log("No reports with location data to display.");
+          return;
+        }
+
+        locations.forEach((report) => {
+          const marker = L.marker([report.latitude, report.longitude]).addTo(
+            map
+          );
+          marker.bindPopup(`
+                    <strong>Drug:</strong> ${report.drug_name || "N/A"}<br>
+                    <strong>Batch:</strong> ${report.batch_number}<br>
+                    <strong>Reported On:</strong> ${new Date(
+                      report.reported_on
+                    ).toLocaleString()}
+                `);
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching hotspot data:", error);
+      });
+  });
+</script>
+{% endblock %}

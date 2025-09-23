@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- New container to center the login panel -->
+<div style="display: flex; justify-content: center; align-items: center; min-height: 60vh;">
+
+  <div class="panel" style="max-width: 400px; width: 100%;">
+    <h2 style="text-align: center;">🔐 Regulator Login</h2>
+    
+    {% if error %}
+      <div class="result-box result-counterfeit" style="color: #721c24; background: #f8d7da; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+        {{ error }}
+      </div>
+    {% endif %}
+
+    <form method="POST">
+      <div class="form-group" style="margin-bottom: 15px;">
+          <label for="email" style="display: block; margin-bottom: 5px;">Official email</label>
+          <input name="email" id="email" class="input" type="email" required style="width: 100%;">
+      </div>
+      <div class="form-group" style="margin-bottom: 15px;">
+          <label for="password" style="display: block; margin-bottom: 5px;">Password</label>
+          <input name="password" id="password" class="input" type="password" required style="width: 100%;">
+      </div>
+      
+      <div class="form-group" style="display: flex; align-items: center; margin-bottom: 20px;">
+          <input type="checkbox" id="show-password-toggle" style="margin-right: 10px;">
+          <label for="show-password-toggle">Show Password</label>
+      </div>
+
+      <input type="hidden" name="csrf" value="{{ session.csrf if session.csrf else '' }}">
+      <button class="btn btn-yellow" type="submit" style="width: 100%; padding: 12px; font-size: 16px;">Sign in</button>
+    </form>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const passwordInput = document.getElementById('password');
+    const toggleCheckbox = document.getElementById('show-password-toggle');
+
+    if (passwordInput && toggleCheckbox) {
+        toggleCheckbox.addEventListener('change', () => {
+            const type = toggleCheckbox.checked ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+        });
+    }
+});
+</script>
+{% endblock %}

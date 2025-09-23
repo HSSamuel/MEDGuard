@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>MedGuard</title>
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/favicon.ico') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+      /* Background image with dark overlay */
+      body {
+        position: relative;
+        min-height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: url("{{ url_for('static', filename='images/medicals.jpg') }}")
+          no-repeat center center fixed;
+        background-size: cover;
+        z-index: 0;
+        color: #f5f5ff;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(2px);
+        z-index: -1;
+      }
+
+      /* Panels and containers with frosted glass effect */
+      .panel,
+      .container,
+      header,
+      footer {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        color: #fff;
+      }
+
+      header.mg-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 15px;
+      }
+
+      .brand p {
+        margin: 2px 0;
+        color: #ddd;
+      }
+
+      footer.mg-footer {
+        text-align: center;
+        font-size: 0.85em;
+        color: #eee;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 10px;
+        border-radius: 6px;
+      }
+
+      /* --- Chatbot Styles --- */
+      #chat-toggle-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #2f4f4f;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 999;
+      }
+      #chat-container {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: 350px;
+        max-width: 90vw;
+        height: 500px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 1000;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+      }
+      #chat-container.hidden {
+        transform: scale(0);
+        opacity: 0;
+      }
+      #chat-header {
+        background: #2f4f4f;
+        color: white;
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      #chat-header h3 {
+        margin: 0;
+      }
+      #chat-close-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+      }
+      #chat-messages {
+        flex-grow: 1;
+        padding: 15px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        color: #333;
+      }
+      .chat-message {
+        padding: 10px 15px;
+        border-radius: 20px;
+        max-width: 80%;
+      }
+      .chat-message.user {
+        background-color: #efefef;
+        align-self: flex-end;
+      }
+      .chat-message.bot {
+        background-color: #f0f8ff;
+        align-self: flex-start;
+        border: 1px solid #d6e9ff;
+      }
+      #chat-input-container {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #eee;
+      }
+      #chat-input {
+        flex-grow: 1;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        padding: 10px 15px;
+        margin-right: 10px;
+      }
+      #chat-send-btn {
+        background: #2f4f4f;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+
+      /* --- Navbar Styles --- */
+      .navbar {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 0 20px;
+        border-radius: 8px;
+        margin-top: -20px; /* Pull it up to fill the gap */
+      }
+      .nav-list {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .nav-left {
+        display: flex;
+        align-items: center;
+      }
+      .nav-item a,
+      .nav-item .btn {
+        color: white;
+        text-decoration: none;
+        padding: 15px 20px;
+        display: block;
+        transition: background 0.2s;
+      }
+      .nav-item a:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .nav-item .btn {
+        padding: 8px 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="mg-header">
+      <img
+        src="{{ url_for('static', filename='images/logo.png') }}"
+        alt="MedGuard Logo"
+        style="height: 50px; border-radius: 8px"
+      />
+      <div class="brand">
+        <p id="tagline" class="tagline"></p>
+      </div>
+    </header>
+
+    <nav class="navbar container">
+      <ul class="nav-list">
+        <div class="nav-left">
+          <li class="nav-item"><a href="{{ url_for('root') }}">Home</a></li>
+          <li class="nav-item">
+            <a href="{{ url_for('about_page') }}">About</a>
+          </li>
+
+          <!-- Admin-only links are now streamlined -->
+          {% if session.admin_id %}
+          <li class="nav-item">
+            <a href="{{ url_for('admin_api.admin_dashboard') }}">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('admin_api.public_db_manager_page') }}"
+              >Public DB Manager</a
+            >
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('admin_api.hotspot_map_page') }}"
+              >Hotspot Map</a
+            >
+          </li>
+          {% endif %}
+        </div>
+
+        <div class="nav-right">
+          {% if session.admin_id %}
+          <li class="nav-item">
+            <form
+              action="{{ url_for('admin_logout') }}"
+              method="post"
+              style="
+                margin: 0;
+                display: flex;
+                align-items: center;
+                height: 100%;
+              "
+            >
+              <input type="hidden" name="csrf" value="{{ session.csrf }}" />
+              <button
+                type="submit"
+                class="btn"
+                style="background: #dc3545; color: white"
+              >
+                Logout
+              </button>
+            </form>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a
+              href="{{ url_for('admin_login') }}"
+              class="btn"
+              style="background-color: #4caf50"
+              >Regulator Login</a
+            >
+          </li>
+          {% endif %}
+        </div>
+      </ul>
+    </nav>
+
+    <main class="container">{% block content %}{% endblock %}</main>
+
+    <footer class="mg-footer">
+      <a
+        href="{{ url_for('about_page') }}"
+        style="color: #eee; text-decoration: none; margin-right: 15px"
+        >About MedGuard</a
+      >
+      <small
+        >© MedGuard — Fighting counterfeit medicine, one scan at a time.</small
+      >
+    </footer>
+
+    <button id="chat-toggle-btn">?</button>
+    <div id="chat-container" class="hidden">
+      <div id="chat-header">
+        <h3>MedGuard Assistant</h3>
+        <button id="chat-close-btn">&times;</button>
+      </div>
+      <div id="chat-messages">
+        <div class="chat-message bot">
+          Hello! How can I help you today? You can ask me how to verify a drug,
+          how to report a counterfeit, or what to do if you find one.
+        </div>
+      </div>
+      <div id="chat-input-container">
+        <input type="text" id="chat-input" placeholder="Ask a question..." />
+        <button id="chat-send-btn">Send</button>
+      </div>
+    </div>
+
+    {% block scripts %}{% endblock %}
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const chatToggleBtn = document.getElementById("chat-toggle-btn");
+        const chatContainer = document.getElementById("chat-container");
+        const chatCloseBtn = document.getElementById("chat-close-btn");
+        const chatSendBtn = document.getElementById("chat-send-btn");
+        const chatInput = document.getElementById("chat-input");
+        const chatMessages = document.getElementById("chat-messages");
+
+        if (chatToggleBtn) {
+          const toggleChat = () => chatContainer.classList.toggle("hidden");
+          chatToggleBtn.addEventListener("click", toggleChat);
+          chatCloseBtn.addEventListener("click", toggleChat);
+        }
+
+        const addMessage = (text, sender) => {
+          const messageDiv = document.createElement("div");
+          messageDiv.classList.add("chat-message", sender);
+          messageDiv.textContent = text;
+          chatMessages.appendChild(messageDiv);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        };
+
+        const sendMessage = () => {
+          const userText = chatInput.value.trim();
+          if (userText === "") return;
+
+          addMessage(userText, "user");
+          chatInput.value = "";
+
+          fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: userText }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              addMessage(data.answer, "bot");
+            })
+            .catch((error) => {
+              console.error("Error with AI chat:", error);
+              addMessage(
+                "I'm sorry, I'm having trouble connecting right now. Please try again later.",
+                "bot"
+              );
+            });
+        };
+
+        if (chatSendBtn) chatSendBtn.addEventListener("click", sendMessage);
+        if (chatInput)
+          chatInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") sendMessage();
+          });
+      });
+    </script>
+  </body>
+</html>

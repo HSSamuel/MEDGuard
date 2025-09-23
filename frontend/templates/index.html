@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block content %}
+<div class="main-content-wrapper">
+  <div class="panel qr-panel">
+    <h2>📷 Scan QR Code</h2>
+    <div id="qr-reader" class="qr-reader"></div>
+    <div style="margin-top: 10px">
+      <button id="start-scan" class="btn btn-yellow">Start Camera</button>
+      <button id="stop-scan" class="btn btn-outline">Stop</button>
+    </div>
+  </div>
+
+  <div class="panel qr-panel">
+    <h2>🔍 Or Verify by Batch Number</h2>
+    <form id="verify-form" class="inline-form" style="justify-content: center">
+      <input
+        id="verify-batch"
+        name="batch_number"
+        class="input"
+        placeholder="Enter batch number"
+        required
+      />
+      <button id="verify-btn" type="submit" class="btn btn-yellow">
+        Verify
+      </button>
+    </form>
+  </div>
+
+  <div id="result"></div>
+
+  <div class="panel report-panel">
+    <!-- REPORT COUNTERFEIT -->
+    <div class="panel">
+      <h2>🚨 Report Counterfeit</h2>
+      <div class="inline-form" style="margin-bottom: 8px">
+        <input id="report-drug" class="input" placeholder="Drug name" />
+        <input
+          id="report-batch"
+          class="input"
+          placeholder="Batch number"
+          required
+        />
+        <input
+          id="report-location"
+          class="input"
+          placeholder="Location (optional)"
+        />
+        <!-- === NEW HIDDEN FIELDS FOR GEOLOCATION === -->
+        <input type="hidden" id="report-latitude" name="latitude" />
+        <input type="hidden" id="report-longitude" name="longitude" />
+      </div>
+      <textarea
+        id="report-note"
+        class="input"
+        placeholder="Note (optional)"
+        style="width: 100%; min-height: 80px; margin-bottom: 8px"
+      ></textarea>
+      <input type="file" id="report-image" class="input" accept="image/*" />
+      <div style="margin-top: 10px">
+        <button id="report-btn" class="btn btn-yellow">Report</button>
+      </div>
+    </div>
+    {% endblock %} {% block scripts %}
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/minified/html5-qrcode.min.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    {% endblock %}
+  </div>
+</div>

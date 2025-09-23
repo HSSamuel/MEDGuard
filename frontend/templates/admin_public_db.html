@@ -1,0 +1,261 @@
+{% extends "base.html" %} {% block content %}
+<div class="panel">
+  <h2>Public Drug Data Manager</h2>
+  <p>
+    View, add, or edit entries in the public drug database. This information is
+    shown to users when a scanned drug is not in the main MedGuard registry.
+  </p>
+</div>
+
+<!-- This panel will show the list of drugs -->
+<div class="panel">
+  <h3>Current Public Drug List</h3>
+  <!-- The inline style has been removed, so it will now use the correct style from styles.css -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Batch Number</th>
+        <th>Drug Name</th>
+        <th>Manufacturer</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="public-db-table-body">
+      <!-- Data will be loaded here by JavaScript -->
+    </tbody>
+  </table>
+  <button id="show-form-btn" class="btn btn-yellow" style="margin-top: 20px">
+    ➕ Add New Drug
+  </button>
+</div>
+
+<!-- This panel contains the form, which is hidden by default -->
+<div id="entry-form-panel" class="panel" style="display: none">
+  <h3 id="form-title">Add New Drug Entry</h3>
+  <form id="entry-form">
+    <!-- Hidden input to track if we are editing an existing entry -->
+    <input type="hidden" id="original-batch-key" />
+
+    <div>
+      <label>Batch Number (Unique Key):</label>
+      <input
+        type="text"
+        id="batch-key"
+        class="input"
+        style="color: #333"
+        required
+      />
+    </div>
+    <div>
+      <label>Drug Name:</label>
+      <input
+        type="text"
+        id="drug-name"
+        class="input"
+        style="color: #333"
+        required
+      />
+    </div>
+    <div>
+      <label>Manufacturer:</label>
+      <input
+        type="text"
+        id="manufacturer"
+        class="input"
+        style="color: #333"
+        required
+      />
+    </div>
+    <div>
+      <label>NAFDAC Status:</label>
+      <input
+        type="text"
+        id="nafdac-status"
+        class="input"
+        style="color: #333"
+        value="Registered"
+      />
+    </div>
+    <div>
+      <label>Expiry Date (YYYY-MM-DD):</label>
+      <input
+        type="date"
+        id="expiry-date"
+        class="input"
+        style="color: #333"
+        required
+      />
+    </div>
+    <div style="margin-top: 20px">
+      <button
+        type="submit"
+        id="save-entry-btn"
+        class="btn"
+        style="background-color: #28a745; color: white"
+      >
+        Save Entry
+      </button>
+      <button type="button" id="cancel-btn" class="btn btn-outline">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Get references to all the important elements on the page
+    const tableBody = document.getElementById("public-db-table-body");
+    const showFormBtn = document.getElementById("show-form-btn");
+    const entryFormPanel = document.getElementById("entry-form-panel");
+    const entryForm = document.getElementById("entry-form");
+    const cancelBtn = document.getElementById("cancel-btn");
+    const formTitle = document.getElementById("form-title");
+
+    let publicDb = {}; // A local cache for our public database data
+
+    // Reusable Toast Notification function
+    const showToast = (message, isError = false) => {
+      const toast = document.createElement("div");
+      toast.className = "toast-notification";
+      if (isError) toast.classList.add("error");
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add("show"), 100);
+      setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => document.body.removeChild(toast), 300);
+      }, 3000);
+    };
+
+    // Renders the data from the local cache into the HTML table
+    const renderTable = () => {
+      tableBody.innerHTML = "";
+      if (Object.keys(publicDb).length === 0) {
+        tableBody.innerHTML =
+          '<tr><td colspan="4" style="text-align:center;">No entries in the public database.</td></tr>';
+        return;
+      }
+      for (const batchNumber in publicDb) {
+        const entry = publicDb[batchNumber];
+        const row = tableBody.insertRow();
+        // Use the classes from your main stylesheet for consistency
+        row.style.color = "var(--mg-white)";
+        row.innerHTML = `
+                <td>${batchNumber}</td>
+                <td>${entry.drug_name || ""}</td>
+                <td>${entry.manufacturer || ""}</td>
+                <td>
+                    <button class="btn edit-btn" data-batch="${batchNumber}">Edit</button>
+                    <button class="btn delete-btn" data-batch="${batchNumber}" style="background-color:#dc3545; color:white;">Delete</button>
+                </td>
+            `;
+      }
+      addTableListeners(); // Re-attach listeners to the new buttons
+    };
+
+    // Fetches the latest data from the server and then re-renders the table
+    const fetchAndRender = () => {
+      fetch("/api/public-db")
+        .then((res) => res.json())
+        .then((data) => {
+          publicDb = data;
+          renderTable();
+        });
+    };
+
+    // Shows the form for either adding a new entry or editing an existing one
+    const showForm = (isEdit = false, batchKey = "") => {
+      entryForm.reset();
+      document.getElementById("original-batch-key").value = batchKey;
+      if (isEdit && publicDb[batchKey]) {
+        formTitle.textContent = "Edit Drug Entry";
+        document.getElementById("batch-key").value = batchKey;
+        document.getElementById("drug-name").value =
+          publicDb[batchKey].drug_name;
+        document.getElementById("manufacturer").value =
+          publicDb[batchKey].manufacturer;
+        document.getElementById("nafdac-status").value =
+          publicDb[batchKey].nafdac_status;
+        document.getElementById("expiry-date").value =
+          publicDb[batchKey].expiry_date;
+      } else {
+        formTitle.textContent = "Add New Drug Entry";
+      }
+      entryFormPanel.style.display = "block";
+      entryFormPanel.scrollIntoView({ behavior: "smooth" });
+    };
+
+    const hideForm = () => {
+      entryFormPanel.style.display = "none";
+    };
+
+    // Attaches click listeners to all the 'Edit' and 'Delete' buttons in the table
+    const addTableListeners = () => {
+      document.querySelectorAll(".edit-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) =>
+          showForm(true, e.target.dataset.batch)
+        );
+      });
+      document.querySelectorAll(".delete-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const batchKey = e.target.dataset.batch;
+          if (
+            confirm(
+              `Are you sure you want to delete the entry for batch "${batchKey}"?`
+            )
+          ) {
+            delete publicDb[batchKey];
+            saveChanges(publicDb);
+          }
+        });
+      });
+    };
+
+    // Saves the provided database object to the server
+    const saveChanges = (dbToSave) => {
+      fetch("/api/public-db", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dbToSave),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          showToast(data.message, data.status !== "success");
+          if (data.status === "success") {
+            hideForm();
+            fetchAndRender(); // Refresh table from server on success
+          }
+        });
+    };
+
+    // --- Main Event Listeners ---
+    showFormBtn.addEventListener("click", () => showForm(false));
+    cancelBtn.addEventListener("click", hideForm);
+
+    entryForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const originalKey = document.getElementById("original-batch-key").value;
+      const newKey = document.getElementById("batch-key").value.trim();
+
+      let updatedDb = { ...publicDb };
+
+      // If the batch number (the key) has been changed, we must remove the old entry
+      if (originalKey && originalKey !== newKey) {
+        delete updatedDb[originalKey];
+      }
+
+      updatedDb[newKey] = {
+        drug_name: document.getElementById("drug-name").value.trim(),
+        manufacturer: document.getElementById("manufacturer").value.trim(),
+        nafdac_status: document.getElementById("nafdac-status").value.trim(),
+        expiry_date: document.getElementById("expiry-date").value.trim(),
+      };
+      saveChanges(updatedDb);
+    });
+
+    // Initial load of data when the page opens
+    fetchAndRender();
+  });
+</script>
+{% endblock %}

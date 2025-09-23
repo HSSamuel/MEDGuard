@@ -1,0 +1,325 @@
+:root {
+  --mg-green: #2f4f4f; /* Dark Slate Gray (Main Background) */
+  --mg-yellow: #92f394; /* Light Medical Green (Accent & Headings) */
+  --mg-white: #ffffff;
+  --mg-red: #b45e19; /* Deeper coral orange */
+  --mg-success: #28a745; /* Success Green */
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--mg-green);
+  color: var(--mg-white);
+}
+
+/* HEADER */
+.mg-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #0a7e57, #1a3c34);
+  position: relative;
+}
+
+.logo::after {
+  content: "+";
+  position: absolute;
+  color: #fff;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -56%);
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.brand h1 {
+  margin: 0;
+  color: var(--mg-yellow);
+}
+
+.brand p {
+  margin: 2px 0 0;
+  opacity: 0.9;
+}
+
+.tagline {
+  font-style: italic;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+/* CONTAINER */
+.container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* PANEL STYLING */
+.panel {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-left: 6px solid var(--mg-yellow);
+}
+
+.panel h2 {
+  margin-top: 0;
+  color: var(--mg-yellow);
+  font-size: 1.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 6px;
+}
+
+/* QR READER */
+.qr-reader {
+  width: 100%;
+  max-width: 400px;
+  background: #2f4f4f;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  min-height: 320px;
+  overflow: hidden;
+  display: block;
+  position: relative;
+}
+
+/* FORMS */
+.inline-form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--mg-white);
+  min-width: 220px;
+}
+
+.input::placeholder {
+  color: #e7e7e7;
+}
+
+/* BUTTONS */
+.btn {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.btn-yellow {
+  background: var(--mg-green);
+  color: #fff;
+}
+
+.btn-yellow:hover {
+  background: #14302a;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--mg-white);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* RESULTS */
+.result-box {
+  padding: 12px;
+  border-radius: 8px;
+  background: #0e2f29;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  animation: fadeInUp 0.4s ease;
+}
+
+.result-valid {
+  border-left: 6px solid var(--mg-success);
+}
+
+.result-expired {
+  border-left: 6px solid var(--mg-yellow);
+}
+
+.result-counterfeit {
+  border-left: 6px solid var(--mg-red);
+}
+
+.msg {
+  margin-top: 8px;
+  opacity: 0.9;
+}
+
+/* FOOTER */
+.mg-footer {
+  padding: 20px;
+  text-align: center;
+  opacity: 0.75;
+}
+
+/* ANIMATIONS */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* TABLE STYLING */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.95em;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.table th,
+.table td {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 10px 12px;
+  text-align: left;
+  color: var(--mg-white);
+}
+
+.table th {
+  background: rgba(0, 0, 0, 0.75);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--mg-yellow);
+}
+
+.table th:first-child,
+.table td:first-child {
+  border-left: none;
+}
+.table th:last-child,
+.table td:last-child {
+  border-right: none;
+}
+
+.table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.table tr:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transition: background 0.2s ease;
+}
+
+/* STATUS BADGES */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-align: center;
+  min-width: 70px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.badge-new {
+  background: var(--mg-red);
+  color: #fff;
+  animation: pulse 1.5s infinite;
+}
+
+.badge-checked {
+  background: var(--mg-success);
+  color: #fff;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(180, 94, 25, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(180, 94, 25, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(180, 94, 25, 0);
+  }
+}
+
+/* --- New Centering Styles for QR Panel --- */
+.qr-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This will center the contents of the panel */
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- New Centering Styles for Report Panel --- */
+.report-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This will center the contents of the panel */
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- Toast Notification Styles --- */
+.toast-notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #28a745; /* Success Green */
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 10001; /* Ensure it's on top of everything */
+  opacity: 0;
+  font-size: 16px;
+  transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out;
+}
+
+.toast-notification.show {
+  top: 40px;
+  opacity: 1;
+}
+
+.toast-notification.error {
+  background-color: #dc3545; /* Red for errors */
+}
