@@ -1,47 +1,72 @@
 {
   "about_medguard": {
     "keywords": ["about", "what is medguard", "purpose", "goal"],
-    "answer": "MedGuard is a full-stack web application designed to help fight the spread of counterfeit drugs in Nigeria. It allows users to instantly verify medications using QR codes or batch numbers, and to report suspicious products to regulators."
+    "answer": "<p><strong>MedGuard</strong> is a full-stack web application designed to help fight the spread of counterfeit drugs in Nigeria.</p><p>It allows users to instantly verify medications and to report suspicious products directly to regulators.</p>"
   },
   "greeting": {
     "keywords": ["hello", "hi", "help", "good day"],
-    "answer": "Hello! I am the MedGuard Assistant. I can answer questions about verifying drugs, reporting counterfeits, using the admin dashboard, and more. How can I help you today?"
+    "answer": "Hello! I am the MedGuard Assistant. I can answer questions about verifying drugs, reporting counterfeits, and more. How can I help you today?",
+    "quick_replies": [
+      { "text": "How do I report a drug?", "payload": "guide to report" },
+      { "text": "How do I verify a drug?", "payload": "verify" },
+      { "text": "Check a batch status", "payload": "status of batch" }
+    ]
   },
   "user_verify_batch": {
     "keywords": ["verify", "check", "valid", "real", "authenticate"],
-    "answer": "To verify a drug using its batch number, please follow these steps:\n\n1. Find the 'Verify by Batch Number' section on the main page.\n2. Type the batch number exactly as it appears on the drug's packaging into the input field.\n3. Click the 'Verify' button.\n4. A new tab will open with the official verification result, showing if the drug is valid, expired, or not found."
+    "answer": "<p>To verify a drug using its batch number, please follow these steps:</p><ol style='padding-left: 20px; margin-top: 10px;'><li>Find the 'Verify by Batch Number' section on the main page.</li><li>Type the batch number exactly as it appears on the packaging.</li><li>Click the 'Verify' button.</li><li>A new tab will open with the official verification result.</li></ol>"
   },
   "user_scan_qr": {
     "keywords": ["scan", "qr code", "camera"],
-    "answer": "To verify a drug by scanning its QR code, please follow these steps:\n\n1. On the main page, click the 'Start Camera' button.\n2. Your browser may ask for permission to use your camera. Please allow it.\n3. Hold the QR code on the drug's packaging steady in front of your camera.\n4. The app will automatically scan the code and open a new tab with the verification result."
+    "answer": "<p>To verify a drug by scanning its QR code:</p><ol style='padding-left: 20px; margin-top: 10px;'><li>On the main page, click the 'Start Camera' button.</li><li>Your browser may ask for permission to use your camera. Please allow it.</li><li>Hold the QR code on the drug's packaging steady in front of your camera.</li><li>The app will automatically scan the code and show the result.</li></ol>"
   },
   "user_report": {
-    "keywords": ["report", "counterfeit", "fake", "suspicious"],
-    "answer": "If you suspect a drug is counterfeit, you should report it immediately. Here's how:\n\n1. Go to the 'Report Counterfeit' section at the bottom of the main page.\n2. Enter the drug's name and batch number.\n3. **Crucially**, if you can, upload a photo of the drug. This is very helpful for regulators.\n4. Add the location where you found it and any other notes.\n5. Click the 'Report' button to submit. Your report is anonymous."
+    "keywords": [
+      "report",
+      "counterfeit",
+      "fake",
+      "suspicious",
+      "guide to report"
+    ],
+    "answer": "<p>If you suspect a drug is counterfeit, you should report it immediately. Here's how:</p><ol style='padding-left: 20px; margin-top: 10px;'><li>Go to the 'Report Counterfeit' section at the bottom of the main page.</li><li>Enter the drug's name and batch number.</li><li><strong>Crucially</strong>, if you can, upload a photo of the drug. This is very helpful for regulators.</li><li>Add the location where you found it and any other notes.</li><li>Click the 'Report' button to submit. Your report is anonymous.</li></ol>",
+    "action": {
+      "type": "scroll",
+      "target": ".report-panel",
+      "buttonText": "Go to Report Form"
+    }
+  },
+  "official_info": {
+    "keywords": ["official", "government", "nafdac website", "official site"],
+    "answer": "For official information, news, and press releases regarding drug regulation in Nigeria, it is always best to consult the official NAFDAC website.",
+    "action": {
+      "type": "link",
+      "target": "https://www.nafdac.gov.ng/",
+      "buttonText": "Visit NAFDAC Website"
+    }
   },
   "user_sms": {
     "keywords": ["sms", "text message", "offline", "no internet"],
-    "answer": "Yes, MedGuard is designed to work offline via SMS. To verify a drug, you can send the batch number as a text message to our official number. The system will reply instantly with the verification status. The simulation page for this is available in the admin dashboard."
+    "answer": "Yes, MedGuard is designed to work offline via SMS. To verify a drug, you can send the batch number as a text message to our official number. The system will reply instantly with the verification status."
   },
   "dangers": {
     "keywords": ["dangers", "risk", "harmful", "safe"],
-    "answer": "Counterfeit drugs are a serious public health threat. They might contain incorrect ingredients, wrong dosages, or even toxic substances like paint or brick dust. Taking them can lead to severe health complications, treatment failure, and can even be fatal. This is why verifying your medication is so important."
+    "answer": "<p>Counterfeit drugs are a serious public health threat. They might contain incorrect ingredients, wrong dosages, or even toxic substances.</p><p>Taking them can lead to severe health complications, treatment failure, and can even be fatal. This is why verifying your medication is so important.</p>"
   },
   "nafdac": {
-    "keywords": ["nafdac", "agency", "regulator", "government"],
-    "answer": "NAFDAC (The National Agency for Food and Drug Administration and Control) is the Nigerian government agency responsible for regulating and controlling all drugs, food, and other regulated products in the country. MedGuard is designed as a tool to support their mission of safeguarding public health."
+    "keywords": ["nafdac", "agency", "regulator"],
+    "answer": "<strong>NAFDAC</strong> (The National Agency for Food and Drug Administration and Control) is the Nigerian government agency responsible for regulating and controlling all drugs and other regulated products in the country. MedGuard is a tool designed to support their mission."
   },
   "admin_register_drug": {
     "keywords": ["register", "add new drug", "generate qr", "admin"],
-    "answer": "As a regulator, you can register a new drug batch from the admin dashboard:\n\n1. Log in to the '/admin' page.\n2. In the 'Register New Drug Batch' form, fill in all the details: Drug Name, Batch Number, Manufacturing Date, Expiry Date, and Manufacturer.\n3. Click 'Register & Get QR'.\n4. The system will save the drug and display its unique QR code for you to save and use on packaging."
+    "answer": "<p>As a regulator, you can register a new drug batch from the admin dashboard:</p><ol style='padding-left: 20px; margin-top: 10px;'><li>Log in to the '/admin' page.</li><li>In the 'Register New Drug Batch' form, fill in all the details.</li><li>Click 'Register & Get QR'.</li><li>The system will save the drug and display its unique QR code for you to use on packaging.</li></ol>"
   },
   "admin_view_reports": {
     "keywords": ["view reports", "check reports", "dashboard"],
-    "answer": "To view counterfeit reports on the admin dashboard, you can:\n\n1. Use the filter buttons to see 'All Reports', 'Today's Reports', or select a custom date range.\n2. New, unread reports are highlighted with a 'New' badge.\n3. To mark a report as 'Checked', simply click anywhere on its row in the table. The status will update automatically."
+    "answer": "<p>To view counterfeit reports on the admin dashboard, you can:</p><ol style='padding-left: 20px; margin-top: 10px;'><li>Use the filter buttons to see 'All Reports', 'Today's Reports', or a select a custom date range.</li><li>New, unread reports are highlighted with a 'New' badge.</li><li>To mark a report as 'Checked', simply click anywhere on its row in the table.</li></ol>"
   },
-  "admin_export_data": {
+  "admin__export_data": {
     "keywords": ["export", "download", "pdf", "word", "document"],
-    "answer": "You can export a list of registered drugs from the 'Registered Drugs' page.\n\n1. Navigate to the '/admin/drugs' page.\n2. Use the search and filter options to create the list you need (e.g., all expired drugs).\n3. Click the 'Export Word' or 'Export PDF' button to download a professionally formatted document of the filtered list."
+    "answer": "<p>You can export a list of registered drugs from the 'Registered Drugs' page.</p><ol style='padding-left: 20px; margin-top: 10px;'><li>Navigate to the '/admin/drugs' page.</li><li>Use the search and filter options to create the list you need.</li><li>Click the 'Export Word' or 'Export PDF' button to download the document.</li></ol>"
   },
   "tech_stack": {
     "keywords": [
@@ -52,6 +77,6 @@
       "python",
       "flask"
     ],
-    "answer": "MedGuard is a full-stack web application built with a Python Flask backend. It uses a SQLite database for local development and is designed to be deployed with a PostgreSQL database. The frontend is built with standard HTML, CSS, and JavaScript."
+    "answer": "MedGuard is a full-stack web application built with a Python Flask backend and a SQLite database. The frontend is built with standard HTML, CSS, and JavaScript."
   }
 }

@@ -61,7 +61,6 @@
         gap: 15px;
       }
 
-      /* NEW: Container to group logo and brand text */
       .brand-container {
         display: flex;
         align-items: center;
@@ -151,6 +150,7 @@
         padding: 10px 15px;
         border-radius: 20px;
         max-width: 80%;
+        white-space: pre-wrap;
       }
       .chat-message.user {
         background-color: #efefef;
@@ -180,6 +180,27 @@
         border-radius: 20px;
         padding: 10px 20px;
         cursor: pointer;
+      }
+      /* NEW: Styles for the quick reply buttons */
+      .quick-replies-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 10px 15px 0 15px;
+        justify-content: flex-end;
+      }
+      .quick-reply-btn {
+        background-color: #e3f2fd;
+        color: #0d47a1;
+        border: 1px solid #bbdefb;
+        border-radius: 20px;
+        padding: 8px 15px;
+        font-size: 0.9em;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      .quick-reply-btn:hover {
+        background-color: #d0e8fc;
       }
 
       /* --- Navbar Styles --- */
@@ -510,6 +531,7 @@
           how to report a counterfeit, or what to do if you find one.
         </div>
       </div>
+      <div id="chat-quick-replies" class="quick-replies-container"></div>
       <div id="chat-input-container">
         <input type="text" id="chat-input" placeholder="Ask a question..." />
         <button id="chat-send-btn">Send</button>
@@ -532,29 +554,55 @@
         const chatSendBtn = document.getElementById("chat-send-btn");
         const chatInput = document.getElementById("chat-input");
         const chatMessages = document.getElementById("chat-messages");
+        const quickRepliesContainer =
+          document.getElementById("chat-quick-replies");
 
-        if (chatToggleBtn) {
-          const toggleChat = () => chatContainer.classList.toggle("hidden");
-          chatToggleBtn.addEventListener("click", toggleChat);
-          if (chatCloseBtn) {
-            chatCloseBtn.addEventListener("click", toggleChat);
-          }
-        }
-
-        const addMessage = (text, sender) => {
-          const messageDiv = document.createElement("div");
-          messageDiv.classList.add("chat-message", sender);
-          messageDiv.textContent = text;
-          chatMessages.appendChild(messageDiv);
-          chatMessages.scrollTop = chatMessages.scrollHeight;
+        const clearQuickReplies = () => {
+          quickRepliesContainer.innerHTML = "";
         };
 
-        const sendMessage = () => {
-          const userText = chatInput.value.trim();
-          if (userText === "") return;
+        const addMessage = (data, sender) => {
+          const messageDiv = document.createElement("div");
+          messageDiv.classList.add("chat-message", sender);
 
-          addMessage(userText, "user");
-          chatInput.value = "";
+          const textContainer = document.createElement("div");
+          textContainer.innerHTML = data.answer;
+          messageDiv.appendChild(textContainer);
+
+          if (sender === "bot" && data.action) {
+            const actionBtn = document.createElement("button");
+            actionBtn.className = "btn btn-yellow chat-action-btn";
+            actionBtn.textContent = data.action.buttonText;
+            actionBtn.dataset.actionType = data.action.type;
+            actionBtn.dataset.actionTarget = data.action.target;
+            actionBtn.style.marginTop = "10px";
+            messageDiv.appendChild(actionBtn);
+          }
+
+          chatMessages.appendChild(messageDiv);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+
+          clearQuickReplies();
+          if (sender === "bot" && data.quick_replies) {
+            data.quick_replies.forEach((reply) => {
+              const replyBtn = document.createElement("button");
+              replyBtn.className = "quick-reply-btn";
+              replyBtn.textContent = reply.text;
+              replyBtn.dataset.payload = reply.payload;
+              quickRepliesContainer.appendChild(replyBtn);
+            });
+          }
+        };
+
+        const sendMessage = (userText) => {
+          if (!userText || userText.trim() === "") return;
+
+          clearQuickReplies();
+          addMessage({ answer: userText }, "user");
+
+          if (chatInput.value) {
+            chatInput.value = "";
+          }
 
           fetch("/api/chat", {
             method: "POST",
@@ -563,22 +611,96 @@
           })
             .then((response) => response.json())
             .then((data) => {
-              addMessage(data.answer, "bot");
+              addMessage(data, "bot");
             })
             .catch((error) => {
               console.error("Error with AI chat:", error);
               addMessage(
-                "I'm sorry, I'm having trouble connecting right now. Please try again later.",
+                {
+                  answer:
+                    "I'm sorry, I'm having trouble connecting right now. Please try again later.",
+                },
                 "bot"
               );
             });
         };
 
-        if (chatSendBtn) chatSendBtn.addEventListener("click", sendMessage);
+        chatMessages.addEventListener("click", (event) => {
+          if (event.target.classList.contains("chat-action-btn")) {
+            const button = event.target;
+            const actionType = button.dataset.actionType;
+            const actionTarget = button.dataset.actionTarget;
+
+            if (actionType === "scroll") {
+              const targetElement = document.querySelector(actionTarget);
+              if (targetElement) {
+                targetElement.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
+                targetElement.style.transition = "box-shadow 0.5s ease-in-out";
+                targetElement.style.boxShadow =
+                  "0 0 20px rgba(146, 243, 148, 0.8)";
+                setTimeout(() => {
+                  targetElement.style.boxShadow = "";
+                }, 2000);
+              }
+            } else if (actionType === "link") {
+              window.open(actionTarget, "_blank");
+            }
+            chatContainer.classList.add("hidden");
+          }
+        });
+
+        quickRepliesContainer.addEventListener("click", (event) => {
+          if (event.target.classList.contains("quick-reply-btn")) {
+            const button = event.target;
+            const payload = button.dataset.payload;
+            sendMessage(payload);
+          }
+        });
+
+        if (chatSendBtn)
+          chatSendBtn.addEventListener("click", () =>
+            sendMessage(chatInput.value)
+          );
         if (chatInput)
           chatInput.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") sendMessage();
+            if (e.key === "Enter") sendMessage(chatInput.value);
           });
+
+        if (chatToggleBtn) {
+          chatToggleBtn.addEventListener("click", () => {
+            if (chatContainer.classList.contains("hidden")) {
+              chatMessages.innerHTML = "";
+              addMessage(
+                {
+                  answer:
+                    "Hello! I am the MedGuard Assistant. I can answer questions about verifying drugs, reporting counterfeits, and more. How can I help you today?",
+                  quick_replies: [
+                    {
+                      text: "How do I report a drug?",
+                      payload: "guide to report",
+                    },
+                    { text: "How do I verify a drug?", payload: "verify" },
+                    {
+                      text: "Check a batch status",
+                      payload: "status of batch",
+                    },
+                  ],
+                },
+                "bot"
+              );
+            }
+          });
+
+          const toggleChat = () => chatContainer.classList.toggle("hidden");
+          chatToggleBtn.addEventListener("click", toggleChat);
+          const chatCloseBtn = document.getElementById("chat-close-btn");
+          if (chatCloseBtn) {
+            chatCloseBtn.addEventListener("click", toggleChat);
+          }
+        }
       });
     </script>
 
