@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect, url_for, session
+from flask import Blueprint, request, render_template, redirect, url_for, session, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from backend.database import get_db
 import sqlite3
@@ -61,9 +61,35 @@ def my_reports():
 
     user_id = session["user_id"]
     conn = get_db()
+    # MODIFIED: Select additional columns for a more detailed view
     reports = conn.execute(
-        "SELECT * FROM reports WHERE user_id = ? ORDER BY reported_on DESC",
+        "SELECT id, drug_name, batch_number, location, note, reported_on, status FROM reports WHERE user_id = ? ORDER BY reported_on DESC",
         (user_id,)
     ).fetchall()
     
     return render_template("my_reports.html", reports=reports)
+
+# NEW: Route for users to delete their own reports
+@auth_bp.delete("/my-reports/delete/<int:report_id>")
+def delete_my_report(report_id):
+    if "user_id" not in session:
+        return jsonify({"error": "Authentication required"}), 401
+
+    user_id = session["user_id"]
+    conn = get_db()
+    
+    # First, verify the report belongs to the logged-in user
+    report = conn.execute("SELECT id FROM reports WHERE id = ? AND user_id = ?", (report_id, user_id)).fetchone()
+    
+    if not report:
+        # If the report doesn't exist or doesn't belong to the user, deny the request
+        return jsonify({"error": "Report not found or you do not have permission to delete it."}), 404
+
+    try:
+        # If verification passes, proceed with deletion
+        conn.execute("DELETE FROM reports WHERE id = ? AND user_id = ?", (report_id, user_id))
+        conn.commit()
+        return jsonify({"message": "Report deleted successfully."})
+    except Exception as e:
+        print(f"Error deleting user report {report_id}: {e}")
+        return jsonify({"error": "An internal server error occurred."}), 500

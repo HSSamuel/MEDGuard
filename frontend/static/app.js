@@ -6,6 +6,11 @@ const taglines = [
   "No more guessing — just scanning.",
   "Keeping counterfeit meds off the streets.",
   "Your pocket pharmacist.",
+  "Authenticity in every scan.",
+  "Empowering patients, one scan at a time.",
+  "Securing Nigeria's medicine supply.",
+  "Verify before you trust.",
+  "Scan. Verify. Report.",
 ];
 let taglineIndex = 0;
 function rotateTagline() {

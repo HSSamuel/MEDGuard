@@ -18,6 +18,7 @@ import logging
 import secrets
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
+from datetime import timedelta # MODIFIED: Import timedelta
 
 # --- Flask and Third-Party Libraries ---
 from flask import (
@@ -88,7 +89,9 @@ def create_app() -> Flask:
         SESSION_COOKIE_HTTPONLY=True,
         SESSION_COOKIE_SAMESITE="Lax",
         SESSION_COOKIE_SECURE=not cfg.DEBUG,
-        SESSION_REFRESH_EACH_REQUEST=False
+        SESSION_REFRESH_EACH_REQUEST=False,
+        # MODIFIED: Set the session lifetime
+        PERMANENT_SESSION_LIFETIME=timedelta(minutes=15)
     )
 
     # --- Extensions and Core Services ---
@@ -146,6 +149,7 @@ def create_app() -> Flask:
                 session["admin_id"] = user["id"]
                 session["admin_role"] = user["role"]
                 session["csrf"] = secrets.token_urlsafe(32)
+                session.permanent = True # MODIFIED: Make the session permanent to use the lifetime
                 return redirect(url_for("admin_api.admin_dashboard"))
             else:
                 return render_template("admin_login.html", error="Invalid credentials")

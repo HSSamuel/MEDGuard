@@ -125,3 +125,27 @@ def count_new_reports():
     conn = get_db()
     row = conn.execute("SELECT COUNT(*) as count FROM reports WHERE status = 0").fetchone()
     return jsonify({"count": row["count"] if row else 0})
+
+# =========================
+# NEW: Delete a specific report
+# =========================
+@report_bp.delete("/report/<int:report_id>")
+def delete_report(report_id):
+    if not session.get("admin_id"):
+        return jsonify({"error": "Authentication required"}), 401
+    
+    try:
+        conn = get_db()
+        cursor = conn.execute("DELETE FROM reports WHERE id = ?", (report_id,))
+        conn.commit()
+        
+        # Check if a row was actually deleted
+        if cursor.rowcount == 0:
+            return jsonify({"error": "Report not found"}), 404
+            
+        return jsonify({"message": f"Report #{report_id} has been deleted successfully."})
+
+    except Exception as e:
+        # It's good practice to log the actual error on the server
+        print(f"Error deleting report {report_id}: {e}")
+        return jsonify({"error": "An internal server error occurred."}), 500

@@ -20,6 +20,9 @@
     h2 {
       font-size: 1.2em;
     }
+    #timers-container {
+        display: none !important;
+    }
   }
 
   /* Responsive navigation shortcuts */
@@ -57,10 +60,89 @@
       width: 100%;
     }
   }
+  /* NEW: Toast Notification Styles */
+  .toast-notification {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #28a745;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 10002; /* Higher than modals */
+      opacity: 0;
+      font-size: 16px;
+      transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out;
+  }
+  .toast-notification.show {
+      top: 40px;
+      opacity: 1;
+  }
+  .toast-notification.error {
+      background-color: #dc3545;
+  }
 </style>
 
 <div class="panel">
-  <h2>🛠 Admin — Register New Drug Batch</h2>
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    "
+  >
+    <h2>🛠 Admin — Register New Drug Batch</h2>
+    <div
+      id="timers-container"
+      style="display: flex; align-items: center; gap: 15px"
+    >
+      <div
+        id="live-clock-container"
+        style="
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.9em;
+          opacity: 0.9;
+          background: rgba(0, 0, 0, 0.2);
+          padding: 5px 12px;
+          border-radius: 6px;
+        "
+      >
+        <span>🗓️</span>
+        <span id="live-clock">Loading time...</span>
+      </div>
+      <div
+        id="session-timer-container"
+        style="
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.9em;
+          opacity: 0.9;
+          background: rgba(0, 0, 0, 0.2);
+          padding: 5px 12px;
+          border-radius: 6px;
+          border-left: 3px solid #f39c12;
+        "
+      >
+        <span>⏳</span>
+        <span
+          >Session ends in:
+          <strong
+            id="session-countdown-display"
+            style="min-width: 45px; display: inline-block; text-align: center"
+            >--:--</strong
+          ></span
+        >
+      </div>
+    </div>
+  </div>
+
   <p style="opacity: 0.85; margin-top: 0">
     Use this form to register a new drug batch and generate its QR code
     instantly.
@@ -216,7 +298,12 @@
       <span
         id="new-report-badge"
         class="badge"
-        style="background: #dc3545; color: white; display: none; margin-left: 8px;"
+        style="
+          background: #dc3545;
+          color: white;
+          display: none;
+          margin-left: 8px;
+        "
         >0</span
       ></a
     >
@@ -260,6 +347,7 @@
           <th data-label="Date">Date</th>
           <th data-label="Reporter">Reporter</th>
           <th data-label="Status">Status</th>
+          <th data-label="Actions">Actions</th>
         </tr>
       </thead>
       <tbody id="reports-body">
@@ -272,7 +360,9 @@
           <td data-label="Drug Name">{{ report.drug_name or "-" }}</td>
           <td data-label="Batch">{{ report.batch_number }}</td>
           <td data-label="Location">{{ report.location or "-" }}</td>
-          <td data-label="Note" class="note-column">{{ report.note or "-" }}</td>
+          <td data-label="Note" class="note-column">
+            {{ report.note or "-" }}
+          </td>
           <td data-label="Image">
             {% if report.image_filename %}
             <a
@@ -302,7 +392,9 @@
             </div>
           </td>
           <td data-label="Date">{{ report.reported_on.split(' ')[0] }}</td>
-          <td data-label="Reporter">{{ report.submitted_by or "Anonymous" }}</td>
+          <td data-label="Reporter">
+            {{ report.submitted_by or "Anonymous" }}
+          </td>
           <td data-label="Status">
             {% if report.status == 0 %}
             <span class="badge badge-new">New</span>
@@ -310,10 +402,19 @@
             <span class="badge badge-checked">Checked</span>
             {% endif %}
           </td>
+          <td data-label="Actions">
+            <button
+              class="btn delete-report-btn"
+              data-id="{{ report.id }}"
+              style="background-color: #dc3545; color: white"
+            >
+              Delete
+            </button>
+          </td>
         </tr>
         {% endfor %} {% else %}
         <tr>
-          <td colspan="10" style="text-align: center">
+          <td colspan="11" style="text-align: center">
             No reports submitted yet.
           </td>
         </tr>
@@ -326,12 +427,112 @@
 <script src="{{ url_for('static', filename='admin.js') }}"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- Reusable Toast Notification function ---
+    const showToast = (message, isError = false) => {
+        const toast = document.createElement("div");
+        toast.className = "toast-notification";
+        if (isError) toast.classList.add("error");
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.classList.add("show"), 100);
+        setTimeout(() => {
+            toast.classList.remove("show");
+            setTimeout(() => document.body.removeChild(toast), 300);
+        }, 3000);
+    };
+
+    // --- Custom Confirmation Modal Logic ---
+    const confirmModal = document.getElementById('confirm-modal');
+    if (confirmModal) {
+        const confirmModalTitle = document.getElementById('confirm-modal-title');
+        const confirmModalText = document.getElementById('confirm-modal-text');
+        const confirmBtn = document.getElementById('confirm-modal-confirm-btn');
+        const cancelBtn = document.getElementById('confirm-modal-cancel-btn');
+
+        const showConfirmModal = (title, text, onConfirm) => {
+            confirmModalTitle.textContent = title;
+            confirmModalText.textContent = text;
+            confirmModal.style.display = 'flex';
+
+            const newConfirmBtn = confirmBtn.cloneNode(true);
+            confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+            
+            newConfirmBtn.addEventListener('click', () => {
+                onConfirm();
+                hideConfirmModal();
+            });
+        };
+
+        const hideConfirmModal = () => {
+            confirmModal.style.display = 'none';
+        };
+
+        cancelBtn.addEventListener('click', hideConfirmModal);
+        
+        // --- MODIFIED: Report Deletion Handler ---
+        const reportsTable = document.getElementById('reports-table');
+        reportsTable.addEventListener('click', (event) => {
+            if (event.target.classList.contains('delete-report-btn')) {
+                const button = event.target;
+                const reportId = button.dataset.id;
+                const row = button.closest('tr');
+
+                showConfirmModal(
+                    'Confirm Deletion',
+                    `Are you sure you want to permanently delete report #${reportId}? This action cannot be undone.`,
+                    () => {
+                        fetch(`/api/report/${reportId}`, {
+                            method: 'DELETE',
+                        })
+                        .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                        .then(({ status, body }) => {
+                            if (status === 200) {
+                                showToast(body.message);
+                                row.style.transition = 'opacity 0.5s ease';
+                                row.style.opacity = '0';
+                                setTimeout(() => row.remove(), 500);
+                            } else {
+                                throw new Error(body.error);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showToast(`Failed to delete report: ${error.message}`, true);
+                        });
+                    }
+                );
+            }
+        });
+    }
+
+    // --- Live Clock Functionality ---
+    const clockElement = document.getElementById("live-clock");
+    if (clockElement) {
+      const updateClock = () => {
+        const now = new Date();
+        const options = {
+          timeZone: "Africa/Lagos",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        };
+        clockElement.textContent =
+          new Intl.DateTimeFormat("en-US", options).format(now) + " (WAT)";
+      };
+      updateClock();
+      setInterval(updateClock, 1000);
+    }
+
     // --- Real-Time Notification System ---
     let currentNewReportCount = 0;
     const badge = document.getElementById("new-report-badge");
-    let audioCtx; // To be initialized on first user interaction
+    let audioCtx;
 
-    // Function to play a notification sound
     const playNotificationSound = () => {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -341,7 +542,7 @@
       oscillator.connect(gainNode);
       gainNode.connect(audioCtx.destination);
       oscillator.type = "sine";
-      oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // A sharp, clear beep
+      oscillator.frequency.setValueAtTime(880, audioCtx.currentTime);
       gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(
         0.001,
@@ -351,7 +552,6 @@
       oscillator.stop(audioCtx.currentTime + 0.5);
     };
 
-    // Function to check for new reports
     const checkNewReports = () => {
       fetch("{{ url_for('admin_api.reports_count') }}")
         .then((response) => response.json())
@@ -373,11 +573,9 @@
         );
     };
 
-    // Initialize on page load and then check every 10 seconds
     checkNewReports();
     setInterval(checkNewReports, 10000);
 
-    // One-time event listener to initialize AudioContext on user interaction
     document.body.addEventListener(
       "click",
       () => {
@@ -419,4 +617,3 @@
   });
 </script>
 {% endblock %}
-

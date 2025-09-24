@@ -2,7 +2,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
 from datetime import datetime, date, timedelta
-from flask import Blueprint, request, send_file, jsonify, url_for, render_template, Response, session
+from flask import Blueprint, request, send_file, jsonify, url_for, render_template, Response, session, redirect
 from sqlite3 import IntegrityError
 from backend.models import insert_drug
 from backend.database import get_db
@@ -22,6 +22,8 @@ admin_bp = Blueprint("admin_api", __name__)
 # =========================
 @admin_bp.route('/dashboard')
 def admin_dashboard():
+    if not session.get("admin_id"):
+        return redirect(url_for("admin_login"))
     try:
         conn = get_db()
         rows = conn.execute("""
@@ -34,7 +36,8 @@ def admin_dashboard():
             LIMIT 20
         """).fetchall()
         reports = [dict(r) for r in rows]
-        return render_template('admin.html', reports=reports)
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        return render_template('admin.html', reports=reports, current_time=current_time)
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": f"Server error: {str(e)}"}), 500
@@ -44,6 +47,8 @@ def admin_dashboard():
 # =========================
 @admin_bp.post("/register")
 def admin_register():
+    if not session.get("admin_id"):
+        return jsonify({"error": "Authentication required"}), 401
     try:
         data = request.get_json(silent=True) or request.form.to_dict()
         required = ["name", "batch_number", "mfg_date", "expiry_date", "manufacturer"]
@@ -89,6 +94,8 @@ def admin_register():
 # =========================
 @admin_bp.get("/drugs")
 def admin_drugs():
+    if not session.get("admin_id"):
+        return redirect(url_for("admin_login"))
     try:
         conn = get_db()
         search = request.args.get("search", "").strip()
@@ -159,6 +166,8 @@ def delete_drug(drug_id):
 # =========================
 @admin_bp.get("/drugs/export/word")
 def export_drugs_word():
+    if not session.get("admin_id"):
+        return redirect(url_for("admin_login"))
     try:
         conn = get_db()
         search = request.args.get("search", "").strip()
@@ -242,6 +251,8 @@ def export_drugs_word():
 # =========================
 @admin_bp.get("/drugs/export/pdf")
 def export_drugs_pdf():
+    if not session.get("admin_id"):
+        return redirect(url_for("admin_login"))
     try:
         conn = get_db()
         search = request.args.get("search", "").strip()
@@ -318,6 +329,8 @@ def export_drugs_pdf():
 # =========================
 @admin_bp.get("/reports")
 def admin_reports():
+    if not session.get("admin_id"):
+        return redirect(url_for("admin_login"))
     try:
         conn = get_db()
         rows = conn.execute("""
@@ -340,6 +353,8 @@ def admin_reports():
 # =========================
 @admin_bp.get("/reports/today")
 def admin_reports_today():
+    if not session.get("admin_id"):
+        return redirect(url_for("admin_login"))
     try:
         conn = get_db()
         rows = conn.execute("""
@@ -360,6 +375,8 @@ def admin_reports_today():
 # =========================
 @admin_bp.get("/reports/range")
 def admin_reports_range():
+    if not session.get("admin_id"):
+        return redirect(url_for("admin_login"))
     try:
         start = request.args.get("start")
         end = request.args.get("end")
@@ -415,10 +432,14 @@ def get_report_locations():
 # =========================
 @admin_bp.route('/hotspot-map')
 def hotspot_map_page():
+    if not session.get("admin_id"):
+        return redirect(url_for("admin_login"))
     return render_template('admin_map.html')
 
 @admin_bp.route('/public-db-manager')
 def public_db_manager_page():
+    if not session.get("admin_id"):
+        return redirect(url_for("admin_login"))
     return render_template('admin_public_db.html')
 
 
@@ -441,3 +462,13 @@ def get_report_analytics():
     analytics_data = [{"date": row["report_date"], "count": row["report_count"]} for row in rows]
     return jsonify(analytics_data)
 
+# =========================
+# Session Keep-Alive Endpoint
+# =========================
+@admin_bp.route('/session/ping', methods=['POST'])
+def ping_session():
+    """An endpoint for the client to hit to keep the session alive."""
+    if not session.get("admin_id"):
+        return jsonify({"status": "error", "message": "unauthenticated"}), 401
+    # Simply accessing the session is enough to refresh its lifetime
+    return jsonify({"status": "ok", "message": "session_refreshed"})

@@ -3,45 +3,145 @@
   <h2>My Submitted Reports</h2>
   <p>Here is a history of the counterfeit drug reports you have submitted.</p>
 
-  <table class="table" style="margin-top: 20px">
-    <thead>
-      <tr>
-        <th>Drug Name</th>
-        <th>Batch Number</th>
-        <th>Date Reported</th>
-        <th>Regulator Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for report in reports %}
-      <tr>
-        <td>{{ report.drug_name or "-" }}</td>
-        <td>{{ report.batch_number }}</td>
-        <td>{{ report.reported_on.strftime('%Y-%m-%d %H:%M') }}</td>
-        <td>
-          {% if report.status == 0 %}
-          <span
-            class="badge badge-new"
-            style="background-color: #ffc107; color: #000"
-            >Pending Review</span
-          >
-          {% else %}
-          <span
-            class="badge badge-checked"
-            style="background-color: #28a745; color: #fff"
-            >Reviewed</span
-          >
-          {% endif %}
-        </td>
-      </tr>
-      {% else %}
-      <tr>
-        <td colspan="4" style="text-align: center">
-          You have not submitted any reports yet.
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div style="overflow-x: auto; -webkit-overflow-scrolling: touch">
+    <table class="table" style="margin-top: 20px" id="my-reports-table">
+      <thead>
+        <tr>
+          <th>Drug Name</th>
+          <th>Batch Number</th>
+          <th>Location</th>
+          <th>Note</th>
+          <th>Date Reported</th>
+          <th>Regulator Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for report in reports %}
+        <tr>
+          <td data-label="Drug Name">{{ report.drug_name or "-" }}</td>
+          <td data-label="Batch Number">{{ report.batch_number }}</td>
+          <td data-label="Location">{{ report.location or "-" }}</td>
+          <td data-label="Note">{{ report.note or "-" }}</td>
+          <td data-label="Date Reported">
+            {{ report.reported_on.strftime('%Y-%m-%d %H:%M') }}
+          </td>
+          <td data-label="Regulator Status">
+            {% if report.status == 0 %}
+            <span class="badge" style="background-color: #ffc107; color: #000"
+              >Pending Review</span
+            >
+            {% else %}
+            <span class="badge" style="background-color: #28a745; color: #fff">
+              Reviewed</span
+            >
+            {% endif %}
+          </td>
+          <td data-label="Actions">
+            <button
+              class="btn delete-my-report-btn"
+              data-id="{{ report.id }}"
+              style="background-color: #dc3545; color: white"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="7" style="text-align: center">
+            You have not submitted any reports yet.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
+{% endblock %} {% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // --- Toast Notification function (re-used from admin) ---
+    const showToast = (message, isError = false) => {
+      const toast = document.createElement("div");
+      toast.className = "toast-notification";
+      if (isError) toast.classList.add("error");
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add("show"), 100);
+      setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => document.body.removeChild(toast), 300);
+      }, 3000);
+    };
+
+    // --- Custom Confirmation Modal Logic (re-used from admin) ---
+    const confirmModal = document.getElementById("confirm-modal");
+    if (confirmModal) {
+      const confirmModalTitle = document.getElementById("confirm-modal-title");
+      const confirmModalText = document.getElementById("confirm-modal-text");
+      const confirmBtn = document.getElementById("confirm-modal-confirm-btn");
+      const cancelBtn = document.getElementById("confirm-modal-cancel-btn");
+
+      const showConfirmModal = (title, text, onConfirm) => {
+        confirmModalTitle.textContent = title;
+        confirmModalText.textContent = text;
+        confirmModal.style.display = "flex";
+
+        const newConfirmBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+        newConfirmBtn.addEventListener("click", () => {
+          onConfirm();
+          hideConfirmModal();
+        });
+      };
+
+      const hideConfirmModal = () => {
+        confirmModal.style.display = "none";
+      };
+
+      cancelBtn.addEventListener("click", hideConfirmModal);
+
+      // --- NEW: Report Deletion Handler for "My Reports" page ---
+      const myReportsTable = document.getElementById("my-reports-table");
+      myReportsTable.addEventListener("click", (event) => {
+        if (event.target.classList.contains("delete-my-report-btn")) {
+          const button = event.target;
+          const reportId = button.dataset.id;
+          const row = button.closest("tr");
+
+          showConfirmModal(
+            "Delete Report",
+            "Are you sure you want to delete this report? This action is permanent.",
+            () => {
+              fetch(`/my-reports/delete/${reportId}`, {
+                method: "DELETE",
+              })
+                .then((response) =>
+                  response
+                    .json()
+                    .then((data) => ({ status: response.status, body: data }))
+                )
+                .then(({ status, body }) => {
+                  if (status === 200) {
+                    showToast(body.message);
+                    row.style.transition = "opacity 0.5s ease";
+                    row.style.opacity = "0";
+                    setTimeout(() => row.remove(), 500);
+                  } else {
+                    throw new Error(body.error);
+                  }
+                })
+                .catch((error) => {
+                  console.error("Error:", error);
+                  showToast(`Failed to delete report: ${error.message}`, true);
+                });
+            }
+          );
+        }
+      });
+    }
+  });
+</script>
 {% endblock %}

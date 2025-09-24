@@ -57,13 +57,21 @@
       header.mg-header {
         display: flex;
         align-items: center;
-        justify-content: space-between; /* Changed for hamburger menu */
+        justify-content: space-between;
+        gap: 15px;
+      }
+
+      /* NEW: Container to group logo and brand text */
+      .brand-container {
+        display: flex;
+        align-items: center;
         gap: 15px;
       }
 
       .brand p {
         margin: 2px 0;
         color: #ddd;
+        font-style: italic;
       }
 
       footer.mg-footer {
@@ -179,8 +187,8 @@
         background: rgba(0, 0, 0, 0.3);
         padding: 0 20px;
         border-radius: 8px;
-        margin-top: -20px; /* Pull it up to fill the gap */
-        position: relative; /* Needed for mobile menu positioning */
+        margin-top: -20px;
+        position: relative;
       }
       .nav-list {
         display: flex;
@@ -190,6 +198,13 @@
         padding: 0;
         margin: 0;
       }
+
+      .nav-left,
+      .nav-right {
+        display: flex;
+        align-items: center;
+      }
+
       .nav-item a,
       .nav-item .btn {
         color: white;
@@ -217,10 +232,13 @@
         margin: 5px 0;
       }
 
-      /* UPDATED MEDIA QUERY FOR MOBILE NAVIGATION */
       @media (max-width: 960px) {
         .hamburger {
           display: block;
+        }
+        .nav-left,
+        .nav-right {
+          display: contents;
         }
         .nav-list {
           display: none;
@@ -253,13 +271,15 @@
   </head>
   <body>
     <header class="mg-header">
-      <img
-        src="{{ url_for('static', filename='images/logo.png') }}"
-        alt="MedGuard Logo"
-        style="height: 50px; border-radius: 8px"
-      />
-      <div class="brand">
-        <p id="tagline" class="tagline"></p>
+      <div class="brand-container">
+        <img
+          src="{{ url_for('static', filename='images/logo.png') }}"
+          alt="MedGuard Logo"
+          style="height: 50px; border-radius: 8px"
+        />
+        <div class="brand">
+          <p id="tagline" class="tagline"></p>
+        </div>
       </div>
       <div class="hamburger">
         <div></div>
@@ -269,85 +289,203 @@
     </header>
 
     <nav class="navbar container">
-      <!-- SIMPLIFIED UL STRUCTURE -->
       <ul class="nav-list">
-        <li class="nav-item"><a href="{{ url_for('root') }}">Home</a></li>
-        <li class="nav-item">
-          <a href="{{ url_for('about_page') }}">About</a>
-        </li>
-
-        {% if session.user_id %}
-        <li class="nav-item">
-          <a href="{{ url_for('auth.my_reports') }}">My Reports</a>
-        </li>
-        {% endif %} {% if session.admin_id %}
-        <li class="nav-item">
-          <a href="{{ url_for('admin_api.admin_dashboard') }}">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ url_for('admin_api.public_db_manager_page') }}"
-            >Public DB Manager</a
-          >
-        </li>
-        <li class="nav-item">
-          <a href="{{ url_for('admin_api.hotspot_map_page') }}">Hotspot Map</a>
-        </li>
-        {% endif %}
-
-        <!-- Auth buttons are now direct children -->
-        {% if session.admin_id %}
-        <li class="nav-item">
-          <form
-            action="{{ url_for('admin_logout') }}"
-            method="post"
-            style="margin: 0"
-          >
-            <input type="hidden" name="csrf" value="{{ session.csrf }}" />
-            <button
-              type="submit"
-              class="btn"
-              style="background: #dc3545; color: white; width: 100%"
+        <div class="nav-left">
+          <li class="nav-item"><a href="{{ url_for('root') }}">Home</a></li>
+          <li class="nav-item">
+            <a href="{{ url_for('about_page') }}">About</a>
+          </li>
+          {% if session.user_id %}
+          <li class="nav-item">
+            <a href="{{ url_for('auth.my_reports') }}">My Reports</a>
+          </li>
+          {% endif %} {% if session.admin_id %}
+          <li class="nav-item">
+            <a href="{{ url_for('admin_api.admin_dashboard') }}">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('admin_api.public_db_manager_page') }}"
+              >Public DB Manager</a
             >
-              Admin Logout
-            </button>
-          </form>
-        </li>
-        {% elif session.user_id %}
-        <li class="nav-item">
-          <span style="padding: 15px 20px; color: white"
-            >Welcome, {{ session.user_name }}</span
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            href="{{ url_for('auth.logout') }}"
-            class="btn"
-            style="background-color: #dc3545"
-            >Logout</a
-          >
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a
-            href="{{ url_for('auth.login') }}"
-            class="btn"
-            style="background-color: #360fd358"
-            >User Login</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            href="{{ url_for('auth.register') }}"
-            class="btn"
-            style="background-color: #04700774"
-            >Register</a
-          >
-        </li>
-        {% endif %}
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('admin_api.hotspot_map_page') }}"
+              >Hotspot Map</a
+            >
+          </li>
+          {% endif %}
+        </div>
+
+        <div class="nav-right">
+          {% if session.admin_id %}
+          <li class="nav-item">
+            <form
+              action="{{ url_for('admin_logout') }}"
+              method="post"
+              style="margin: 0"
+            >
+              <input type="hidden" name="csrf" value="{{ session.csrf }}" />
+              <button
+                type="submit"
+                class="btn"
+                style="background: #dc3545; color: white; width: 100%"
+              >
+                Admin Logout
+              </button>
+            </form>
+          </li>
+          {% elif session.user_id %}
+          <li class="nav-item">
+            <span style="padding: 15px 20px; color: white"
+              >Welcome, {{ session.user_name }}</span
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="{{ url_for('auth.logout') }}"
+              class="btn"
+              style="background-color: #dc3545"
+              >Logout</a
+            >
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a
+              href="{{ url_for('auth.login') }}"
+              class="btn"
+              style="background-color: #360fd358"
+              >User Login</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="{{ url_for('auth.register') }}"
+              class="btn"
+              style="background-color: #04700774"
+              >Register</a
+            >
+          </li>
+          {% endif %}
+        </div>
       </ul>
     </nav>
 
     <main class="container">{% block content %}{% endblock %}</main>
+
+    {% if session.admin_id %}
+    <div
+      id="confirm-modal"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(5px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10001;
+      "
+    >
+      <div
+        style="
+          background: rgba(47, 79, 79, 0.9);
+          padding: 25px;
+          border-radius: 12px;
+          max-width: 450px;
+          width: 90%;
+          text-align: center;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+          border-top: 4px solid #f39c12;
+        "
+      >
+        <h3 id="confirm-modal-title" style="color: #92f394">Confirm Action</h3>
+        <p id="confirm-modal-text" style="color: #ffffff"></p>
+        <div
+          style="
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+          "
+        >
+          <button id="confirm-modal-cancel-btn" class="btn btn-outline">
+            Cancel
+          </button>
+          <button
+            id="confirm-modal-confirm-btn"
+            class="btn"
+            style="background-color: #dc3545; color: white"
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+    {% endif %} {% if session.admin_id %}
+    <div
+      id="session-modal"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(5px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+      "
+    >
+      <div
+        style="
+          background: rgba(47, 79, 79, 0.9);
+          padding: 25px;
+          border-radius: 12px;
+          max-width: 450px;
+          width: 90%;
+          text-align: center;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+          border-top: 4px solid #b45e19;
+        "
+      >
+        <h3 style="color: #92f394">Session Timeout Warning</h3>
+        <p style="color: #ffffff">
+          Your session is about to expire due to inactivity. You will be logged
+          out in
+          <strong id="session-countdown" style="font-size: 1.2em">120</strong>
+          seconds.
+        </p>
+        <div
+          style="
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+          "
+        >
+          <button
+            id="session-stay-btn"
+            class="btn"
+            style="background-color: #28a745; color: white"
+          >
+            Stay Logged In
+          </button>
+          <button
+            id="session-logout-btn"
+            class="btn"
+            style="background-color: #dc3545; color: white"
+          >
+            Logout Now
+          </button>
+        </div>
+      </div>
+    </div>
+    {% endif %}
 
     <footer class="mg-footer">
       <a
@@ -443,5 +581,9 @@
           });
       });
     </script>
+
+    {% if session.admin_id %}
+    <script src="{{ url_for('static', filename='admin_timer.js') }}"></script>
+    {% endif %}
   </body>
 </html>
