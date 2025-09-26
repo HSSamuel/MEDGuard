@@ -1,7 +1,7 @@
 import json
 import os
 import re
-from datetime import datetime # NEW: Import the datetime module
+from datetime import datetime
 from flask import Blueprint, request, jsonify, current_app
 from backend.database import get_db
 
@@ -46,7 +46,7 @@ def get_ai_response(user_message, knowledge_base):
             answer += f"<p>The most recent report was submitted from <strong>{latest_location}</strong>.</p>"
         return {"answer": answer}
 
-    # --- NEW -- Priority 2: Dynamic Database Query for Drug Status ---
+    # --- Priority 2: Dynamic Database Query for Drug Status ---
     drug_status_match = re.search(r"(?:check|status of) (?:batch )?([a-z0-9-]+)", user_message)
     if drug_status_match:
         batch_number = drug_status_match.group(1).upper()
@@ -80,6 +80,23 @@ def get_ai_response(user_message, knowledge_base):
                 
         return {"answer": answer}
 
+    # --- NEW -- Priority 3: Dynamic Action for Pre-filling a Report ---
+    report_match = re.search(r"report (?:batch )?([a-z0-9-]+)", user_message)
+    if report_match:
+        batch_number = report_match.group(1).upper()
+        return {
+            "answer": f"Okay, I can help you report batch <strong>{batch_number}</strong>. Click the button below to go to the form and I will fill in the batch number for you.",
+            "action": {
+                "type": "prefill_and_scroll",
+                "target": ".report-panel",
+                "buttonText": f"Report Batch {batch_number}",
+                "prefill": {
+                    "target_id": "report-batch",
+                    "value": batch_number
+                }
+            }
+        }
+
     # --- Fallback to Static Knowledge Base ---
     for intent, intent_data in knowledge_base.items():
         for keyword in intent_data.get("keywords", []):
@@ -87,7 +104,7 @@ def get_ai_response(user_message, knowledge_base):
                 return intent_data
     
     return {
-        "answer": "I'm sorry, I don't have information on that. You can ask me to 'check batch [number]' or to get 'reports for batch [number]'."
+        "answer": "I'm sorry, I don't have information on that. You can ask me to 'check batch [number]' or to 'report batch [number]'."
     }
 
 @ai_bp.route("/chat", methods=['POST'])

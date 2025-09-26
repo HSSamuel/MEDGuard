@@ -1,14 +1,8 @@
 {
     "0118904019011936": {
         "drug_name": "Lonart DS",
+        "expiry_date": "2026-10-01",
         "manufacturer": "Greenlife Pharmaceuticals",
-        "nafdac_status": "Registered",
-        "expiry_date": "2026-10-01"
-    },
-    "SAM-0808": {
-        "drug_name": "Ibuprofen 200mg",
-        "expiry_date": "2027-05-15",
-        "manufacturer": "HealthWell Inc.",
         "nafdac_status": "Registered"
     }
 }

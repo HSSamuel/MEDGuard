@@ -7,82 +7,82 @@
   </p>
 </div>
 
-<!-- This panel will show the list of drugs -->
 <div class="panel">
   <h3>Current Public Drug List</h3>
-  <!-- The inline style has been removed, so it will now use the correct style from styles.css -->
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Batch Number</th>
-        <th>Drug Name</th>
-        <th>Manufacturer</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="public-db-table-body">
-      <!-- Data will be loaded here by JavaScript -->
-    </tbody>
-  </table>
+  <div style="overflow-x: auto; -webkit-overflow-scrolling: touch">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Batch Number</th>
+          <th>Drug Name</th>
+          <th>Manufacturer</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="public-db-table-body"></tbody>
+    </table>
+  </div>
   <button id="show-form-btn" class="btn btn-yellow" style="margin-top: 20px">
     ➕ Add New Drug
   </button>
 </div>
 
-<!-- This panel contains the form, which is hidden by default -->
 <div id="entry-form-panel" class="panel" style="display: none">
   <h3 id="form-title">Add New Drug Entry</h3>
   <form id="entry-form">
-    <!-- Hidden input to track if we are editing an existing entry -->
     <input type="hidden" id="original-batch-key" />
 
-    <div>
-      <label>Batch Number (Unique Key):</label>
+    <div style="margin-bottom: 10px">
+      <label style="display: block; margin-bottom: 5px"
+        >Batch Number (Unique Key):</label
+      >
       <input
         type="text"
         id="batch-key"
         class="input"
-        style="color: #333"
+        style="width: 100%; color: #333"
         required
       />
     </div>
-    <div>
-      <label>Drug Name:</label>
+    <div style="margin-bottom: 10px">
+      <label style="display: block; margin-bottom: 5px">Drug Name:</label>
       <input
         type="text"
         id="drug-name"
         class="input"
-        style="color: #333"
+        style="width: 100%; color: #333"
         required
       />
     </div>
-    <div>
-      <label>Manufacturer:</label>
+    <div style="margin-bottom: 10px">
+      <label style="display: block; margin-bottom: 5px">Manufacturer:</label>
       <input
         type="text"
         id="manufacturer"
         class="input"
-        style="color: #333"
+        style="width: 100%; color: #333"
         required
       />
     </div>
-    <div>
-      <label>NAFDAC Status:</label>
+    <div style="margin-bottom: 10px">
+      <label style="display: block; margin-bottom: 5px">NAFDAC Status:</label>
       <input
         type="text"
         id="nafdac-status"
         class="input"
-        style="color: #333"
+        style="width: 100%; color: #333"
         value="Registered"
       />
     </div>
-    <div>
-      <label>Expiry Date (YYYY-MM-DD):</label>
+    <div style="margin-bottom: 10px">
+      <label style="display: block; margin-bottom: 5px"
+        >Expiry Date (YYYY-MM-DD):</label
+      >
       <input
         type="date"
         id="expiry-date"
         class="input"
-        style="color: #333"
+        style="width: 100%; color: #333"
         required
       />
     </div>
@@ -104,7 +104,6 @@
 {% endblock %} {% block scripts %}
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    // Get references to all the important elements on the page
     const tableBody = document.getElementById("public-db-table-body");
     const showFormBtn = document.getElementById("show-form-btn");
     const entryFormPanel = document.getElementById("entry-form-panel");
@@ -112,9 +111,8 @@
     const cancelBtn = document.getElementById("cancel-btn");
     const formTitle = document.getElementById("form-title");
 
-    let publicDb = {}; // A local cache for our public database data
+    let publicDb = {};
 
-    // Reusable Toast Notification function
     const showToast = (message, isError = false) => {
       const toast = document.createElement("div");
       toast.className = "toast-notification";
@@ -128,7 +126,37 @@
       }, 3000);
     };
 
-    // Renders the data from the local cache into the HTML table
+    // --- MODIFIED: Custom Confirmation Modal Logic ---
+    const confirmModal = document.getElementById("confirm-modal");
+    const confirmModalTitle = document.getElementById("confirm-modal-title");
+    const confirmModalText = document.getElementById("confirm-modal-text");
+    const confirmBtn = document.getElementById("confirm-modal-confirm-btn");
+    const cancelConfirmBtn = document.getElementById(
+      "confirm-modal-cancel-btn"
+    );
+
+    const showConfirmModal = (title, text, onConfirm) => {
+      if (!confirmModal) return;
+      confirmModalTitle.textContent = title;
+      confirmModalText.textContent = text;
+      confirmModal.style.display = "flex";
+
+      const newConfirmBtn = confirmBtn.cloneNode(true);
+      confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+      newConfirmBtn.addEventListener("click", () => {
+        onConfirm();
+        hideConfirmModal();
+      });
+    };
+
+    const hideConfirmModal = () => {
+      if (confirmModal) confirmModal.style.display = "none";
+    };
+
+    if (cancelConfirmBtn)
+      cancelConfirmBtn.addEventListener("click", hideConfirmModal);
+
     const renderTable = () => {
       tableBody.innerHTML = "";
       if (Object.keys(publicDb).length === 0) {
@@ -139,22 +167,20 @@
       for (const batchNumber in publicDb) {
         const entry = publicDb[batchNumber];
         const row = tableBody.insertRow();
-        // Use the classes from your main stylesheet for consistency
         row.style.color = "var(--mg-white)";
         row.innerHTML = `
-                <td>${batchNumber}</td>
-                <td>${entry.drug_name || ""}</td>
-                <td>${entry.manufacturer || ""}</td>
-                <td>
+                <td data-label="Batch Number">${batchNumber}</td>
+                <td data-label="Drug Name">${entry.drug_name || ""}</td>
+                <td data-label="Manufacturer">${entry.manufacturer || ""}</td>
+                <td data-label="Actions">
                     <button class="btn edit-btn" data-batch="${batchNumber}">Edit</button>
                     <button class="btn delete-btn" data-batch="${batchNumber}" style="background-color:#dc3545; color:white;">Delete</button>
                 </td>
             `;
       }
-      addTableListeners(); // Re-attach listeners to the new buttons
+      addTableListeners();
     };
 
-    // Fetches the latest data from the server and then re-renders the table
     const fetchAndRender = () => {
       fetch("/api/public-db")
         .then((res) => res.json())
@@ -164,7 +190,6 @@
         });
     };
 
-    // Shows the form for either adding a new entry or editing an existing one
     const showForm = (isEdit = false, batchKey = "") => {
       entryForm.reset();
       document.getElementById("original-batch-key").value = batchKey;
@@ -190,7 +215,6 @@
       entryFormPanel.style.display = "none";
     };
 
-    // Attaches click listeners to all the 'Edit' and 'Delete' buttons in the table
     const addTableListeners = () => {
       document.querySelectorAll(".edit-btn").forEach((btn) => {
         btn.addEventListener("click", (e) =>
@@ -200,19 +224,19 @@
       document.querySelectorAll(".delete-btn").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           const batchKey = e.target.dataset.batch;
-          if (
-            confirm(
-              `Are you sure you want to delete the entry for batch "${batchKey}"?`
-            )
-          ) {
-            delete publicDb[batchKey];
-            saveChanges(publicDb);
-          }
+          // MODIFIED: Use the custom modal instead of the default confirm()
+          showConfirmModal(
+            "Confirm Deletion",
+            `Are you sure you want to delete the entry for batch "${batchKey}"?`,
+            () => {
+              delete publicDb[batchKey];
+              saveChanges(publicDb);
+            }
+          );
         });
       });
     };
 
-    // Saves the provided database object to the server
     const saveChanges = (dbToSave) => {
       fetch("/api/public-db", {
         method: "POST",
@@ -224,12 +248,11 @@
           showToast(data.message, data.status !== "success");
           if (data.status === "success") {
             hideForm();
-            fetchAndRender(); // Refresh table from server on success
+            fetchAndRender();
           }
         });
     };
 
-    // --- Main Event Listeners ---
     showFormBtn.addEventListener("click", () => showForm(false));
     cancelBtn.addEventListener("click", hideForm);
 
@@ -237,14 +260,10 @@
       e.preventDefault();
       const originalKey = document.getElementById("original-batch-key").value;
       const newKey = document.getElementById("batch-key").value.trim();
-
       let updatedDb = { ...publicDb };
-
-      // If the batch number (the key) has been changed, we must remove the old entry
       if (originalKey && originalKey !== newKey) {
         delete updatedDb[originalKey];
       }
-
       updatedDb[newKey] = {
         drug_name: document.getElementById("drug-name").value.trim(),
         manufacturer: document.getElementById("manufacturer").value.trim(),
@@ -254,7 +273,6 @@
       saveChanges(updatedDb);
     });
 
-    // Initial load of data when the page opens
     fetchAndRender();
   });
 </script>

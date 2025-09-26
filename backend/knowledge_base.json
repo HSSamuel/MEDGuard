@@ -28,7 +28,7 @@
       "suspicious",
       "guide to report"
     ],
-    "answer": "<p>If you suspect a drug is counterfeit, you should report it immediately. Here's how:</p><ol style='padding-left: 20px; margin-top: 10px;'><li>Go to the 'Report Counterfeit' section at the bottom of the main page.</li><li>Enter the drug's name and batch number.</li><li><strong>Crucially</strong>, if you can, upload a photo of the drug. This is very helpful for regulators.</li><li>Add the location where you found it and any other notes.</li><li>Click the 'Report' button to submit. Your report is anonymous.</li></ol>",
+    "answer": "<p>If you suspect a drug is counterfeit, you should report it immediately. Here's how:</p><ol style='padding-left: 20px; margin-top: 10px;'><li>Go to the 'Report Counterfeit' section at the bottom of the main page.</li><li>Enter the drug's name and batch number.</li><li><strong>Crucially</strong>, if you can, upload a photo of the drug. This is very helpful for regulators.</li><li>Add the location where you found it and any other notes.</li><li>Click the 'Report' button to submit.</li></ol>",
     "action": {
       "type": "scroll",
       "target": ".report-panel",
@@ -51,6 +51,14 @@
   "dangers": {
     "keywords": ["dangers", "risk", "harmful", "safe"],
     "answer": "<p>Counterfeit drugs are a serious public health threat. They might contain incorrect ingredients, wrong dosages, or even toxic substances.</p><p>Taking them can lead to severe health complications, treatment failure, and can even be fatal. This is why verifying your medication is so important.</p>"
+  },
+  "signs_counterfeit": {
+    "keywords": ["signs", "look for", "identify", "spot", "tell if fake"],
+    "answer": "<p>While it can be difficult to tell, here are some common signs of a counterfeit drug:</p><ul style='padding-left: 20px; margin-top: 10px;'><li><strong>Packaging:</strong> Look for spelling mistakes, grammatical errors, or poor quality printing on the box.</li><li><strong>Seals:</strong> Check if the safety seals are broken, missing, or have been tampered with.</li><li><strong>Appearance:</strong> The pills may have an incorrect color, shape, or size. They might be cracked, crumbly, or have an unusual smell.</li><li><strong>Price:</strong> Be cautious if the price is significantly lower than what you would normally pay.</li></ul><p>If you notice any of these signs, do not use the drug and report it immediately.</p>"
+  },
+  "report_anonymity": {
+    "keywords": ["anonymous", "private", "track me", "is it safe"],
+    "answer": "<p>Your privacy is very important. When you submit a report without being logged in, it is completely anonymous.</p><p>If you are logged in, your report is linked to your account so you can see its status on your 'My Reports' page. However, the system is designed so that personal identifying information is not the primary focus for regulators, who are more concerned with the drug and location details.</p>"
   },
   "nafdac": {
     "keywords": ["nafdac", "agency", "regulator"],

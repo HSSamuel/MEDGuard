@@ -575,6 +575,10 @@
             actionBtn.textContent = data.action.buttonText;
             actionBtn.dataset.actionType = data.action.type;
             actionBtn.dataset.actionTarget = data.action.target;
+            // NEW: Store prefill data as a JSON string
+            if (data.action.prefill) {
+              actionBtn.dataset.prefill = JSON.stringify(data.action.prefill);
+            }
             actionBtn.style.marginTop = "10px";
             messageDiv.appendChild(actionBtn);
           }
@@ -617,14 +621,14 @@
               console.error("Error with AI chat:", error);
               addMessage(
                 {
-                  answer:
-                    "I'm sorry, I'm having trouble connecting right now. Please try again later.",
+                  answer: "I'm sorry, I'm having trouble connecting right now.",
                 },
                 "bot"
               );
             });
         };
 
+        // MODIFIED: This now handles scroll, link, and prefill actions
         chatMessages.addEventListener("click", (event) => {
           if (event.target.classList.contains("chat-action-btn")) {
             const button = event.target;
@@ -638,6 +642,25 @@
                   behavior: "smooth",
                   block: "center",
                 });
+              }
+            } else if (actionType === "link") {
+              window.open(actionTarget, "_blank");
+            } else if (actionType === "prefill_and_scroll") {
+              const prefillData = JSON.parse(button.dataset.prefill);
+              const inputElement = document.getElementById(
+                prefillData.target_id
+              );
+              if (inputElement) {
+                inputElement.value = prefillData.value;
+              }
+
+              const targetElement = document.querySelector(actionTarget);
+              if (targetElement) {
+                targetElement.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
+                // Highlight the form for the user
                 targetElement.style.transition = "box-shadow 0.5s ease-in-out";
                 targetElement.style.boxShadow =
                   "0 0 20px rgba(146, 243, 148, 0.8)";
@@ -645,9 +668,8 @@
                   targetElement.style.boxShadow = "";
                 }, 2000);
               }
-            } else if (actionType === "link") {
-              window.open(actionTarget, "_blank");
             }
+
             chatContainer.classList.add("hidden");
           }
         });
@@ -669,32 +691,26 @@
             if (e.key === "Enter") sendMessage(chatInput.value);
           });
 
-        if (chatToggleBtn) {
-          chatToggleBtn.addEventListener("click", () => {
-            if (chatContainer.classList.contains("hidden")) {
-              chatMessages.innerHTML = "";
-              addMessage(
-                {
-                  answer:
-                    "Hello! I am the MedGuard Assistant. I can answer questions about verifying drugs, reporting counterfeits, and more. How can I help you today?",
-                  quick_replies: [
-                    {
-                      text: "How do I report a drug?",
-                      payload: "guide to report",
-                    },
-                    { text: "How do I verify a drug?", payload: "verify" },
-                    {
-                      text: "Check a batch status",
-                      payload: "status of batch",
-                    },
-                  ],
-                },
-                "bot"
-              );
-            }
-          });
+        const toggleChat = () => {
+          chatContainer.classList.toggle("hidden");
+          if (!chatContainer.classList.contains("hidden")) {
+            // When opening the chat, reset to the initial greeting
+            chatMessages.innerHTML = "";
+            addMessage(
+              {
+                answer: "Hello! I am the MedGuard Assistant. How can I help?",
+                quick_replies: [
+                  { text: "How to report a drug?", payload: "guide to report" },
+                  { text: "How to verify a drug?", payload: "verify" },
+                  { text: "Check a batch status", payload: "status of batch" },
+                ],
+              },
+              "bot"
+            );
+          }
+        };
 
-          const toggleChat = () => chatContainer.classList.toggle("hidden");
+        if (chatToggleBtn) {
           chatToggleBtn.addEventListener("click", toggleChat);
           const chatCloseBtn = document.getElementById("chat-close-btn");
           if (chatCloseBtn) {
