@@ -1,72 +1,105 @@
 import requests
-from flask import Blueprint, render_template, request, url_for, current_app
+import re
+from flask import Blueprint, render_template, request, url_for, current_app, session
 from backend.database import get_db
-from datetime import datetime
-from backend.emdex import get_drug_info_from_emdex # Import the new function
+from datetime import datetime, timedelta
+from backend.emdex import get_drug_info_from_emdex
+from math import radians, sin, cos, sqrt, atan2
 
-# The blueprint is already registered with a '/verify' prefix in app.py
 verify_bp = Blueprint("verify", __name__)
 
+def haversine(lat1, lon1, lat2, lon2):
+    """Calculate the distance between two points on Earth."""
+    R = 6371
+    dLat, dLon = radians(lat2 - lat1), radians(lon2 - lat1)
+    a = sin(dLat/2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dLon/2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1-a))
+    return R * c
+
+def check_scan_anomalies(conn, batch_number):
+    """Analyze scan logs for suspicious activity."""
+    logs = conn.execute(
+        "SELECT latitude, longitude, scanned_at FROM scan_logs WHERE batch_number = ? ORDER BY scanned_at DESC",
+        (batch_number,)
+    ).fetchall()
+
+    if len(logs) < 2:
+        return None
+
+    recent_scans = [log for log in logs if log['scanned_at'] > datetime.now() - timedelta(hours=1)]
+    if len(recent_scans) > 50:
+        return f"This code has been scanned an unusually high number of times ({len(recent_scans)} times in the last hour)."
+
+    latest_log = logs[0]
+    previous_log = logs[1]
+    
+    if latest_log['latitude'] and previous_log['latitude']:
+        distance = haversine(latest_log['latitude'], latest_log['longitude'], previous_log['latitude'], previous_log['longitude'])
+        time_diff = latest_log['scanned_at'] - previous_log['scanned_at']
+        hours = time_diff.total_seconds() / 3600
+        
+        if hours > 0:
+            speed = distance / hours
+            if speed > 900:
+                return (f"This code was recently scanned in two locations that are too far apart to be plausible "
+                        f"({int(distance)} km apart in {int(hours*60)} minutes). This suggests the code has been cloned.")
+    
+    return None
 
 @verify_bp.route("/<path:scanned_data>")
 def verify_smart_scan(scanned_data):
     """
-    This is the new "Smart Scan" endpoint. It intelligently handles any data
-    scanned from a QR code by checking multiple sources.
+    Intelligently handles any scanned data, distinguishing between MedGuard batches,
+    barcodes, and other QR types.
     """
     conn = get_db()
     data = scanned_data.strip()
-    verified_on_str = datetime.now().strftime("%B %d, %Y at %I:%M %p") + " in Lagos, Nigeria"
     
-    # --- Logic Path 1: Check the MedGuard Database (Highest Trust) ---
+    conn.execute(
+        "INSERT INTO scan_logs (batch_number, ip_address, user_id) VALUES (?, ?, ?)",
+        (data, request.remote_addr, session.get("user_id"))
+    )
+    conn.commit()
+    
+    anomaly_warning = check_scan_anomalies(conn, data)
+    verified_on_str = datetime.now().strftime("%B %d, %Y at %I:%M %p")
+    
     row = conn.execute(
         "SELECT name AS drug_name, batch_number, mfg_date, expiry_date, manufacturer FROM drugs WHERE batch_number = ?", (data,)
     ).fetchone()
 
     if row:
-        # If a match is found, check if the drug is expired.
         try:
             expiry_date = datetime.strptime(str(row["expiry_date"]), "%Y-%m-%d").date()
-            if expiry_date < datetime.today().date():
-                return render_template("verify.html", status="expired", batch=row, verified_on=verified_on_str)
-            else:
-                return render_template("verify.html", status="valid", batch=row, verified_on=verified_on_str)
+            status = "expired" if expiry_date < datetime.today().date() else "valid"
+            return render_template("verify.html", status=status, batch=row, verified_on=verified_on_str, anomaly_warning=anomaly_warning)
         except (ValueError, TypeError):
             return render_template("verify.html", status="notfound", error="Could not parse expiry date.", verified_on=verified_on_str)
 
-    # --- UPDATED: Logic Path 2: Call the EMDEX Service ---
     try:
         api_key = current_app.config.get("EMDEX_API_KEY")
         public_data = get_drug_info_from_emdex(api_key, data)
-        
         if public_data:
-            # We found public info from our trusted source.
-            return render_template("verify.html", status="public_info_found", public_data=public_data, verified_on=verified_on_str)
-
+            return render_template("verify.html", status="public_info_found", public_data=public_data, verified_on=verified_on_str, anomaly_warning=anomaly_warning)
     except Exception as e:
         print(f"An error occurred while calling the EMDEX service: {e}")
-        # If the service fails, we continue to the next logic path.
 
-    # This block runs only if the drug was not found in the MedGuard database.
-    try:
-        nafdac_api_url = url_for('nafdac_api.lookup_drug', batch_number=data, _external=True)
-        response = requests.get(nafdac_api_url, timeout=5) # Added a timeout for safety
-        
-        if response.status_code == 200:
-            public_data = response.json()
-            # We found public info, but it's not MedGuard-verified.
-            return render_template("verify.html", status="public_info_found", public_data=public_data, verified_on=verified_on_str)
-    except requests.exceptions.RequestException as e:
-        print(f"Could not connect to the simulated NAFDAC API: {e}")
+    if data.lower().startswith("http"):
+        return render_template("verify.html", status="external_url", external_url=data, verified_on=verified_on_str, scan_type='QR code')
 
-    # --- Logic Path 3: Check if it's a URL to an external website ---
-    if data.lower().startswith("http://") or data.lower().startswith("https://"):
-        return render_template("verify.html", status="external_url", external_url=data, verified_on=verified_on_str)
-
-    # --- Logic Path 4: If it's none of the above, it's unrecognized ---
-    return render_template(
-        "verify.html",
-        status="notfound",
-        scanned_content=data,
-        verified_on=verified_on_str
-    )
+    if data.isnumeric():
+        return render_template(
+            "verify.html",
+            status="unregistered_product_code", # MODIFIED: Use the new status
+            scanned_content=data,
+            verified_on=verified_on_str,
+            scan_type='Barcode' # MODIFIED: Specify the scan type
+        )
+    else:
+        return render_template(
+            "verify.html",
+            status="notfound",
+            scanned_content=data,
+            verified_on=verified_on_str,
+            scan_type='QR code' # MODIFIED: Specify the scan type
+        )

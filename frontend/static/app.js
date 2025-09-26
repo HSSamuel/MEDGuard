@@ -6,11 +6,6 @@ const taglines = [
   "No more guessing — just scanning.",
   "Keeping counterfeit meds off the streets.",
   "Your pocket pharmacist.",
-  "Authenticity in every scan.",
-  "Empowering patients, one scan at a time.",
-  "Securing Nigeria's medicine supply.",
-  "Verify before you trust.",
-  "Scan. Verify. Report.",
 ];
 let taglineIndex = 0;
 function rotateTagline() {
@@ -24,19 +19,38 @@ setInterval(rotateTagline, 3000);
 rotateTagline(); // initial load
 
 // =========================
-// QR Scanner
+// QR & Barcode Scanner
 // =========================
 let html5QrCode;
 const qrRegionId = "qr-reader";
 
+// NEW: Define all the code formats we want to support
+const supportedFormats = [
+  Html5QrcodeSupportedFormats.QR_CODE,
+  Html5QrcodeSupportedFormats.UPC_A,
+  Html5QrcodeSupportedFormats.UPC_E,
+  Html5QrcodeSupportedFormats.EAN_13,
+  Html5QrcodeSupportedFormats.EAN_8,
+];
+
 function startScanner() {
   if (!html5QrCode) {
-    html5QrCode = new Html5Qrcode(qrRegionId);
+    // MODIFIED: Pass a config object to enable verbose logging for debugging
+    html5QrCode = new Html5Qrcode(qrRegionId, { verbose: false });
   }
+
+  // MODIFIED: Update the scanner configuration
+  const scannerConfig = {
+    fps: 10,
+    qrbox: { width: 250, height: 150 }, // Rectangular box is better for barcodes
+    // Tell the scanner to only look for the formats we've defined
+    formatsToSupport: supportedFormats,
+  };
+
   html5QrCode
     .start(
       { facingMode: "environment" },
-      { fps: 10, qrbox: 250 },
+      scannerConfig,
       (decodedText) => {
         stopScanner();
         openVerificationPage(decodedText);
@@ -50,7 +64,7 @@ function startScanner() {
 }
 
 function stopScanner() {
-  if (html5QrCode) {
+  if (html5QrCode && html5QrCode.isScanning) {
     html5QrCode.stop().catch((err) => console.error("Stop failed:", err));
   }
 }
@@ -85,23 +99,19 @@ function reportCounterfeit() {
   reportBtn.textContent = "Getting location...";
   reportBtn.disabled = true;
 
-  // --- NEW: Geolocation Logic ---
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        // Success: We got the location, now send the report
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
         sendReportData(drug, batch, location, note, image, lat, lon);
       },
       () => {
-        // Error or user denied permission: Send the report without location
         alert("Could not get location. Submitting report without it.");
         sendReportData(drug, batch, location, note, image, null, null);
       }
     );
   } else {
-    // Browser doesn't support geolocation
     alert(
       "Geolocation is not supported by your browser. Submitting report without it."
     );
@@ -127,7 +137,6 @@ function sendReportData(
   if (image) {
     formData.append("image", image);
   }
-  // Add coordinates to the form data
   if (latitude && longitude) {
     formData.append("latitude", latitude);
     formData.append("longitude", longitude);
@@ -174,13 +183,11 @@ function showMessage(msg, type) {
 // Event listeners
 // =========================
 document.addEventListener("DOMContentLoaded", () => {
-  // Start/Stop scanner
   const startBtn = document.getElementById("start-scan");
   const stopBtn = document.getElementById("stop-scan");
   if (startBtn) startBtn.addEventListener("click", startScanner);
   if (stopBtn) stopBtn.addEventListener("click", stopScanner);
 
-  // Manual verify
   const verifyForm = document.getElementById("verify-form");
   if (verifyForm) {
     verifyForm.addEventListener("submit", (event) => {
@@ -194,7 +201,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Report counterfeit
   const reportBtn = document.getElementById("report-btn");
   if (reportBtn) {
     reportBtn.addEventListener("click", reportCounterfeit);

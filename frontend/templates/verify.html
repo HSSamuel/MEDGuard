@@ -20,8 +20,9 @@
   .external_url {
     background: #ffebee;
   }
-  /* NEW: Style for when public info is found */
-  .public_info_found {
+  .public_info_found,
+  .unregistered_product_code {
+    /* MODIFIED: Added new status */
     background: #e3f2fd; /* A light blue to distinguish it */
   }
 
@@ -35,7 +36,7 @@
     font-size: 1.5em;
   }
   .status-icon {
-    font-size: 2.5em; /* Larger icon for more impact */
+    font-size: 2.5em;
     margin-bottom: 10px;
   }
   .subtle {
@@ -86,11 +87,21 @@
       style="max-height: 60px; margin-bottom: 10px"
     />
 
-    <!-- ================================= -->
-    <!-- DYNAMIC CONTENT BASED ON STATUS -->
-    <!-- ================================= -->
-
-    {% if status == 'valid' %}
+    {% if anomaly_warning %}
+    <div
+      style="
+        background: #fff3cd;
+        color: #856404;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #ffeeba;
+        margin-bottom: 20px;
+      "
+    >
+      <h3 style="margin-top: 0; color: #856404">🚨 Security Alert</h3>
+      <p style="margin-bottom: 0">{{ anomaly_warning }}</p>
+    </div>
+    {% endif %} {% if status == 'valid' %}
     <div class="status-icon" style="color: #2e7d32">✅</div>
     <h2 style="color: #2e7d32">Batch Verified by MedGuard</h2>
     <p class="subtle">
@@ -102,8 +113,6 @@
     <p class="subtle">
       This is a registered drug, but it has passed its expiry date. Do not use.
     </p>
-
-    <!-- NEW: Logic block to display public information -->
     {% elif status == 'public_info_found' %}
     <div class="status-icon" style="color: #007bff">ℹ️</div>
     <h2 style="color: #007bff">Public Information Found</h2>
@@ -111,7 +120,6 @@
       Disclaimer: This information is from a public database and has
       <u>not</u> been independently verified by MedGuard.
     </p>
-
     {% elif status == 'external_url' %}
     <div class="status-icon" style="color: #c62828">🌐</div>
     <h2 style="color: #c62828">External Website Link</h2>
@@ -119,17 +127,26 @@
       This QR code points to an external website. MedGuard cannot verify its
       authenticity. Proceed with caution.
     </p>
+
+    {% elif status == 'unregistered_product_code' %}
+    <div class="status-icon" style="color: #007bff">ℹ️</div>
+    <h2 style="color: #007bff">Unregistered Product</h2>
+    <p class="subtle">
+      This appears to be a standard product, not a MedGuard verification
+      product. While MedGuard cannot verify this item, it has not been flagged
+      as counterfeit in our system.
+    </p>
+
     {% else %} {# This handles 'notfound' and any other case #}
     <div class="status-icon" style="color: #c62828">❌</div>
-    <h2 style="color: #c62828">Not Found in Any System</h2>
+    <h2 style="color: #c62828">Not Found in MedGuard System</h2>
     <p class="subtle">
-      This code is not registered in the MedGuard system or any known public
-      database. This drug may be counterfeit. Please report it.
+      This product is not registered in the MedGuard system. This drug may be
+      counterfeit. Please report it.
     </p>
     {% endif %}
   </div>
 
-  <!-- Show MedGuard-verified details -->
   {% if batch %}
   <table class="details-table">
     <tr>
@@ -149,10 +166,7 @@
       <td>{{ batch.expiry_date }}</td>
     </tr>
   </table>
-  {% endif %}
-
-  <!-- NEW: Show public info details -->
-  {% if public_data %}
+  {% endif %} {% if public_data %}
   <table class="details-table">
     <tr>
       <td><strong>Drug Name:</strong></td>
@@ -171,10 +185,7 @@
       <td>{{ public_data.details }}</td>
     </tr>
   </table>
-  {% endif %}
-
-  <!-- Show the external URL if the code was a link -->
-  {% if external_url %}
+  {% endif %} {% if external_url %}
   <div style="text-align: center; word-wrap: break-word; color: #333">
     <p>The scanned code links to the following address:</p>
     <strong
@@ -190,12 +201,12 @@
       >Proceed to Website</a
     >
   </div>
-  {% endif %}
-
-  <!-- Show the unrecognized content if it wasn't found -->
-  {% if scanned_content %}
+  {% endif %} {% if scanned_content %}
   <div style="text-align: center; word-wrap: break-word; color: #333">
-    <p>The scanned QR code contained the following unrecognized data:</p>
+    <p>
+      The scanned {{ scan_type or 'code' }} contained the following unrecognized
+      data:
+    </p>
     <strong
       style="background: #eee; padding: 5px; border-radius: 4px; color: #000"
       >{{ scanned_content }}</strong

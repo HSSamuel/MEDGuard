@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block content %}
 <div class="main-content-wrapper">
   <div class="panel qr-panel">
-    <h2>📷 Scan QR Code</h2>
+    <h2>📷 Scan QR / Barcode</h2>
     <div id="qr-reader" class="qr-reader"></div>
     <div style="margin-top: 10px">
       <button id="start-scan" class="btn btn-yellow">Start Camera</button>
@@ -28,7 +28,6 @@
   <div id="result"></div>
 
   <div class="panel report-panel">
-    <!-- REPORT COUNTERFEIT -->
     <div class="panel">
       <h2>🚨 Report Counterfeit</h2>
       <div class="inline-form" style="margin-bottom: 8px">
@@ -44,7 +43,6 @@
           class="input"
           placeholder="Location (optional)"
         />
-        <!-- === NEW HIDDEN FIELDS FOR GEOLOCATION === -->
         <input type="hidden" id="report-latitude" name="latitude" />
         <input type="hidden" id="report-longitude" name="longitude" />
       </div>

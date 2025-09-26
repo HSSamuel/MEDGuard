@@ -81,7 +81,7 @@ def init_db():
         image_filename TEXT,
         latitude REAL,
         longitude REAL,
-        image_analysis_result TEXT, -- THIS IS THE NEW COLUMN --
+        image_analysis_result TEXT,
         reported_on TIMESTAMP DEFAULT (datetime('now')),
         status INTEGER DEFAULT 0,
         FOREIGN KEY (user_id) REFERENCES users (id)
@@ -97,6 +97,20 @@ def init_db():
             password_hash TEXT NOT NULL,
             is_verified INTEGER DEFAULT 0,
             role TEXT NOT NULL
+        )
+    """)
+    
+    # NEW: Create the scan_logs table
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS scan_logs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            batch_number TEXT NOT NULL,
+            scanned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            latitude REAL,
+            longitude REAL,
+            ip_address TEXT,
+            user_id INTEGER,
+            FOREIGN KEY (user_id) REFERENCES users (id)
         )
     """)
 
