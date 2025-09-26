@@ -22,8 +22,7 @@
   }
   .public_info_found,
   .unregistered_product_code {
-    /* MODIFIED: Added new status */
-    background: #e3f2fd; /* A light blue to distinguish it */
+    background: #e3f2fd;
   }
 
   /* --- Header and Status Styles --- */
@@ -77,6 +76,26 @@
   .btn-link:hover {
     background: #0056b3;
   }
+
+  .next-steps {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    text-align: left;
+    color: #333;
+  }
+  .next-steps h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #0056b3;
+  }
+  .next-steps ul {
+    padding-left: 20px;
+    margin-bottom: 0;
+  }
+  .next-steps li {
+    margin-bottom: 10px;
+  }
 </style>
 
 <div class="card {{ status }}">
@@ -124,24 +143,24 @@
     <div class="status-icon" style="color: #c62828">🌐</div>
     <h2 style="color: #c62828">External Website Link</h2>
     <p class="subtle">
-      This QR code points to an external website. MedGuard cannot verify its
+      This QR/Barcode  points to an external website. MedGuard cannot verify its
       authenticity. Proceed with caution.
     </p>
 
     {% elif status == 'unregistered_product_code' %}
     <div class="status-icon" style="color: #007bff">ℹ️</div>
-    <h2 style="color: #007bff">Unregistered Product</h2>
+    <h2 style="color: #007bff">Unregistered Product Code</h2>
     <p class="subtle">
-      This appears to be a standard product, not a MedGuard verification
-      product. While MedGuard cannot verify this item, it has not been flagged
-      as counterfeit in our system.
+      This appears to be a standard product code, not a MedGuard verification
+      code. MedGuard cannot verify this item, but it has not been flagged as
+      counterfeit.
     </p>
 
     {% else %} {# This handles 'notfound' and any other case #}
     <div class="status-icon" style="color: #c62828">❌</div>
     <h2 style="color: #c62828">Not Found in MedGuard System</h2>
     <p class="subtle">
-      This product is not registered in the MedGuard system. This drug may be
+      This QR/Barcode  is not registered in the MedGuard system. This drug may be
       counterfeit. Please report it.
     </p>
     {% endif %}
@@ -203,14 +222,33 @@
   </div>
   {% endif %} {% if scanned_content %}
   <div style="text-align: center; word-wrap: break-word; color: #333">
-    <p>
-      The scanned {{ scan_type or 'code' }} contained the following unrecognized
-      data:
-    </p>
+    <p>The scanned QR/Barcode contained the following unrecognized data:</p>
     <strong
       style="background: #eee; padding: 5px; border-radius: 4px; color: #000"
       >{{ scanned_content }}</strong
     >
+  </div>
+  {% endif %} {% if status == 'notfound' or status ==
+  'unregistered_product_code' %}
+  <div class="next-steps">
+    <h3>What To Do Next</h3>
+    <ul>
+      <li>
+        <strong>Cross-check with NAFDAC:</strong> You can search for the drug on
+        the official NAFDAC Greenbook or use their Mobile Authentication Service
+        (MAS) for certain products.
+      </li>
+      <li>
+        <strong>Report to MedGuard:</strong> If you are suspicious, use the
+        "Report Counterfeit" form on our main page to alert regulators through
+        our system.
+      </li>
+      <li>
+        <strong>Report Officially to NAFDAC:</strong> For a direct report to the
+        authorities, you can contact NAFDAC's Pharmacovigilance department via
+        email at <a href="mailto:nafdac@nafdac.gov.ng">nafdac@nafdac.gov.ng</a>.
+      </li>
+    </ul>
   </div>
   {% endif %}
 
