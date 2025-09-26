@@ -252,6 +252,16 @@
   </div>
   {% endif %}
 
+  {% if status == 'valid' and batch %}
+  <div class="next-steps">
+      <h3>Experiencing a Side Effect?</h3>
+      <p style="text-align: center;">Help keep our medicines safe by reporting any unexpected reactions. Your contribution is vital for public health.</p>
+      <div style="text-align: center;">
+          <a href="{{ url_for('adr_report_form', drug_id=batch.id) }}" class="btn-link" style="background-color: #ff8f00;">Report a Side Effect</a>
+      </div>
+  </div>
+  {% endif %}
+
   <div class="verified-on">Checked on {{ verified_on }}</div>
 
   <div style="text-align: center; margin-top: 30px">

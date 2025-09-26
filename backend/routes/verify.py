@@ -64,8 +64,9 @@ def verify_smart_scan(scanned_data):
     anomaly_warning = check_scan_anomalies(conn, data)
     verified_on_str = datetime.now().strftime("%B %d, %Y at %I:%M %p")
     
+    # --- THIS IS THE CORRECTED LINE ---
     row = conn.execute(
-        "SELECT name AS drug_name, batch_number, mfg_date, expiry_date, manufacturer FROM drugs WHERE batch_number = ?", (data,)
+        "SELECT id, name AS drug_name, batch_number, mfg_date, expiry_date, manufacturer FROM drugs WHERE batch_number = ?", (data,)
     ).fetchone()
 
     if row:

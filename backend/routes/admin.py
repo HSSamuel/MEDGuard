@@ -26,7 +26,9 @@ def admin_dashboard():
         return redirect(url_for("admin_login"))
     try:
         conn = get_db()
-        rows = conn.execute("""
+        
+        # --- Fetch Counterfeit Reports (Existing Code) ---
+        counterfeit_rows = conn.execute("""
             SELECT r.id, r.drug_name, r.batch_number, r.location, r.note, r.image_filename, r.image_analysis_result,
                    strftime('%Y-%m-%d %H:%M:%S', r.reported_on) AS reported_on, r.status,
                    u.email AS submitted_by
@@ -35,9 +37,49 @@ def admin_dashboard():
             ORDER BY r.reported_on DESC
             LIMIT 20
         """).fetchall()
-        reports = [dict(r) for r in rows]
+        counterfeit_reports = [dict(r) for r in counterfeit_rows]
+
+        # --- ADR Reports Filtering Logic ---
+        adr_search = request.args.get("adr_search", "").strip()
+        adr_start = request.args.get("adr_start", "").strip()
+        adr_end = request.args.get("adr_end", "").strip()
+
+        adr_query = """
+            SELECT
+                ar.id, ar.patient_age_range, ar.patient_gender,
+                ar.reaction_description, ar.status,
+                strftime('%Y-%m-%d %H:%M:%S', ar.report_date) AS report_date,
+                d.name as drug_name, d.batch_number
+            FROM adr_reports ar
+            JOIN drugs d ON ar.drug_id = d.id
+            WHERE 1=1
+        """
+        adr_params = []
+
+        if adr_search:
+            adr_query += " AND (d.name LIKE ? OR d.batch_number LIKE ? OR ar.reaction_description LIKE ?)"
+            adr_params.extend([f"%{adr_search}%", f"%{adr_search}%", f"%{adr_search}%"])
+
+        if adr_start and adr_end:
+            adr_query += " AND date(ar.report_date) BETWEEN date(?) AND date(?)"
+            adr_params.extend([adr_start, adr_end])
+
+        adr_query += " ORDER BY ar.report_date DESC"
+
+        adr_rows = conn.execute(adr_query, adr_params).fetchall()
+        adr_reports = [dict(r) for r in adr_rows]
+        
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        return render_template('admin.html', reports=reports, current_time=current_time)
+        
+        return render_template(
+            'admin.html', 
+            reports=counterfeit_reports, 
+            adr_reports=adr_reports,
+            current_time=current_time,
+            adr_search=adr_search,
+            adr_start=adr_start,
+            adr_end=adr_end
+        )
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": f"Server error: {str(e)}"}), 500

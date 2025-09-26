@@ -1,0 +1,174 @@
+{% extends "base.html" %} {% block content %}
+<style>
+  .adr-form-panel {
+    max-width: 700px;
+    margin: 20px auto;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--mg-yellow);
+  }
+  .input,
+  select,
+  textarea {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    color: #fff;
+  }
+  .input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--mg-yellow);
+    box-shadow: 0 0 5px rgba(146, 243, 148, 0.5);
+  }
+  .drug-info-box {
+    background: rgba(0, 0, 0, 0.25);
+    border-left: 4px solid var(--mg-yellow);
+    padding: 15px;
+    border-radius: 8px;
+  }
+</style>
+
+<div class="panel adr-form-panel">
+  <h2>Report an Adverse Reaction</h2>
+  <p>
+    You are reporting a side effect for the following medication. Please provide
+    as much detail as possible. Your report is anonymous and helps protect
+    public health.
+  </p>
+
+  <div class="drug-info-box" style="margin-bottom: 25px">
+    <p><strong>Drug Name:</strong> {{ drug.name }}</p>
+    <p><strong>Batch Number:</strong> {{ drug.batch_number }}</p>
+    <p><strong>Manufacturer:</strong> {{ drug.manufacturer }}</p>
+  </div>
+
+  <form id="adr-form">
+    <input type="hidden" id="drug-id" value="{{ drug.id }}" />
+
+    <div class="form-group">
+      <label for="patient-age-range">Patient's Age Range</label>
+      <select id="patient-age-range" class="input">
+        <option value="" disabled selected>
+          Please select an age range...
+        </option>
+        <option value="0-17">0 - 17 years</option>
+        <option value="18-29">18 - 29 years</option>
+        <option value="30-49">30 - 49 years</option>
+        <option value="50-65">50 - 65 years</option>
+        <option value="66+">66 years and over</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="patient-gender">Patient's Gender</label>
+      <select id="patient-gender" class="input">
+        <option value="" disabled selected>Please select a gender...</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Prefer not to say">Prefer not to say</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="reaction-start-date">When did the reaction start?</label>
+      <input type="date" id="reaction-start-date" class="input" />
+    </div>
+
+    <div class="form-group">
+      <label for="reaction-description"
+        >Please describe the side effect(s)
+        <span style="color: red">*</span></label
+      >
+      <textarea
+        id="reaction-description"
+        class="input"
+        style="min-height: 120px"
+        required
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="other-medications"
+        >Was the patient taking any other medications at the time?</label
+      >
+      <textarea
+        id="other-medications"
+        class="input"
+        placeholder="List other drugs, vitamins, or supplements. If none, leave blank."
+        style="min-height: 80px"
+      ></textarea>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-yellow"
+      style="width: 100%; padding: 12px; font-size: 16px"
+    >
+      Submit Secure Report
+    </button>
+  </form>
+
+  <div id="form-message" style="margin-top: 20px"></div>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const adrForm = document.getElementById("adr-form");
+    const messageDiv = document.getElementById("form-message");
+
+    if (adrForm) {
+      adrForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const submitButton = adrForm.querySelector('button[type="submit"]');
+        submitButton.textContent = "Submitting...";
+        submitButton.disabled = true;
+
+        const reportData = {
+          drug_id: document.getElementById("drug-id").value,
+          patient_age_range: document.getElementById("patient-age-range").value,
+          patient_gender: document.getElementById("patient-gender").value,
+          reaction_start_date: document.getElementById("reaction-start-date")
+            .value,
+          reaction_description: document
+            .getElementById("reaction-description")
+            .value.trim(),
+          other_medications: document
+            .getElementById("other-medications")
+            .value.trim(),
+        };
+
+        fetch("/api/adr-report", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(reportData),
+        })
+          .then((response) =>
+            response
+              .json()
+              .then((data) => ({ status: response.status, body: data }))
+          )
+          .then(({ status, body }) => {
+            if (status === 201) {
+              adrForm.style.display = "none";
+              messageDiv.innerHTML = `<div class="result-box result-valid"><h4>Report Submitted Successfully</h4><p>${body.message} Thank you for your contribution to public health.</p></div>`;
+            } else {
+              throw new Error(body.error || "An unknown error occurred.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error submitting ADR report:", error);
+            messageDiv.innerHTML = `<div class="result-box result-counterfeit"><h4>Submission Failed</h4><p>${error.message}</p></div>`;
+            submitButton.textContent = "Submit Secure Report";
+            submitButton.disabled = false;
+          });
+      });
+    }
+  });
+</script>
+{% endblock %}

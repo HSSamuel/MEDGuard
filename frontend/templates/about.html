@@ -1,122 +1,157 @@
 {% extends "base.html" %} {% block content %}
 <style>
+  .about-container {
+    max-width: 800px;
+    margin: 20px auto;
+  }
   .about-content {
     color: #ffffff;
-    line-height: 1.7;
+    line-height: 1.8;
+    font-size: 1.1em;
   }
   .about-content p {
-    text-align: justify;
+    text-align: justify; /* Justifies the main paragraphs */
     margin-bottom: 1.5em;
   }
   .about-content h2,
   .about-content h3 {
     text-align: center;
+    color: var(--mg-yellow);
+    border-bottom: 2px solid var(--mg-yellow);
+    padding-bottom: 10px;
+    margin-top: 2em;
+    margin-bottom: 1em;
   }
-  .about-content ul {
-    padding-left: 20px;
-    list-style-type: square;
+  .feature-list {
+    list-style-type: none;
+    padding-left: 0;
   }
-  .about-content li {
-    margin-bottom: 10px;
+  .feature-list li {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 5px solid var(--mg-yellow);
+    text-align: justify; /* Justifies the text within each feature list item */
+  }
+  .feature-list strong {
+    color: var(--mg-yellow);
+    display: block;
+    margin-bottom: 5px;
   }
   .center-container {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 40px;
   }
   .btn-home {
-    background-color: #24623b;
-    color: rgb(255, 255, 255);
-    padding: 12px 25px;
-    font-size: 16px;
+    background-color: var(--mg-green);
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s;
   }
-
-  @media (max-width: 600px) {
-    .about-content p {
-      text-align: justify;
-    }
+  .btn-home:hover {
+    background-color: #1a593e;
   }
 </style>
 
-<div class="panel">
-  <div style="text-align: center; margin-bottom: 20px">
+<div class="panel about-container">
+  <div style="text-align: center; margin-bottom: 30px">
     <img
       src="{{ url_for('static', filename='images/logo.png') }}"
       alt="MedGuard Logo"
-      style="max-height: 80px"
+      style="max-height: 90px"
     />
-    <h2 style="color: #8bff9a; margin-top: 10px">About MedGuard</h2>
+    <h1 style="color: var(--mg-yellow); margin-top: 15px; font-size: 2.5em">
+      About MedGuard
+    </h1>
+    <p style="font-size: 1.2em; font-style: italic; text-align: center">
+      Your Partner in Pharmaceutical Safety
+    </p>
   </div>
 
   <div class="about-content">
     <p>
-      <strong>MedGuard</strong> is a comprehensive web application designed with
-      a singular, critical mission: to detect, report, and manage counterfeit
-      drugs, thereby safeguarding public health across Nigeria. It serves as a
-      vital bridge between the public and regulatory bodies like NAFDAC,
-      empowering every citizen to become a guardian of our nation's medicine
-      supply.
+      <strong>MedGuard</strong> is a comprehensive, multi-faceted public health
+      platform designed with a singular, critical mission: to build a resilient
+      and transparent pharmaceutical supply chain in Nigeria. We aim to
+      safeguard public health by detecting, reporting, and managing counterfeit
+      drugs while also monitoring the safety of legitimate medications through
+      adverse reaction reporting.
     </p>
 
-    <!-- === NEW SECTION: THE PROBLEMS WE SOLVE === -->
-    <h3 style="color: #8bff9a">The Problems We Solve</h3>
+    <h3>The Silent Epidemic</h3>
     <p>
-      The circulation of counterfeit drugs is a silent epidemic with devastating
-      consequences. MedGuard was built to directly address these critical
-      challenges:
+      The circulation of counterfeit and substandard drugs is a silent epidemic
+      with devastating consequences. These fake medications can contain
+      incorrect ingredients, the wrong dosage, or even toxic substances, leading
+      to treatment failure, severe health complications, and death. This threat
+      erodes public trust in our healthcare system, putting every citizen at
+      risk.
     </p>
-    <ul>
+
+    <h3>A Two-Pronged Defense</h3>
+    <p>
+      MedGuard tackles this challenge with a dual-layered approach, empowering
+      both the public and regulatory bodies like NAFDAC to become active
+      guardians of our nation's medicine supply.
+    </p>
+
+    <ul class="feature-list">
       <li>
-        <strong>Protecting Lives:</strong> Fake medications can contain
-        incorrect ingredients, wrong dosages, or even toxic substances, leading
-        to treatment failure, severe health complications, and death. MedGuard
-        provides a first line of defense.
+        <strong>Counterfeit Drug Verification:</strong> We provide every
+        Nigerian with simple, powerful tools to instantly verify the
+        authenticity of their medication. Through QR code scanning and batch
+        number verification, our platform serves as a frontline defense against
+        dangerous fakes.
       </li>
       <li>
-        <strong>Building Trust:</strong> The fear of counterfeit drugs erodes
-        public trust in our healthcare system. By providing a reliable
-        verification tool, we help restore confidence in pharmacies and medical
-        providers.
-      </li>
-      <li>
-        <strong>Bridging the Information Gap:</strong> Many citizens lack an
-        easy, immediate way to verify their medications. MedGuard closes this
-        gap with accessible technology, including offline SMS functionality for
-        those without internet access.
-      </li>
-      <li>
-        <strong>Empowering Regulators:</strong> By crowdsourcing real-time data
-        on suspicious products, MedGuard provides authorities like NAFDAC with
-        the actionable intelligence needed to conduct targeted investigations
-        and protect the public more effectively.
+        <strong>Pharmacovigilance & Safety Monitoring:</strong> Our mission
+        extends beyond counterfeits. MedGuard provides a direct channel for the
+        public to report adverse drug reactions (ADRs) to legitimate
+        medications. This crowdsourced data is critical for post-market
+        surveillance and ensures that even approved drugs are continuously
+        monitored for safety.
       </li>
     </ul>
 
-    <h3 style="color: #8bff9a">Our Features</h3>
-    <ul>
+    <h3>Our Core Features</h3>
+    <ul class="feature-list">
       <li>
-        <strong>Instant QR Code & Batch Verification:</strong> Instantly
-        validate a drug's authenticity against a secure, regulator-managed
-        database.
+        <strong>Instant QR & Batch Verification:</strong>
+        Instantly validate a drug's authenticity against a secure,
+        regulator-managed database using your smartphone camera or by entering a
+        batch number.
       </li>
       <li>
-        <strong>Anonymous Counterfeit Reporting:</strong> Easily submit reports
-        of suspicious medications with photographic evidence to alert
-        authorities.
-      </li>
-      <li>
-        <strong>Admin Dashboard for Regulators:</strong> A powerful dashboard
-        for authorities to view, filter, and manage all submitted reports in
+        <strong>Anonymous Counterfeit Reporting:</strong>
+        Easily submit reports of suspicious medications, complete with
+        photographic evidence and location data, to alert authorities in
         real-time.
       </li>
       <li>
-        <strong>Smart Scan Technology:</strong> The system can intelligently
-        analyze any QR code to provide helpful information, even for
-        unregistered drugs.
+        <strong>Adverse Drug Reaction (ADR) Reporting:</strong>
+        After verifying a legitimate drug, users can report any unexpected side
+        effects, contributing vital data to national pharmacovigilance efforts.
+      </li>
+      <li>
+        <strong>Offline SMS Functionality:</strong>
+        For citizens without consistent internet access, our system works via
+        SMS, ensuring that everyone can verify their medication, anytime,
+        anywhere.
+      </li>
+      <li>
+        <strong>Admin Dashboard for Regulators:</strong>
+        A powerful, secure dashboard for authorities to view, filter, and manage
+        all submitted counterfeit and ADR reports, complete with data
+        visualizations and a live hotspot map.
       </li>
     </ul>
 
     <div class="center-container">
-      <a href="/" class="btn btn-home">Return to Home</a>
+      <a href="/" class="btn-home">Return to Home</a>
     </div>
   </div>
 </div>

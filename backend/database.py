@@ -114,6 +114,21 @@ def init_db():
         )
     """)
 
+    # NEW: Create the adr_reports table
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS adr_reports (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            drug_id INTEGER NOT NULL,
+            patient_age_range TEXT,
+            patient_gender TEXT,
+            reaction_description TEXT NOT NULL,
+            reaction_start_date TEXT,
+            other_medications TEXT,
+            report_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (drug_id) REFERENCES drugs (id)
+        )
+    """)
+
     # Add default admin user if table is empty
     c.execute("SELECT COUNT(*) FROM admin_users")
     if c.fetchone()[0] == 0:

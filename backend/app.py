@@ -46,6 +46,7 @@ from backend.routes.parser import parser_bp
 from backend.routes.public_db_admin import public_db_admin_bp
 from backend.routes.auth import auth_bp
 from backend.routes.analysis import analysis_bp
+from backend.routes.adr import adr_bp
 
 # A flag to check if the admin blueprint was imported successfully
 HAS_ADMIN = True
@@ -128,6 +129,17 @@ def create_app() -> Flask:
     def about_page():
         """Serves the 'About MedGuard' informational page."""
         return render_template("about.html")
+    
+    # NEW ROUTE FOR ADR FORM
+    @app.route("/report-adr/<int:drug_id>")
+    def adr_report_form(drug_id):
+        """Renders the form for reporting an adverse drug reaction."""
+        conn = get_db()
+        drug = conn.execute("SELECT id, name, batch_number, manufacturer FROM drugs WHERE id = ?", (drug_id,)).fetchone()
+        if not drug:
+            abort(404)
+        return render_template("adr_report.html", drug=drug)
+
 
     # --- Admin Authentication Routes ---
     @app.route("/admin/login", methods=["GET", "POST"])
@@ -183,6 +195,7 @@ def create_app() -> Flask:
     app.register_blueprint(public_db_admin_bp, url_prefix="/api")
     app.register_blueprint(auth_bp)  # No prefix, handles /login, /register, etc.
     app.register_blueprint(analysis_bp, url_prefix="/api")
+    app.register_blueprint(adr_bp)
 
     if HAS_ADMIN:
         app.register_blueprint(admin_bp, url_prefix="/admin")
