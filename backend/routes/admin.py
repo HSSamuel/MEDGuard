@@ -6,6 +6,7 @@ from flask import Blueprint, request, send_file, jsonify, url_for, render_templa
 from sqlite3 import IntegrityError
 from backend.models import insert_drug
 from backend.database import get_db
+from backend import ai_service
 import qrcode
 import io
 import traceback
@@ -27,9 +28,10 @@ def admin_dashboard():
     try:
         conn = get_db()
         
-        # --- Fetch Counterfeit Reports (Existing Code) ---
+        # --- Fetch Counterfeit Reports (Now includes summary) ---
         counterfeit_rows = conn.execute("""
-            SELECT r.id, r.drug_name, r.batch_number, r.location, r.note, r.image_filename, r.image_analysis_result,
+            SELECT r.id, r.drug_name, r.batch_number, r.location, r.note, r.image_filename, 
+                   r.image_analysis_result, r.summary,
                    strftime('%Y-%m-%d %H:%M:%S', r.reported_on) AS reported_on, r.status,
                    u.email AS submitted_by
             FROM reports r
@@ -470,6 +472,24 @@ def get_report_locations():
     return jsonify(locations)
 
 # =========================
+# NEW: AI Thematic Analysis Endpoint
+# =========================
+@admin_bp.route('/reports/analyze-themes', methods=['POST'])
+def analyze_report_themes():
+    if not session.get("admin_id"):
+        return jsonify({"error": "Authentication required"}), 401
+    
+    conn = get_db()
+    # This query fetches all report notes currently displayed on the dashboard
+    # (This can be adapted to use the same filters as the main dashboard if needed)
+    rows = conn.execute("SELECT note FROM reports WHERE note IS NOT NULL AND note != ''").fetchall()
+    notes = [row['note'] for row in rows]
+    
+    analysis_result = ai_service.analyze_themes(notes)
+    
+    return jsonify(analysis_result)
+
+# =========================
 # Page Rendering Routes
 # =========================
 @admin_bp.route('/hotspot-map')
@@ -486,7 +506,7 @@ def public_db_manager_page():
 
 
 # =========================
-# Analytics Endpoint
+# Analytics Endpoint for Charting
 # =========================
 @admin_bp.route('/reports/analytics')
 def get_report_analytics():
@@ -494,14 +514,20 @@ def get_report_analytics():
         return jsonify({"error": "Authentication required"}), 401
 
     conn = get_db()
+    # Query to count reports per day for the last 30 days
     rows = conn.execute("""
         SELECT date(reported_on) as report_date, COUNT(*) as report_count
         FROM reports
+        WHERE date(reported_on) >= date('now', '-30 days')
         GROUP BY report_date
         ORDER BY report_date
     """).fetchall()
 
-    analytics_data = [{"date": row["report_date"], "count": row["report_count"]} for row in rows]
+    # Format the data for Chart.js
+    analytics_data = {
+        "labels": [row["report_date"] for row in rows],
+        "data": [row["report_count"] for row in rows],
+    }
     return jsonify(analytics_data)
 
 # =========================

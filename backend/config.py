@@ -7,7 +7,6 @@ class Config:
     # App
     APP_NAME: str = "MedGuard"
     DEBUG: bool = os.getenv("DEBUG", "true").lower() == "true"
-    # Added a default fallback key for local development
     SECRET_KEY: str = os.getenv("SECRET_KEY", "a-super-secret-key-for-dev")
     HOST: str = os.getenv("HOST", "127.0.0.1")
     PORT: int = int(os.getenv("PORT", "5000"))
@@ -35,14 +34,17 @@ class Config:
     TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
     TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER")
     
-    # Comprehensive Database of NAFDAC-registered drugs is through the EMDEX API (api.emdex.org).
+    # EMDEX API
     EMDEX_API_KEY = os.getenv("EMDEX_API_KEY", "your_default_key_for_dev")
+    
+    # --- RE-ADDED: Gemini API Key ---
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+    COHERE_API_KEY = os.getenv("COHERE_API_KEY") # Keeping this in case you switch back
 
 
 class ProdConfig(Config):
     DEBUG = False
     CORS_ORIGINS = os.getenv("CORS_ORIGINS", "https://your-domain.com").split(",")
-    # In production, SECRET_KEY should always be set as an environment variable
     SECRET_KEY = os.getenv("SECRET_KEY")
 
 

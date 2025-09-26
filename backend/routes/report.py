@@ -3,7 +3,8 @@ from flask import Blueprint, jsonify, request, current_app, session
 from werkzeug.utils import secure_filename
 from backend.database import get_db
 from datetime import datetime
-from backend.notifications import send_sms_alert # Import the new function
+from backend.notifications import send_sms_alert
+from backend.ai_service import summarize_text, cohere_client # UPDATED: Import Cohere client
 
 report_bp = Blueprint("report_api", __name__)
 
@@ -15,19 +16,16 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # =========================
-# POST: Save a new counterfeit report (now with location data and user tracking)
+# POST: Save a new counterfeit report (now with AI summarization)
 # =========================
 @report_bp.post("/report")
 def create_report():
-    # Get the user_id from the session if a user is logged in
     user_id = session.get("user_id")
     
-    # Form data is now multipart/form-data, not JSON
     drug_name = request.form.get("drug_name")
     batch_number = request.form.get("batch_number")
     location = request.form.get("location")
     note = request.form.get("note")
-    # ADDED: Get latitude and longitude from the form
     latitude = request.form.get("latitude")
     longitude = request.form.get("longitude")
     image_file = request.files.get('image')
@@ -35,33 +33,30 @@ def create_report():
     if not batch_number:
         return jsonify({"message": "❌ Batch number is required"}), 400
 
+    # --- Cohere AI Summarization Step ---
+    summary = summarize_text(note, cohere_client) # UPDATED: Pass Cohere client to function
+
     image_filename = None
     if image_file and allowed_file(image_file.filename):
-        # Create a secure filename and save the image
         image_filename = secure_filename(f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{image_file.filename}")
         upload_folder = os.path.join(current_app.static_folder, 'uploads')
-        os.makedirs(upload_folder, exist_ok=True)  # Ensure the directory exists
+        os.makedirs(upload_folder, exist_ok=True)
         image_file.save(os.path.join(upload_folder, image_filename))
 
     conn = get_db()
-    # UPDATED: The INSERT statement now includes user_id, latitude and longitude
+    # UPDATED: INSERT statement now includes the AI summary
     conn.execute(
         """
-        INSERT INTO reports (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, reported_on, status)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO reports (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, reported_on, status, summary)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
-        (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, datetime.now(), 0)
+        (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, datetime.now(), 0, summary)
     )
     conn.commit()
 
-    # --- NEW: Trigger SMS Alert ---
-    report_data_for_alert = {
-        "drug_name": drug_name,
-        "batch_number": batch_number,
-    }
+    report_data_for_alert = { "drug_name": drug_name, "batch_number": batch_number, }
     send_sms_alert(report_data_for_alert)
-    # ----------------------------
-
+    
     return jsonify({"message": "🚨 Report received. Thank you for helping keep patients safe."}), 201
 
 

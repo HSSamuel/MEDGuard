@@ -73,6 +73,34 @@
   .status-resolved {
     background-color: #2ecc71;
   }
+  .ai-summary {
+    font-style: italic;
+    opacity: 0.9;
+    font-size: 0.9em;
+  }
+  .analysis-modal-content {
+    background: rgba(47, 79, 79, 0.95);
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 90%;
+    text-align: left;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-top: 4px solid var(--mg-yellow);
+  }
+  .analysis-modal-content ul {
+    list-style-type: disc;
+    padding-left: 25px;
+  }
+  .analysis-modal-content li {
+    margin-bottom: 12px;
+  }
+  .analytics-panel {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
 </style>
 
 <div class="panel">
@@ -147,6 +175,11 @@
   <a href="{{ url_for('render_sms_check') }}" class="btn btn-outline"
     >📱 Simulate SMS</a
   >
+</div>
+
+<div class="panel analytics-panel">
+    <h2>Dashboard Analytics: Reports in the Last 30 Days</h2>
+    <canvas id="reportsChart" width="400" height="150"></canvas>
 </div>
 
 <div class="panel">
@@ -279,7 +312,20 @@
 </div>
 
 <div class="panel" id="counterfeit-reports">
-  <h2>🚨 Counterfeit Reports</h2>
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    "
+  >
+    <h2>🚨 Counterfeit Reports</h2>
+    <button id="analyze-themes-btn" class="btn btn-yellow">
+      Analyze Themes with AI
+    </button>
+  </div>
+
   <div class="nav-shortcuts" style="margin-bottom: 15px">
     <a
       href="{{ url_for('admin_api.admin_reports_today') }}?scroll=reports"
@@ -328,17 +374,17 @@
     <table class="table" id="reports-table">
       <thead>
         <tr>
-          <th data-label="ID">ID</th>
-          <th data-label="Drug Name">Drug Name</th>
-          <th data-label="Batch">Batch</th>
-          <th data-label="Location">Location</th>
-          <th data-label="Note">Note</th>
-          <th data-label="Image">Image</th>
-          <th data-label="Analysis">Analysis</th>
-          <th data-label="Date">Date</th>
-          <th data-label="Reporter">Reporter</th>
-          <th data-label="Status">Status</th>
-          <th data-label="Actions">Actions</th>
+          <th>ID</th>
+          <th>Drug Name</th>
+          <th>Batch</th>
+          <th>AI Summary</th>
+          <th>Location</th>
+          <th>Image</th>
+          <th>Analysis</th>
+          <th>Date</th>
+          <th>Reporter</th>
+          <th>Status</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody id="reports-body">
@@ -350,10 +396,10 @@
           <td data-label="ID">{{ report.id }}</td>
           <td data-label="Drug Name">{{ report.drug_name or "-" }}</td>
           <td data-label="Batch">{{ report.batch_number }}</td>
-          <td data-label="Location">{{ report.location or "-" }}</td>
-          <td data-label="Note" class="note-column">
-            {{ report.note or "-" }}
+          <td data-label="AI Summary" class="ai-summary">
+            {{ report.summary or report.note or "-" }}
           </td>
+          <td data-label="Location">{{ report.location or "-" }}</td>
           <td data-label="Image">
             {% if report.image_filename %}
             <a
@@ -520,8 +566,29 @@
   </div>
 </div>
 
+<div
+  id="analysis-modal"
+  class="modal-overlay"
+  style="display: none; align-items: flex-start; padding-top: 5%"
+>
+  <div class="analysis-modal-content">
+    <h3 style="color: var(--mg-yellow); text-align: center">
+      AI Thematic Analysis of Reports
+    </h3>
+    <div id="analysis-result-content">
+      <p style="text-align: center">Analyzing report notes... Please wait.</p>
+    </div>
+    <div style="text-align: center; margin-top: 25px">
+      <button id="close-analysis-modal-btn" class="btn btn-outline">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
 {% endblock %} {% block scripts %}
 <script src="{{ url_for('static', filename='admin.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     // --- Reusable Toast Notification function ---
@@ -570,11 +637,39 @@
       const reportsTable = document.getElementById("reports-table");
       reportsTable.addEventListener("click", (event) => {
         if (event.target.classList.contains("delete-report-btn")) {
-          // ... (existing counterfeit deletion logic remains here) ...
+          const button = event.target;
+          const reportId = button.dataset.id;
+          const row = button.closest("tr");
+
+          showConfirmModal(
+            "Confirm Deletion",
+            `Are you sure you want to permanently delete report #${reportId}? This action cannot be undone.`,
+            () => {
+              fetch(`/api/report/${reportId}`, {
+                method: "DELETE",
+              })
+                .then((response) =>
+                  response
+                    .json()
+                    .then((data) => ({ status: response.status, body: data }))
+                )
+                .then(({ status, body }) => {
+                  if (status === 200) {
+                    showToast(body.message);
+                    row.remove();
+                  } else {
+                    throw new Error(body.error);
+                  }
+                })
+                .catch((error) => {
+                  showToast(`Failed to delete report: ${error.message}`, true);
+                });
+            }
+          );
         }
       });
 
-      // --- CORRECTED: ADR Reports Table Actions ---
+      // --- ADR Reports Table Actions ---
       const adrTable = document.getElementById("adr-reports-table");
       if (adrTable) {
         adrTable.addEventListener("click", (event) => {
@@ -611,8 +706,6 @@
       }
     }
 
-    // --- Live Clock, Notifications, and other scripts remain here ---
-    // ... (rest of the script) ...
     // --- Live Clock Functionality ---
     const clockElement = document.getElementById("live-clock");
     if (clockElement) {
@@ -692,6 +785,97 @@
       },
       { once: true }
     );
+
+    // --- Thematic Analysis Modal Logic ---
+    const analysisModal = document.getElementById("analysis-modal");
+    const openAnalysisBtn = document.getElementById("analyze-themes-btn");
+    const closeAnalysisBtn = document.getElementById(
+      "close-analysis-modal-btn"
+    );
+    const analysisResultContent = document.getElementById(
+      "analysis-result-content"
+    );
+
+    if (analysisModal && openAnalysisBtn && closeAnalysisBtn) {
+      openAnalysisBtn.addEventListener("click", () => {
+        analysisModal.style.display = "flex";
+        analysisResultContent.innerHTML =
+          '<p style="text-align: center;">Analyzing report notes... Please wait.</p>';
+
+        fetch("/admin/reports/analyze-themes", {
+          method: "POST",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              throw new Error(data.error);
+            }
+            let content = "<ul>";
+            data.themes.forEach((theme) => {
+              content += `<li>${theme}</li>`;
+            });
+            content += "</ul>";
+            analysisResultContent.innerHTML = content;
+          })
+          .catch((error) => {
+            analysisResultContent.innerHTML = `<p style="color: red; text-align: center;">Analysis Failed: ${error.message}</p>`;
+          });
+      });
+
+      closeAnalysisBtn.addEventListener("click", () => {
+        analysisModal.style.display = "none";
+      });
+    }
+    
+    // --- Chart.js Implementation ---
+    const reportsChartCanvas = document.getElementById('reportsChart');
+    if (reportsChartCanvas) {
+        fetch('/admin/reports/analytics')
+            .then(response => response.json())
+            .then(data => {
+                if (data.labels && data.data) {
+                    new Chart(reportsChartCanvas, {
+                        type: 'line',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Counterfeit Reports per Day',
+                                data: data.data,
+                                backgroundColor: 'rgba(243, 156, 18, 0.2)',
+                                borderColor: 'rgba(243, 156, 18, 1)',
+                                borderWidth: 2,
+                                tension: 0.3,
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        color: '#fff'
+                                    }
+                                },
+                                x: {
+                                    ticks: {
+                                        color: '#fff'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    labels: {
+                                        color: '#fff'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            })
+            .catch(error => console.error('Error fetching analytics data:', error));
+    }
+
 
     // --- Other page scripts ---
     const startInput = document.getElementById("start");

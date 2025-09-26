@@ -9,3 +9,5 @@ waitress==2.1.2           # For local Windows development
 werkzeug==3.0.1           # For check_password_hash
 python-dotenv==1.0.1      # For environment variable loading (if used)
 twilio==8.0.0             # For sending SMS notifications
+google-generativeai
+cohere
