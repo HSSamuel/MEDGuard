@@ -4,36 +4,8 @@ import re
 from datetime import datetime
 from flask import Blueprint, request, jsonify, current_app
 from backend.database import get_db
-import google.generativeai as genai
-import cohere  # ADDED: Import Cohere
-from backend.config import get_config
 
-cfg = get_config()
 ai_bp = Blueprint("ai_api", __name__)
-
-# --- Global variables for both AI clients ---
-gemini_model = None
-cohere_client = None
-
-# --- Configuration for Gemini (Preserved) ---
-def configure_gemini():
-    """Configures the Gemini AI model with the API key."""
-    global gemini_model
-    api_key = cfg.GEMINI_API_KEY
-    if not api_key:
-        raise ValueError("GEMINI_API_KEY not found in configuration.")
-    genai.configure(api_key=api_key)
-    gemini_model = genai.GenerativeModel('gemini-1.5-flash-latest')
-
-# --- Configuration for Cohere (New) ---
-def configure_cohere():
-    """Configures the Cohere AI client with the API key."""
-    global cohere_client
-    api_key = cfg.COHERE_API_KEY
-    if not api_key:
-        raise ValueError("COHERE_API_KEY not found in configuration.")
-    cohere_client = cohere.Client(api_key)
-
 
 def get_kb_path():
     """Constructs the full, reliable path to the knowledge base file."""
@@ -55,12 +27,7 @@ def get_ai_response(user_message, knowledge_base):
     """
     user_message_lower = user_message.lower().strip()
 
-    # --- PRIORITY 1: Attempt to get an intelligent response from the generative AI (Now using Cohere) ---
-    ai_response = get_conversational_response(user_message)
-    if ai_response and ai_response.get("action"):
-        return ai_response
-
-    # --- PRIORITY 2: Dynamic Database Query for Batch Reports (Existing Logic) ---
+    # --- PRIORITY 1: Dynamic Database Query for Batch Reports (Existing Logic) ---
     batch_report_match = re.search(r"reports for (?:batch )?([a-z0-9-]+)", user_message_lower)
     if batch_report_match:
         batch_number = batch_report_match.group(1).upper()
@@ -79,7 +46,7 @@ def get_ai_response(user_message, knowledge_base):
             answer += f"<p>The most recent report was submitted from <strong>{latest_location}</strong>.</p>"
         return {"answer": answer}
 
-    # --- PRIORITY 3: Dynamic Database Query for Drug Status (Existing Logic) ---
+    # --- PRIORITY 2: Dynamic Database Query for Drug Status (Existing Logic) ---
     drug_status_match = re.search(r"(?:check|status of) (?:batch )?([a-z0-9-]+)", user_message_lower)
     if drug_status_match:
         batch_number = drug_status_match.group(1).upper()
@@ -108,7 +75,7 @@ def get_ai_response(user_message, knowledge_base):
                 
         return {"answer": answer}
 
-    # --- PRIORITY 4: Dynamic Action for Pre-filling a Report (Existing Logic) ---
+    # --- PRIORITY 3: Dynamic Action for Pre-filling a Report (Existing Logic) ---
     report_match = re.search(r"report (?:batch )?([a-z0-9-]+)", user_message_lower)
     if report_match:
         batch_number = report_match.group(1).upper()
@@ -125,10 +92,6 @@ def get_ai_response(user_message, knowledge_base):
             }
         }
     
-    # --- FALLBACK: Use the Generative AI's conversational answer if no specific action was found ---
-    if ai_response and ai_response.get("answer"):
-        return ai_response
-
     # --- FINAL FALLBACK: Static Knowledge Base (Existing Logic) ---
     for intent, intent_data in knowledge_base.items():
         for keyword in intent_data.get("keywords", []):

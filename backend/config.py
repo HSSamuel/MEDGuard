@@ -37,11 +37,6 @@ class Config:
     # EMDEX API
     EMDEX_API_KEY = os.getenv("EMDEX_API_KEY", "your_default_key_for_dev")
     
-    # --- RE-ADDED: Gemini API Key ---
-    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-    COHERE_API_KEY = os.getenv("COHERE_API_KEY") # Keeping this in case you switch back
-
-
 class ProdConfig(Config):
     DEBUG = False
     CORS_ORIGINS = os.getenv("CORS_ORIGINS", "https://your-domain.com").split(",")

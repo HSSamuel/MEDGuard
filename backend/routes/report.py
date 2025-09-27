@@ -4,7 +4,6 @@ from werkzeug.utils import secure_filename
 from backend.database import get_db
 from datetime import datetime
 from backend.notifications import send_sms_alert
-from backend.ai_service import summarize_text, cohere_client # UPDATED: Import Cohere client
 
 report_bp = Blueprint("report_api", __name__)
 
@@ -16,7 +15,7 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # =========================
-# POST: Save a new counterfeit report (now with AI summarization)
+# POST: Save a new counterfeit report
 # =========================
 @report_bp.post("/report")
 def create_report():
@@ -33,9 +32,6 @@ def create_report():
     if not batch_number:
         return jsonify({"message": "❌ Batch number is required"}), 400
 
-    # --- Cohere AI Summarization Step ---
-    summary = summarize_text(note, cohere_client) # UPDATED: Pass Cohere client to function
-
     image_filename = None
     if image_file and allowed_file(image_file.filename):
         image_filename = secure_filename(f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{image_file.filename}")
@@ -44,13 +40,13 @@ def create_report():
         image_file.save(os.path.join(upload_folder, image_filename))
 
     conn = get_db()
-    # UPDATED: INSERT statement now includes the AI summary
+    # INSERT statement now includes the AI summary
     conn.execute(
         """
-        INSERT INTO reports (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, reported_on, status, summary)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO reports (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, reported_on, status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
-        (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, datetime.now(), 0, summary)
+        (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, datetime.now(), 0)
     )
     conn.commit()
 
@@ -61,7 +57,7 @@ def create_report():
 
 
 # =========================
-# GET: Fetch counterfeit reports (supports search & date filters)
+# GET: Fetch counterfeit reports
 # =========================
 @report_bp.get("/report")
 def get_reports():
