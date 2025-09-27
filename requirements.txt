@@ -9,6 +9,7 @@ attrs==25.3.0
 babel==2.17.0
 blinker==1.9.0
 cachetools==5.5.2
+celery==5.2.7
 certifi==2025.8.3
 charset-normalizer==3.4.3
 click==8.3.0
@@ -23,6 +24,7 @@ Flask==3.0.3
 flask-babel==4.0.0
 Flask-Cors==4.0.1
 Flask-Mail==0.10.0
+Flask-SocketIO==5.3.0
 frozenlist==1.7.0
 fsspec==2025.9.0
 google-ai-generativelanguage==0.6.15
@@ -42,6 +44,7 @@ httpx==0.28.1
 httpx-sse==0.4.0
 huggingface-hub==0.35.1
 idna==3.10
+importlib-metadata<5.0
 itsdangerous==2.2.0
 Jinja2==3.1.6
 lxml==6.0.1
@@ -65,6 +68,7 @@ python-dotenv==1.0.1
 pytz==2025.2
 PyYAML==6.0.3
 qrcode==7.4.2
+redis==4.3.4
 reportlab==4.4.3
 requests==2.32.5
 rsa==4.9.1

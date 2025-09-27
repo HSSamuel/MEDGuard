@@ -7,9 +7,11 @@ Run this from the project root:
 from backend.app import create_app
 
 if __name__ == "__main__":
-    app = create_app()
-    app.run(
+    app, socketio = create_app()
+    socketio.run(
+        app,
         host=app.config.get("HOST", "127.0.0.1"),
         port=app.config.get("PORT", 5000),
         debug=app.config.get("DEBUG", True)
     )
+

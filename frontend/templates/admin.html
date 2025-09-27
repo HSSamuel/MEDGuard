@@ -135,7 +135,8 @@
   </div>
 
   <p style="opacity: 0.85; margin-top: 0">
-    {{ _('Use this form to register a new drug batch and generate its QR code instantly.') }}
+    {{ _('Use this form to register a new drug batch and generate its QR code
+    instantly.') }}
   </p>
 </div>
 
@@ -320,7 +321,9 @@
     <input type="date" id="start" name="start" class="input" required />
     <label for="end" style="font-weight: bold">{{ _('To:') }}</label>
     <input type="date" id="end" name="end" class="input" required />
-    <a id="range-reports-btn" href="#" class="btn btn-yellow">{{ _('Filter') }}</a>
+    <a id="range-reports-btn" href="#" class="btn btn-yellow"
+      >{{ _('Filter') }}</a
+    >
   </div>
 
   <div style="overflow-x: auto; -webkit-overflow-scrolling: touch">
@@ -510,7 +513,8 @@
         {% endfor %} {% else %}
         <tr>
           <td colspan="8" style="text-align: center">
-            {{ _('No Adverse Drug Reaction reports match the current filters.') }}
+            {{ _('No Adverse Drug Reaction reports match the current filters.')
+            }}
           </td>
         </tr>
         {% endif %}
@@ -520,6 +524,7 @@
 </div>
 
 {% endblock %} {% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
 <script src="{{ url_for('static', filename='admin.js') }}"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -601,7 +606,10 @@
                     }
                   })
                   .catch((error) =>
-                    showToast(`{{ _('Failed to delete report:') }} ${error.message}`, true)
+                    showToast(
+                      `{{ _('Failed to delete report:') }} ${error.message}`,
+                      true
+                    )
                   );
               }
             );
@@ -611,8 +619,6 @@
     }
 
     // --- Live Clock, Notifications, and other scripts remain here ---
-    // ... (rest of the script) ...
-    // --- Live Clock Functionality ---
     const clockElement = document.getElementById("live-clock");
     if (clockElement) {
       const updateClock = () => {
@@ -634,7 +640,6 @@
       setInterval(updateClock, 1000);
     }
 
-    // --- Real-Time Notification System ---
     let currentNewReportCount = 0;
     const badge = document.getElementById("new-report-badge");
     let audioCtx;
@@ -692,7 +697,6 @@
       { once: true }
     );
 
-    // --- Other page scripts ---
     const startInput = document.getElementById("start");
     const endInput = document.getElementById("end");
     const rangeBtn = document.getElementById("range-reports-btn");
@@ -720,6 +724,22 @@
         element.scrollIntoView({ behavior: "smooth" });
       }
     }
+
+    // --- Socket.IO Integration for Real-Time Notifications ---
+    const socket = io.connect(
+      location.protocol + "//" + document.domain + ":" + location.port
+    );
+
+    socket.on("connect", function () {
+      console.log("Socket.IO connected successfully.");
+    });
+
+    socket.on("new_report", function (msg) {
+      console.log("Received new report notification:", msg);
+      showToast("A new counterfeit report has been submitted!");
+      // Refresh the new report count immediately
+      checkNewReports();
+    });
   });
 </script>
 {% endblock %}

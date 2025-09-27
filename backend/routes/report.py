@@ -3,7 +3,8 @@ from flask import Blueprint, jsonify, request, current_app, session
 from werkzeug.utils import secure_filename
 from backend.database import get_db
 from datetime import datetime
-from backend.notifications import send_sms_alert, send_email_alert
+from backend.celery_worker import send_sms_alert_task, send_email_alert_task
+from flask_socketio import emit
 
 report_bp = Blueprint("report_api", __name__)
 
@@ -51,9 +52,18 @@ def create_report():
     conn.commit()
 
     report_data_for_alert = { "drug_name": drug_name, "batch_number": batch_number, }
-    send_sms_alert(report_data_for_alert)
-    send_email_alert(report_data_for_alert)
+    # Call the asynchronous tasks
+    send_sms_alert_task.delay(report_data_for_alert)
+    send_email_alert_task.delay(report_data_for_alert)
     
+    # Emit a WebSocket event to notify connected admin clients
+    # Note: socketio.emit might be better here if you pass the socketio object around
+    # but a simple emit() from the flask_socketio library often works in a request context.
+    try:
+        emit('new_report', {'message': 'A new counterfeit report has been submitted.'}, namespace='/', broadcast=True)
+    except RuntimeError as e:
+        print(f"SocketIO emit failed. Are you running under the SocketIO server? Error: {e}")
+
     return jsonify({"message": "🚨 Report received. Thank you for helping keep patients safe."}), 201
 
 
@@ -141,3 +151,4 @@ def delete_report(report_id):
         # It's good practice to log the actual error on the server
         print(f"Error deleting report {report_id}: {e}")
         return jsonify({"error": "An internal server error occurred."}), 500
+
