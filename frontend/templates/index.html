@@ -1,15 +1,18 @@
 {% extends "base.html" %} {% block content %}
-<div class="main-content-wrapper">
-  <div class="panel qr-panel">
-    <h2>{{ _('📷 Scan QR / Barcode') }}</h2>
-    <div id="qr-reader" class="qr-reader"></div>
-    <div style="margin-top: 10px">
-      <button id="start-scan" class="btn btn-yellow">
-        {{ _('Start Camera') }}
-      </button>
-      <button id="stop-scan" class="btn btn-outline">{{ _('Stop') }}</button>
-    </div>
+<div class="panel qr-panel">
+  <h2>{{ _('📷 Scan QR / Barcode') }}</h2>
+  <div id="qr-reader" class="qr-reader"></div>
+  <div style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
+  <button id="start-scan" class="btn btn-yellow">
+    {{ _('Start Camera') }}
+  </button>
+  
+  <button id="stop-scan" class="btn btn-danger">{{ _('Stop') }}</button>
+  
+  <button id="scan-from-file-btn" class="btn btn-secondary">{{ _('Scan from Image') }}</button>
+  <input type="file" id="qr-input-file" accept="image/*" style="display: none;">
   </div>
+</div>
 
   <div class="panel qr-panel">
     <h2>{{ _('🔍 Or Verify by Batch Number') }}</h2>
@@ -75,17 +78,18 @@
           "{{ _('Because your health deserves the truth.') }}",
           "{{ _('No more guessing — just scanning.') }}",
           "{{ _('Keeping counterfeit meds off the streets.') }}",
-          "{{ _('Your pocket pharmacist.') }}"
+          "{{ _('Your pocket pharmacist.') }}",
         ],
         batchRequired: "{{ _('Batch number is required to report.') }}",
         errorSubmitting: "{{ _('Error submitting report.') }}",
         reportSuccess: "{{ _('Report submitted successfully') }}",
-        cameraAccessFailed: "{{ _('Camera access failed. Please check permissions.') }}",
-        enterBatchNumber: "{{ _('Please enter a batch number.') }}"
+        cameraAccessFailed:
+          "{{ _('Camera access failed. Please check permissions.') }}",
+        enterBatchNumber: "{{ _('Please enter a batch number.') }}",
       };
     </script>
     {% endblock %}
-    
+
     <script src="{{ url_for('static', filename='app.js') }}"></script>
     {% endblock %}
   </div>

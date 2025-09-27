@@ -24,7 +24,6 @@ rotateTagline(); // initial load
 let html5QrCode;
 const qrRegionId = "qr-reader";
 
-// NEW: Define all the code formats we want to support
 const supportedFormats = [
   Html5QrcodeSupportedFormats.QR_CODE,
   Html5QrcodeSupportedFormats.UPC_A,
@@ -33,17 +32,27 @@ const supportedFormats = [
   Html5QrcodeSupportedFormats.EAN_8,
 ];
 
+// Function to manage button enabled/disabled states
+function updateButtonStates(isScanning) {
+  const startBtn = document.getElementById("start-scan");
+  const stopBtn = document.getElementById("stop-scan");
+  const scanFromFileBtn = document.getElementById("scan-from-file-btn");
+
+  if (startBtn) startBtn.disabled = isScanning;
+  if (scanFromFileBtn) scanFromFileBtn.disabled = isScanning;
+  if (stopBtn) stopBtn.disabled = !isScanning;
+}
+
 function startScanner() {
   if (!html5QrCode) {
-    // MODIFIED: Pass a config object to enable verbose logging for debugging
     html5QrCode = new Html5Qrcode(qrRegionId, { verbose: false });
   }
 
-  // MODIFIED: Update the scanner configuration
+  updateButtonStates(true);
+
   const scannerConfig = {
     fps: 10,
-    qrbox: { width: 250, height: 150 }, // Rectangular box is better for barcodes
-    // Tell the scanner to only look for the formats we've defined
+    qrbox: { width: 300, height: 200 },
     formatsToSupport: supportedFormats,
   };
 
@@ -52,8 +61,22 @@ function startScanner() {
       { facingMode: "environment" },
       scannerConfig,
       (decodedText) => {
+        // --- VISUAL FEEDBACK LOGIC START ---
+        const qrReaderElement = document.getElementById(qrRegionId);
+        if (qrReaderElement) {
+          qrReaderElement.classList.add("scan-success");
+          setTimeout(() => {
+            qrReaderElement.classList.remove("scan-success");
+          }, 700); // Remove class after 0.7s animation
+        }
+        // --- VISUAL FEEDBACK LOGIC END ---
+
         stopScanner();
-        openVerificationPage(decodedText);
+
+        // Open the page after a brief delay to allow the user to see the flash
+        setTimeout(() => {
+          openVerificationPage(decodedText);
+        }, 200);
       },
       () => {} // ignore scan errors
     )
@@ -64,6 +87,7 @@ function startScanner() {
           "Camera access failed. Please check permissions.",
         "error"
       );
+      updateButtonStates(false);
     });
 }
 
@@ -71,6 +95,26 @@ function stopScanner() {
   if (html5QrCode && html5QrCode.isScanning) {
     html5QrCode.stop().catch((err) => console.error("Stop failed:", err));
   }
+  updateButtonStates(false);
+}
+
+function handleFileSelect(event) {
+  const file = event.target.files[0];
+  if (!file) {
+    return;
+  }
+  if (!html5QrCode) {
+    html5QrCode = new Html5Qrcode(qrRegionId, { verbose: false });
+  }
+
+  html5QrCode
+    .scanFile(file, true)
+    .then((decodedText) => {
+      openVerificationPage(decodedText);
+    })
+    .catch((err) => {
+      showMessage(`Error scanning file: ${err}`, "error");
+    });
 }
 
 // =========================
@@ -204,8 +248,14 @@ function showMessage(msg, type) {
 document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.getElementById("start-scan");
   const stopBtn = document.getElementById("stop-scan");
-  if (startBtn) startBtn.addEventListener("click", startScanner);
+  const scanFromFileBtn = document.getElementById("scan-from-file-btn");
+  const fileInput = document.getElementById("qr-input-file");
+
+  if (startBtn) startBtn.addEventListener("click", () => startScanner());
   if (stopBtn) stopBtn.addEventListener("click", stopScanner);
+  if (scanFromFileBtn)
+    scanFromFileBtn.addEventListener("click", () => fileInput.click());
+  if (fileInput) fileInput.addEventListener("change", handleFileSelect);
 
   const verifyForm = document.getElementById("verify-form");
   if (verifyForm) {
@@ -226,4 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (reportBtn) {
     reportBtn.addEventListener("click", reportCounterfeit);
   }
+
+  // Set initial button states on page load
+  updateButtonStates(false);
 });

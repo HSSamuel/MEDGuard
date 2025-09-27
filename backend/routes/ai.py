@@ -27,7 +27,7 @@ def get_ai_response(user_message, knowledge_base):
     """
     user_message_lower = user_message.lower().strip()
 
-    # --- PRIORITY 1: Dynamic Database Query for Batch Reports (Existing Logic) ---
+    # --- PRIORITY 1: Dynamic Database Query for Batch Reports ---
     batch_report_match = re.search(r"reports for (?:batch )?([a-z0-9-]+)", user_message_lower)
     if batch_report_match:
         batch_number = batch_report_match.group(1).upper()
@@ -46,7 +46,7 @@ def get_ai_response(user_message, knowledge_base):
             answer += f"<p>The most recent report was submitted from <strong>{latest_location}</strong>.</p>"
         return {"answer": answer}
 
-    # --- PRIORITY 2: Dynamic Database Query for Drug Status (Existing Logic) ---
+    # --- PRIORITY 2: Dynamic Database Query for Drug Status ---
     drug_status_match = re.search(r"(?:check|status of) (?:batch )?([a-z0-9-]+)", user_message_lower)
     if drug_status_match:
         batch_number = drug_status_match.group(1).upper()
@@ -74,8 +74,14 @@ def get_ai_response(user_message, knowledge_base):
                 answer = f"<p>I found batch <strong>{batch_number}</strong>, but could not verify its expiry date.</p>"
                 
         return {"answer": answer}
+        
+    # --- NEW: Handle vague "status of batch" query ---
+    if "status of batch" in user_message_lower and not drug_status_match:
+        return {
+            "answer": "I can help with that. What is the batch number you would like to check?",
+        }
 
-    # --- PRIORITY 3: Dynamic Action for Pre-filling a Report (Existing Logic) ---
+    # --- PRIORITY 3: Dynamic Action for Pre-filling a Report ---
     report_match = re.search(r"report (?:batch )?([a-z0-9-]+)", user_message_lower)
     if report_match:
         batch_number = report_match.group(1).upper()
@@ -92,7 +98,7 @@ def get_ai_response(user_message, knowledge_base):
             }
         }
     
-    # --- FINAL FALLBACK: Static Knowledge Base (Existing Logic) ---
+    # --- FINAL FALLBACK: Static Knowledge Base ---
     for intent, intent_data in knowledge_base.items():
         for keyword in intent_data.get("keywords", []):
             if keyword in user_message_lower:
@@ -113,3 +119,4 @@ def handle_chat():
         
     bot_response_data = get_ai_response(user_message, knowledge_base)
     return jsonify(bot_response_data)
+
