@@ -29,7 +29,7 @@ def role_required(role):
     return decorator
 
 # =========================
-# Admin Dashboard
+# MODIFIED: Admin Dashboard (Now handles all filtering)
 # =========================
 @admin_bp.route('/dashboard')
 @role_required('regulator')
@@ -37,19 +37,33 @@ def admin_dashboard():
     try:
         conn = get_db()
 
-        # --- Fetch Counterfeit Reports (Existing Code) ---
-        counterfeit_rows = conn.execute("""
+        # --- Counterfeit Reports Filtering Logic ---
+        start_date = request.args.get("start", "").strip()
+        end_date = request.args.get("end", "").strip()
+        filter_type = request.args.get("filter", "").strip()
+
+        counterfeit_query = """
             SELECT r.id, r.drug_name, r.batch_number, r.location, r.note, r.image_filename, r.image_analysis_result,
                    strftime('%Y-%m-%d %H:%M:%S', r.reported_on) AS reported_on, r.status,
                    u.email AS submitted_by
             FROM reports r
             LEFT JOIN users u ON r.user_id = u.id
-            ORDER BY r.reported_on DESC
-            LIMIT 20
-        """).fetchall()
+            WHERE 1=1
+        """
+        counterfeit_params = []
+
+        if filter_type == 'today':
+            counterfeit_query += " AND date(r.reported_on) = date('now','localtime')"
+        elif start_date and end_date:
+            counterfeit_query += " AND date(r.reported_on) BETWEEN date(?) AND date(?)"
+            counterfeit_params.extend([start_date, end_date])
+        
+        counterfeit_query += " ORDER BY r.reported_on DESC, r.id DESC"
+        
+        counterfeit_rows = conn.execute(counterfeit_query, counterfeit_params).fetchall()
         counterfeit_reports = [dict(r) for r in counterfeit_rows]
 
-        # --- ADR Reports Filtering Logic ---
+        # --- ADR Reports Filtering Logic (Unchanged) ---
         adr_search = request.args.get("adr_search", "").strip()
         adr_start = request.args.get("adr_start", "").strip()
         adr_end = request.args.get("adr_end", "").strip()
@@ -79,13 +93,11 @@ def admin_dashboard():
         adr_rows = conn.execute(adr_query, adr_params).fetchall()
         adr_reports = [dict(r) for r in adr_rows]
 
-        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
         return render_template(
             'admin.html',
             reports=counterfeit_reports,
             adr_reports=adr_reports,
-            current_time=current_time,
+            current_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             adr_search=adr_search,
             adr_start=adr_start,
             adr_end=adr_end
@@ -380,81 +392,6 @@ def export_drugs_pdf():
         print("Error exporting PDF:", e)
         traceback.print_exc()
         return jsonify({"error": "Failed to export PDF"}), 500
-
-# =========================
-# Reports (All)
-# =========================
-@admin_bp.get("/reports")
-@role_required('regulator')
-def admin_reports():
-    if not session.get("admin_id"):
-        return redirect(url_for("admin_login"))
-    try:
-        conn = get_db()
-        rows = conn.execute("""
-            SELECT r.id, r.drug_name, r.batch_number, r.location, r.note, r.image_filename,
-                   strftime('%Y-%m-%d %H:%M:%S', r.reported_on) AS reported_on, r.status,
-                   u.email AS submitted_by
-            FROM reports r
-            LEFT JOIN users u ON r.user_id = u.id
-            ORDER BY r.reported_on DESC, r.id DESC
-        """).fetchall()
-        conn.execute("UPDATE reports SET status = 1 WHERE status = 0")
-        conn.commit()
-        return render_template("admin.html", reports=rows, scroll='reports')
-    except Exception as e:
-        traceback.print_exc()
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-# =========================
-# Reports (Today Only)
-# =========================
-@admin_bp.get("/reports/today")
-@role_required('regulator')
-def admin_reports_today():
-    if not session.get("admin_id"):
-        return redirect(url_for("admin_login"))
-    try:
-        conn = get_db()
-        rows = conn.execute("""
-            SELECT id, drug_name, batch_number, location, note, image_filename,
-                   strftime('%Y-%m-%d %H:%M:%S', reported_on) AS reported_on, status
-            FROM reports
-            WHERE date(reported_on) = date('now','localtime')
-            ORDER BY reported_on DESC, id DESC
-        """).fetchall()
-        return render_template("admin.html", reports=rows, scroll='reports')
-    except Exception as e:
-        print("Error in /reports/today:", e)
-        traceback.print_exc()
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-# =========================
-# Reports by Date Range
-# =========================
-@admin_bp.get("/reports/range")
-@role_required('regulator')
-def admin_reports_range():
-    if not session.get("admin_id"):
-        return redirect(url_for("admin_login"))
-    try:
-        start = request.args.get("start")
-        end = request.args.get("end")
-        if not start or not end:
-            return jsonify({"error": "Please provide start and end dates (YYYY-MM-DD)"}), 400
-        conn = get_db()
-        rows = conn.execute("""
-            SELECT id, drug_name, batch_number, location, note, image_filename,
-                   strftime('%Y-%m-%d %H:%M:%S', reported_on) AS reported_on, status
-            FROM reports
-            WHERE date(reported_on) BETWEEN date(?) AND date(?)
-            ORDER BY reported_on DESC, id DESC
-        """, (start, end)).fetchall()
-        return render_template("admin.html", reports=rows, scroll='reports')
-    except Exception as e:
-        print("Error in /reports/range:", e)
-        traceback.print_exc()
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 # =========================
 # Reports Count (Unread)

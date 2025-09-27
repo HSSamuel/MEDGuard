@@ -10,6 +10,7 @@ from reportlab.lib import colors
 
 adr_bp = Blueprint("adr_api", __name__)
 
+
 @adr_bp.route("/api/adr-report", methods=["POST"])
 def submit_adr_report():
     data = request.get_json()
@@ -35,12 +36,13 @@ def submit_adr_report():
             data["reaction_description"],
             data.get("reaction_start_date"),
             data.get("other_medications"),
-            "New"
+            "New",
         ),
     )
     conn.commit()
 
     return jsonify({"message": "Adverse Drug Reaction report submitted successfully."}), 201
+
 
 @adr_bp.route("/api/adr-report/<int:report_id>", methods=["DELETE"])
 def delete_adr_report(report_id):
@@ -54,14 +56,47 @@ def delete_adr_report(report_id):
 
         if cursor.rowcount == 0:
             return jsonify({"error": "Report not found"}), 404
-            
+
         return jsonify({"message": f"ADR Report #{report_id} has been deleted."})
     except Exception as e:
         print(f"Error deleting ADR report: {e}")
         return jsonify({"error": "An internal server error occurred."}), 500
 
-# --- NEW EXPORT ROUTES ---
 
+# --- NEW: Route to update ADR report status ---
+@adr_bp.route("/api/adr-report/<int:report_id>/status", methods=["POST"])
+def update_adr_status(report_id):
+    if not session.get("admin_id"):
+        return jsonify({"error": "Authentication required"}), 401
+
+    data = request.get_json()
+    new_status = data.get("status")
+
+    if not new_status:
+        return jsonify({"error": "New status is required."}), 400
+
+    try:
+        conn = get_db()
+        cursor = conn.execute(
+            "UPDATE adr_reports SET status = ? WHERE id = ?", (new_status, report_id)
+        )
+        conn.commit()
+
+        if cursor.rowcount == 0:
+            return jsonify({"error": "Report not found"}), 404
+
+        return jsonify(
+            {
+                "message": f"ADR Report #{report_id} status updated to {new_status}.",
+                "new_status": new_status,
+            }
+        )
+    except Exception as e:
+        print(f"Error updating ADR status: {e}")
+        return jsonify({"error": "An internal server error occurred."}), 500
+
+
+# --- Helper and Export Routes ---
 def get_filtered_adr_data(conn):
     """Helper function to fetch and filter ADR data based on request arguments."""
     adr_search = request.args.get("adr_search", "").strip()
@@ -89,21 +124,22 @@ def get_filtered_adr_data(conn):
         params.extend([adr_start, adr_end])
 
     query += " ORDER BY ar.report_date DESC"
-    
+
     rows = conn.execute(query, params).fetchall()
     return [dict(row) for row in rows]
+
 
 @adr_bp.route("/admin/adr-reports/export/word")
 def export_adr_reports_word():
     if not session.get("admin_id"):
         return jsonify({"error": "Authentication required"}), 401
-    
+
     conn = get_db()
     reports = get_filtered_adr_data(conn)
 
     doc = Document()
     doc.add_heading("Adverse Drug Reaction Reports", 0)
-    
+
     table = doc.add_table(rows=1, cols=7)
     table.style = "Table Grid"
     hdr_cells = table.rows[0].cells
@@ -118,7 +154,9 @@ def export_adr_reports_word():
         cells = table.add_row().cells
         cells[0].text = report["drug_name"]
         cells[1].text = report["batch_number"]
-        cells[2].text = f"{report['patient_age_range'] or 'N/A'} / {report['patient_gender'] or 'N/A'}"
+        cells[2].text = (
+            f"{report['patient_age_range'] or 'N/A'} / {report['patient_gender'] or 'N/A'}"
+        )
         cells[3].text = report["reaction_description"]
         cells[4].text = report["status"] or "New"
         cells[5].text = report["report_date"]
@@ -130,8 +168,9 @@ def export_adr_reports_word():
         buf,
         mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         download_name="adr_reports.docx",
-        as_attachment=True
+        as_attachment=True,
     )
+
 
 @adr_bp.route("/admin/adr-reports/export/pdf")
 def export_adr_reports_pdf():
@@ -140,38 +179,46 @@ def export_adr_reports_pdf():
 
     conn = get_db()
     reports = get_filtered_adr_data(conn)
-    
+
     buf = io.BytesIO()
     doc = SimpleDocTemplate(buf, pagesize=letter)
     elements = []
     styles = getSampleStyleSheet()
-    
+
     elements.append(Paragraph("Adverse Drug Reaction Reports", styles["Title"]))
     elements.append(Spacer(1, 12))
 
     data = [["Drug", "Batch #", "Patient", "Reaction", "Status", "Report Date"]]
     for report in reports:
-        data.append([
-            report["drug_name"],
-            report["batch_number"],
-            f"{report['patient_age_range'] or 'N/A'} / {report['patient_gender'] or 'N/A'}",
-            report["reaction_description"],
-            report["status"] or "New",
-            report["report_date"]
-        ])
-    
+        data.append(
+            [
+                report["drug_name"],
+                report["batch_number"],
+                f"{report['patient_age_range'] or 'N/A'} / {report['patient_gender'] or 'N/A'}",
+                report["reaction_description"],
+                report["status"] or "New",
+                report["report_date"],
+            ]
+        )
+
     table = Table(data, repeatRows=1)
-    table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
-        ('GRID', (0, 0), (-1, -1), 1, colors.black)
-    ]))
+    table.setStyle(
+        TableStyle(
+            [
+                ("BACKGROUND", (0, 0), (-1, 0), colors.grey),
+                ("TEXTCOLOR", (0, 0), (-1, 0), colors.whitesmoke),
+                ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+                ("BOTTOMPADDING", (0, 0), (-1, 0), 12),
+                ("BACKGROUND", (0, 1), (-1, -1), colors.beige),
+                ("GRID", (0, 0), (-1, -1), 1, colors.black),
+            ]
+        )
+    )
     elements.append(table)
-    
+
     doc.build(elements)
     buf.seek(0)
-    return send_file(buf, mimetype="application/pdf", download_name="adr_reports.pdf", as_attachment=True)
+    return send_file(
+        buf, mimetype="application/pdf", download_name="adr_reports.pdf", as_attachment=True
+    )

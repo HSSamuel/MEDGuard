@@ -444,7 +444,6 @@
 
     <main class="container">{% block content %}{% endblock %}</main>
 
-    {% if session.admin_id %}
     <div
       id="confirm-modal"
       style="
@@ -498,7 +497,7 @@
         </div>
       </div>
     </div>
-    {% endif %} {% if session.admin_id %}
+    {% if session.admin_id %}
     <div
       id="session-modal"
       style="

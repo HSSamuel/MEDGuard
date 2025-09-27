@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (startBtn) startBtn.addEventListener("click", startScanner);
   if (stopBtn) stopBtn.addEventListener("click", stopScanner);
 
-  // --- NEW: Image Analysis Handler ---
+  // --- Image Analysis Handler ---
   const handleAnalysisClick = (event) => {
     if (!event.target.classList.contains("analyze-btn")) return;
 
@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
     reportsTable.addEventListener("click", handleAnalysisClick);
   }
 
-  // --- NEW: Real-Time Report Search ---
+  // --- Real-Time Report Search ---
   const handleReportSearch = () => {
     const searchInput = document.getElementById("report-search");
     if (!searchInput) return;

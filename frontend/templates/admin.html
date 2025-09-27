@@ -63,11 +63,12 @@
     font-size: 0.8em;
     font-weight: bold;
     color: white;
+    cursor: pointer; /* Make it look clickable */
   }
   .status-new {
     background-color: #f39c12;
   }
-  .status-review {
+  .status-under-review {
     background-color: #3498db;
   }
   .status-resolved {
@@ -282,7 +283,7 @@
   <h2>{{ _('🚨 Counterfeit Reports') }}</h2>
   <div class="nav-shortcuts" style="margin-bottom: 15px">
     <a
-      href="{{ url_for('admin_api.admin_reports_today') }}?scroll=reports"
+      href="{{ url_for('admin_api.admin_dashboard') }}?filter=today&scroll=reports"
       id="new-reports-btn-today"
       class="btn btn-yellow"
       >{{ _('Today’s Reports') }}
@@ -299,7 +300,7 @@
       ></a
     >
     <a
-      href="{{ url_for('admin_api.admin_reports') }}?scroll=reports"
+      href="{{ url_for('admin_api.admin_dashboard') }}?scroll=reports"
       id="new-reports-btn"
       class="btn btn-outline"
       >{{ _('View All Reports') }}</a
@@ -570,18 +571,71 @@
 
       cancelBtn.addEventListener("click", hideConfirmModal);
 
-      // --- Counterfeit Report Deletion Handler ---
       const reportsTable = document.getElementById("reports-table");
-      reportsTable.addEventListener("click", (event) => {
-        if (event.target.classList.contains("delete-report-btn")) {
-          // ... (existing counterfeit deletion logic remains here) ...
-        }
-      });
+      if (reportsTable) {
+        reportsTable.addEventListener("click", (event) => {
+          // Handle Delete Button Click
+          if (event.target.classList.contains("delete-report-btn")) {
+            const button = event.target;
+            const reportId = button.dataset.id;
+            const row = button.closest("tr");
 
-      // --- CORRECTED: ADR Reports Table Actions ---
+            showConfirmModal(
+              "Confirm Deletion",
+              `Are you sure you want to delete counterfeit report #${reportId}? This is permanent.`,
+              () => {
+                fetch(`/api/report/${reportId}`, { method: "DELETE" })
+                  .then((response) =>
+                    response
+                      .json()
+                      .then((data) => ({ status: response.status, body: data }))
+                  )
+                  .then(({ status, body }) => {
+                    if (status === 200) {
+                      showToast(body.message);
+                      row.remove();
+                    } else {
+                      throw new Error(body.error);
+                    }
+                  })
+                  .catch((error) =>
+                    showToast(`Failed to delete report: ${error.message}`, true)
+                  );
+              }
+            );
+            return; // Stop further execution
+          }
+
+          // Handle Mark as Checked (by clicking the row)
+          const row = event.target.closest(".report-row");
+          if (row && !event.target.closest("button, a")) {
+            const reportId = row.dataset.id;
+            const statusBadge = row.querySelector(".badge");
+
+            if (statusBadge && statusBadge.classList.contains("badge-new")) {
+              fetch(`/api/report/${reportId}/mark_checked`, { method: "POST" })
+                .then((response) => response.json())
+                .then((data) => {
+                  if (data.success) {
+                    statusBadge.textContent = "Checked";
+                    statusBadge.classList.remove("badge-new");
+                    statusBadge.classList.add("badge-checked");
+                    showToast(`Report #${reportId} marked as checked.`);
+                  }
+                })
+                .catch((err) =>
+                  console.error("Failed to mark as checked:", err)
+                );
+            }
+          }
+        });
+      }
+
+      // --- ADR Reports Table Actions ---
       const adrTable = document.getElementById("adr-reports-table");
       if (adrTable) {
         adrTable.addEventListener("click", (event) => {
+          // --- ADR Deletion Logic ---
           if (event.target.classList.contains("adr-delete-btn")) {
             const button = event.target;
             const reportId = button.dataset.id;
@@ -613,6 +667,44 @@
                   );
               }
             );
+          }
+
+          // --- ADR Status Update Logic ---
+          if (event.target.classList.contains("status-badge")) {
+            const badge = event.target;
+            const reportId = badge.closest("tr").dataset.id;
+
+            const statuses = ["New", "Under Review", "Resolved"];
+            const currentStatus = badge.textContent.trim();
+            const currentIndex = statuses.indexOf(currentStatus);
+            const nextIndex = (currentIndex + 1) % statuses.length;
+            const newStatus = statuses[nextIndex];
+
+            fetch(`/api/adr-report/${reportId}/status`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ status: newStatus }),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.new_status) {
+                  badge.textContent = data.new_status;
+                  // Remove old status classes
+                  badge.classList.remove(
+                    "status-new",
+                    "status-under-review",
+                    "status-resolved"
+                  );
+                  // Add new status class
+                  badge.classList.add(
+                    `status-${data.new_status.toLowerCase().replace(" ", "-")}`
+                  );
+                  showToast(data.message);
+                } else {
+                  throw new Error(data.error);
+                }
+              })
+              .catch((err) => showToast(`Error: ${err.message}`, true));
           }
         });
       }
@@ -697,6 +789,7 @@
       { once: true }
     );
 
+    // MODIFIED: This now points to the main dashboard route
     const startInput = document.getElementById("start");
     const endInput = document.getElementById("end");
     const rangeBtn = document.getElementById("range-reports-btn");
@@ -710,7 +803,7 @@
           alert("{{ _('Please select both a start and end date.') }}");
           return;
         }
-        window.location.href = `{{ url_for('admin_api.admin_reports_range') }}?start=${start}&end=${end}&scroll=reports`;
+        window.location.href = `{{ url_for('admin_api.admin_dashboard') }}?start=${start}&end=${end}&scroll=reports`;
       });
     }
 

@@ -34,7 +34,6 @@ from flask_babel import Babel
 from flask_socketio import SocketIO
 
 # --- Application-Specific Imports ---
-from backend.celery_init import celery_app # Import the celery instance
 from backend.config import get_config
 from backend.database import init_db, get_db, close_db
 from backend.models import get_admin_by_email
@@ -82,9 +81,6 @@ def create_app():
     )
     app.config.from_object(cfg)
     
-    # Update Celery config with Flask app config
-    celery_app.conf.update(app.config)
-
     socketio = SocketIO(app)
 
     app.config['LANGUAGES'] = ['en', 'fr', 'yo']
@@ -243,4 +239,3 @@ if __name__ == "__main__":
         port=app.config.get("PORT", 5000),
         debug=app.config.get("DEBUG", True),
     )
-

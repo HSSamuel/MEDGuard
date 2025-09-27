@@ -203,23 +203,30 @@ function sendReportData(
     method: "POST",
     body: formData,
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok) {
+        // If the server responded with an error, show it
+        return res.json().then((err) => {
+          throw new Error(err.message);
+        });
+      }
+      return res.json();
+    })
     .then((data) => {
-      showMessage(
-        data.message ||
-          window.translations.reportSuccess ||
-          "Report submitted successfully",
-        "success"
-      );
+      // On success, redirect the user to their reports page
+      window.location.href = "/my-reports";
     })
     .catch((err) => {
       console.error(err);
       showMessage(
-        window.translations.errorSubmitting || "Error submitting report",
+        err.message ||
+          window.translations.errorSubmitting ||
+          "Error submitting report",
         "error"
       );
     })
     .finally(() => {
+      // Re-enable the button in case of an error
       reportBtn.textContent = "Report";
       reportBtn.disabled = false;
     });
