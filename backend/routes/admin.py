@@ -36,7 +36,7 @@ def role_required(role):
 def admin_dashboard():
     try:
         conn = get_db()
-        
+
         # --- Fetch Counterfeit Reports (Existing Code) ---
         counterfeit_rows = conn.execute("""
             SELECT r.id, r.drug_name, r.batch_number, r.location, r.note, r.image_filename, r.image_analysis_result,
@@ -78,12 +78,12 @@ def admin_dashboard():
 
         adr_rows = conn.execute(adr_query, adr_params).fetchall()
         adr_reports = [dict(r) for r in adr_rows]
-        
+
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
+
         return render_template(
-            'admin.html', 
-            reports=counterfeit_reports, 
+            'admin.html',
+            reports=counterfeit_reports,
             adr_reports=adr_reports,
             current_time=current_time,
             adr_search=adr_search,
@@ -505,27 +505,6 @@ def public_db_manager_page():
     if not session.get("admin_id"):
         return redirect(url_for("admin_login"))
     return render_template('admin_public_db.html')
-
-
-# =========================
-# Analytics Endpoint
-# =========================
-@admin_bp.route('/reports/analytics')
-@role_required('regulator')
-def get_report_analytics():
-    if not session.get("admin_id"):
-        return jsonify({"error": "Authentication required"}), 401
-
-    conn = get_db()
-    rows = conn.execute("""
-        SELECT date(reported_on) as report_date, COUNT(*) as report_count
-        FROM reports
-        GROUP BY report_date
-        ORDER BY report_date
-    """).fetchall()
-
-    analytics_data = [{"date": row["report_date"], "count": row["report_count"]} for row in rows]
-    return jsonify(analytics_data)
 
 # =========================
 # Session Keep-Alive Endpoint

@@ -1,3 +1,5 @@
+# backend/app.py
+
 # =============================================================================
 # M A I N   A P P L I C A T I O N   F I L E
 # =============================================================================
@@ -88,6 +90,9 @@ def create_app() -> Flask:
     # Add language configuration
     app.config['LANGUAGES'] = ['en', 'fr', 'yo']
     app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+    # Use the absolute path from the config file
+    app.config['BABEL_TRANSLATION_DIRECTORIES'] = str(cfg.TRANSLATIONS_DIR)
+
 
     # --- Session and Security Configuration ---
     # These settings help protect against common web vulnerabilities.
@@ -104,15 +109,15 @@ def create_app() -> Flask:
     CORS(app, resources={r"/api/*": {"origins": cfg.CORS_ORIGINS}}) # Enables Cross-Origin Resource Sharing for APIs
     _configure_logging(app) # Sets up the application's logging system
     init_db() # Initializes the database tables if they don't exist
-    babel = Babel(app)
-
-    @babel.localeselector
+    
     def get_locale():
         # Check if a language is stored in the session
         if 'language' in session and session['language'] in app.config['LANGUAGES']:
             return session['language']
         # Otherwise, use the best match from the browser's settings
         return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+    babel = Babel(app, locale_selector=get_locale)
 
     @app.context_processor
     def inject_locale():
@@ -290,4 +295,3 @@ if __name__ == "__main__":
         port=app.config.get("PORT", 5000),
         debug=app.config.get("DEBUG", True),
     )
-

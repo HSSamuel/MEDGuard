@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-27 08:48+0100\n"
-"PO-Revision-Date: 2025-09-27 08:50+0100\n"
+"POT-Creation-Date: 2025-09-27 09:58+0100\n"
+"PO-Revision-Date: 2025-09-27 10:00+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -18,17 +18,323 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
+#: frontend/templates/about.html:68 frontend/templates/base.html:568
+msgid "About MedGuard"
+msgstr "À propos de MedGuard"
+
+#: frontend/templates/about.html:71
+msgid "Your Partner in Pharmaceutical Safety"
+msgstr "Votre Partenaire en Sécurité Pharmaceutique"
+
+#: frontend/templates/about.html:77 frontend/templates/base.html:6
+msgid "MedGuard"
+msgstr "MedGuard"
+
+#: frontend/templates/about.html:77
+msgid ""
+"is a comprehensive, multi-faceted public health platform designed with a "
+"singular, critical mission: to build a resilient and transparent "
+"pharmaceutical supply chain in Nigeria. We aim to safeguard public health"
+" by detecting, reporting, and managing counterfeit drugs while also "
+"monitoring the safety of legitimate medications through adverse reaction "
+"reporting."
+msgstr ""
+"est une plateforme de santé publique complète et polyvalente conçue avec "
+"une mission unique et essentielle : construire une chaîne "
+"d'approvisionnement pharmaceutique résiliente et transparente au Nigeria."
+" Notre objectif est de protéger la santé publique en détectant, signalant"
+" et gérant les médicaments contrefaits, tout en surveillant la sécurité "
+"des médicaments légitimes grâce au signalement des réactions "
+"indésirables."
+
+#: frontend/templates/about.html:80
+msgid "The Silent Epidemic"
+msgstr "L'Épidémie Silencieuse"
+
+#: frontend/templates/about.html:82
+msgid ""
+"The circulation of counterfeit and substandard drugs is a silent epidemic"
+" with devastating consequences. These fake medications can contain "
+"incorrect ingredients, the wrong dosage, or even toxic substances, "
+"leading to treatment failure, severe health complications, and death. "
+"This threat erodes public trust in our healthcare system, putting every "
+"citizen at risk."
+msgstr ""
+"La circulation de médicaments contrefaits et de qualité inférieure est "
+"une épidémie silencieuse aux conséquences dévastatrices. Ces faux "
+"médicaments peuvent contenir des ingrédients incorrects, un mauvais "
+"dosage, ou même des substances toxiques, entraînant l'échec du "
+"traitement, de graves complications de santé et la mort. Cette menace "
+"érode la confiance du public dans notre système de santé, mettant chaque "
+"citoyen en danger."
+
+#: frontend/templates/about.html:85
+msgid "A Two-Pronged Defense"
+msgstr "Une Défense à Deux Volets"
+
+#: frontend/templates/about.html:87
+msgid ""
+"MedGuard tackles this challenge with a dual-layered approach, empowering "
+"both the public and regulatory bodies like NAFDAC to become active "
+"guardians of our nation's medicine supply."
+msgstr ""
+"MedGuard aborde ce défi avec une approche à double niveau, en donnant au "
+"public et aux organismes de réglementation comme la NAFDAC les moyens de "
+"devenir des gardiens actifs de l'approvisionnement en médicaments de "
+"notre nation."
+
+#: frontend/templates/about.html:92
+msgid "Counterfeit Drug Verification:"
+msgstr "Vérification des Médicaments Contrefaits :"
+
+#: frontend/templates/about.html:92
+msgid ""
+"We provide every Nigerian with simple, powerful tools to instantly verify"
+" the authenticity of their medication. Through QR code scanning and batch"
+" number verification, our platform serves as a frontline defense against "
+"dangerous fakes."
+msgstr ""
+"Nous fournissons à chaque Nigérian des outils simples et puissants pour "
+"vérifier instantanément l'authenticité de leurs médicaments. Grâce à la "
+"lecture de codes QR et à la vérification du numéro de lot, notre "
+"plateforme sert de première ligne de défense contre les contrefaçons "
+"dangereuses."
+
+#: frontend/templates/about.html:95
+msgid "Pharmacovigilance & Safety Monitoring:"
+msgstr "Pharmacovigilance et Surveillance de la Sécurité :"
+
+#: frontend/templates/about.html:95
+msgid ""
+"Our mission extends beyond counterfeits. MedGuard provides a direct "
+"channel for the public to report adverse drug reactions (ADRs) to "
+"legitimate medications. This crowdsourced data is critical for post-"
+"market surveillance and ensures that even approved drugs are continuously"
+" monitored for safety."
+msgstr ""
+"Notre mission va au-delà des contrefaçons. MedGuard offre un canal direct"
+" au public pour signaler les réactions indésirables aux médicaments (ADR)"
+" légitimes. Ces données participatives sont essentielles pour la "
+"surveillance post-commercialisation et garantissent que même les "
+"médicaments approuvés sont continuellement surveillés pour leur sécurité."
+
+#: frontend/templates/about.html:99
+msgid "Our Core Features"
+msgstr "Nos Fonctionnalités Clés"
+
+#: frontend/templates/about.html:102
+msgid "Instant QR & Batch Verification:"
+msgstr "Vérification Instantanée par QR et Lot :"
+
+#: frontend/templates/about.html:103
+msgid ""
+"Instantly validate a drug's authenticity against a secure, regulator-"
+"managed database using your smartphone camera or by entering a batch "
+"number."
+msgstr ""
+"Validez instantanément l'authenticité d'un médicament par rapport à une "
+"base de données sécurisée et gérée par les régulateurs en utilisant "
+"l'appareil photo de votre smartphone ou en saisissant un numéro de lot."
+
+#: frontend/templates/about.html:106
+msgid "Anonymous Counterfeit Reporting:"
+msgstr "Signalement Anonyme de Contrefaçons :"
+
+#: frontend/templates/about.html:107
+msgid ""
+"Easily submit reports of suspicious medications, complete with "
+"photographic evidence and location data, to alert authorities in real-"
+"time."
+msgstr ""
+"Soumettez facilement des rapports de médicaments suspects, avec des "
+"preuves photographiques et des données de localisation, pour alerter les "
+"autorités en temps réel."
+
+#: frontend/templates/about.html:110
+msgid "Adverse Drug Reaction (ADR) Reporting:"
+msgstr "Signalement des Réactions Indésirables aux Médicaments (ADR) :"
+
+#: frontend/templates/about.html:111
+msgid ""
+"After verifying a legitimate drug, users can report any unexpected side "
+"effects, contributing vital data to national pharmacovigilance efforts."
+msgstr ""
+"Après avoir vérifié un médicament légitime, les utilisateurs peuvent "
+"signaler tout effet secondaire inattendu, contribuant ainsi à des données"
+" vitales pour les efforts nationaux de pharmacovigilance."
+
+#: frontend/templates/about.html:114
+msgid "Offline SMS Functionality:"
+msgstr "Fonctionnalité SMS Hors Ligne :"
+
+#: frontend/templates/about.html:115
+msgid ""
+"For citizens without consistent internet access, our system works via "
+"SMS, ensuring that everyone can verify their medication, anytime, "
+"anywhere."
+msgstr ""
+"Pour les citoyens sans accès Internet constant, notre système fonctionne "
+"par SMS, garantissant que tout le monde peut vérifier ses médicaments, à "
+"tout moment et n'importe où."
+
+#: frontend/templates/about.html:118
+msgid "Admin Dashboard for Regulators:"
+msgstr "Tableau de Bord Administratif pour les Régulateurs :"
+
+#: frontend/templates/about.html:119
+msgid ""
+"A powerful, secure dashboard for authorities to view, filter, and manage "
+"all submitted counterfeit and ADR reports, complete with data "
+"visualizations and a live hotspot map."
+msgstr ""
+"Un tableau de bord puissant et sécurisé permettant aux autorités de "
+"visualiser, filtrer et gérer tous les rapports de contrefaçon et d'ADR "
+"soumis, avec des visualisations de données et une carte des points chauds"
+" en direct."
+
+#: frontend/templates/about.html:124
+msgid "Return to Home"
+msgstr "Retour à l'Accueil"
+
+#: frontend/templates/base.html:344
+msgid "Home"
+msgstr ""
+
+#: frontend/templates/base.html:347
+msgid "About"
+msgstr ""
+
+#: frontend/templates/base.html:351
+#, fuzzy
+msgid "My Reports"
+msgstr "Signaler"
+
+#: frontend/templates/base.html:356
+msgid "Dashboard"
+msgstr ""
+
+#: frontend/templates/base.html:361
+msgid "Public DB Manager"
+msgstr ""
+
+#: frontend/templates/base.html:366
+msgid "Hotspot Map"
+msgstr ""
+
+#: frontend/templates/base.html:374
+msgid "Language"
+msgstr ""
+
+#: frontend/templates/base.html:405
+msgid "Admin Logout"
+msgstr ""
+
+#: frontend/templates/base.html:412
+msgid "Welcome,"
+msgstr ""
+
+#: frontend/templates/base.html:420
+msgid "Logout"
+msgstr ""
+
+#: frontend/templates/base.html:429 frontend/templates/login.html:6
+msgid "User Login"
+msgstr "Connexion Utilisateur"
+
+#: frontend/templates/base.html:437
+#, fuzzy
+msgid "Register"
+msgstr "Inscrivez-vous ici"
+
+#: frontend/templates/base.html:477
+msgid "Confirm Action"
+msgstr ""
+
+#: frontend/templates/base.html:489
+msgid "Cancel"
+msgstr ""
+
+#: frontend/templates/base.html:496
+msgid "Confirm"
+msgstr ""
+
+#: frontend/templates/base.html:530
+msgid "Session Timeout Warning"
+msgstr ""
+
+#: frontend/templates/base.html:532
+msgid ""
+"Your session is about to expire due to inactivity. You will be\n"
+"          logged out in"
+msgstr ""
+
+#: frontend/templates/base.html:535
+msgid "seconds."
+msgstr ""
+
+#: frontend/templates/base.html:550
+msgid "Stay Logged In"
+msgstr ""
+
+#: frontend/templates/base.html:557
+msgid "Logout Now"
+msgstr ""
+
+#: frontend/templates/base.html:571
+msgid "MedGuard — Fighting counterfeit medicine, one scan at a time."
+msgstr ""
+
+#: frontend/templates/base.html:579
+#, fuzzy
+msgid "MedGuard Assistant"
+msgstr "MedGuard"
+
+#: frontend/templates/base.html:584
+msgid ""
+"Hello! How can I help you today? You can ask me how to verify a\n"
+"          drug, how to report a counterfeit, or what to do if you find "
+"one."
+msgstr ""
+
+#: frontend/templates/base.html:593
+msgid "Ask a question..."
+msgstr ""
+
+#: frontend/templates/base.html:595
+msgid "Send"
+msgstr ""
+
+#: frontend/templates/base.html:683
+msgid "I am sorry, I am having trouble connecting right now."
+msgstr ""
+
+#: frontend/templates/base.html:761
+msgid "Hello! I am the MedGuard Assistant. How can I help?"
+msgstr ""
+
+#: frontend/templates/base.html:764
+msgid "How to report a drug?"
+msgstr ""
+
+#: frontend/templates/base.html:768
+msgid "How to verify a drug?"
+msgstr ""
+
+#: frontend/templates/base.html:772
+msgid "Check a batch status"
+msgstr ""
+
 #: frontend/templates/index.html:4
 msgid "📷 Scan QR / Barcode"
-msgstr ""
+msgstr "📷 Scanner le Code QR / Code-barres"
 
 #: frontend/templates/index.html:8
 msgid "Start Camera"
-msgstr ""
+msgstr "Démarrer la Caméra"
 
 #: frontend/templates/index.html:10
 msgid "Stop"
-msgstr ""
+msgstr "Arrêter"
 
 #: frontend/templates/index.html:15
 msgid "🔍 Or Verify by Batch Number"
@@ -36,33 +342,68 @@ msgstr "Ou Vérifier par Numéro de Lot"
 
 #: frontend/templates/index.html:21
 msgid "Enter batch number"
-msgstr ""
+msgstr "Entrez le numéro de lot"
 
 #: frontend/templates/index.html:25
 msgid "Verify"
-msgstr ""
+msgstr "Vérifier"
 
 #: frontend/templates/index.html:34
 msgid "🚨 Report Counterfeit"
-msgstr ""
+msgstr "🚨 Signaler une Contrefaçon"
 
 #: frontend/templates/index.html:39
 msgid "Drug name"
-msgstr ""
+msgstr "Nom du médicament"
 
 #: frontend/templates/index.html:44
 msgid "Batch number"
-msgstr ""
+msgstr "Numéro de lot"
 
 #: frontend/templates/index.html:50
 msgid "Location (optional)"
-msgstr ""
+msgstr "Lieu (optionnel)"
 
 #: frontend/templates/index.html:58
 msgid "Note (optional)"
-msgstr ""
+msgstr "Note (optionnelle)"
 
 #: frontend/templates/index.html:64
 msgid "Report"
-msgstr ""
+msgstr "Signaler"
+
+#: frontend/templates/login.html:16
+msgid "Email Address"
+msgstr "Adresse E-mail"
+
+#: frontend/templates/login.html:20
+msgid "Password"
+msgstr "Mot de passe"
+
+#: frontend/templates/login.html:24
+msgid "Sign in"
+msgstr "Se connecter"
+
+#: frontend/templates/login.html:27
+msgid "Don't have an account?"
+msgstr "Vous n'avez pas de compte ?"
+
+#: frontend/templates/login.html:27
+msgid "Register here"
+msgstr "Inscrivez-vous ici"
+
+#~ msgid "Create Your Account"
+#~ msgstr "Créez Votre Compte"
+
+#~ msgid "Full Name"
+#~ msgstr "Nom Complet"
+
+#~ msgid "Create Account"
+#~ msgstr "Créer un Compte"
+
+#~ msgid "Already have an account?"
+#~ msgstr "Vous avez déjà un compte ?"
+
+#~ msgid "Login here"
+#~ msgstr "Connectez-vous ici"
 

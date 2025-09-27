@@ -25,6 +25,7 @@ class Config:
     # Paths for frontend
     TEMPLATES_DIR: Path = BASE_DIR / "frontend" / "templates"
     STATIC_DIR: Path = BASE_DIR / "frontend" / "static"
+    TRANSLATIONS_DIR: Path = BASE_DIR / "frontend" / "translations" # <-- ADD THIS LINE
 
     # Logging
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")

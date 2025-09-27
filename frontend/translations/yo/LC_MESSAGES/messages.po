@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-27 08:48+0100\n"
-"PO-Revision-Date: 2025-09-27 08:50+0100\n"
+"POT-Creation-Date: 2025-09-27 09:58+0100\n"
+"PO-Revision-Date: 2025-09-27 10:00+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: yo\n"
 "Language-Team: yo <LL@li.org>\n"
@@ -18,17 +18,314 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
+#: frontend/templates/about.html:68 frontend/templates/base.html:568
+msgid "About MedGuard"
+msgstr "Nípa MedGuard"
+
+#: frontend/templates/about.html:71
+msgid "Your Partner in Pharmaceutical Safety"
+msgstr "Alábàápín Rẹ nínú Ààbò Oògùn"
+
+#: frontend/templates/about.html:77 frontend/templates/base.html:6
+msgid "MedGuard"
+msgstr "MedGuard"
+
+#: frontend/templates/about.html:77
+msgid ""
+"is a comprehensive, multi-faceted public health platform designed with a "
+"singular, critical mission: to build a resilient and transparent "
+"pharmaceutical supply chain in Nigeria. We aim to safeguard public health"
+" by detecting, reporting, and managing counterfeit drugs while also "
+"monitoring the safety of legitimate medications through adverse reaction "
+"reporting."
+msgstr ""
+"jẹ́ pẹpẹ ìlera gbogbo ènìyàn tí ó ní ojú púpọ̀, tí a ṣe pẹ̀lú ète pàtàkì "
+"kan ṣoṣo: láti kọ́ ìpèsè oògùn tí ó lágbára àti tí ó ṣe kedere ní "
+"Nàìjíríà. Ète wa ni láti dáàbò bo ìlera gbogbo ènìyàn nípa wíwárí, "
+"ìròyìn, àti ṣíṣàkóso àwọn oògùn ayédèrú, àti pẹ̀lú síṣe àbojútó ààbò àwọn"
+" oògùn tí ó tọ́ nípasẹ̀ ìròyìn àwọn ìṣẹ̀lẹ̀ búburú."
+
+#: frontend/templates/about.html:80
+msgid "The Silent Epidemic"
+msgstr "Àjàkálẹ̀ Àrùn Tí ó Dákẹ́"
+
+#: frontend/templates/about.html:82
+msgid ""
+"The circulation of counterfeit and substandard drugs is a silent epidemic"
+" with devastating consequences. These fake medications can contain "
+"incorrect ingredients, the wrong dosage, or even toxic substances, "
+"leading to treatment failure, severe health complications, and death. "
+"This threat erodes public trust in our healthcare system, putting every "
+"citizen at risk."
+msgstr ""
+"Pípín káàkiri àwọn oògùn ayédèrú àti àwọn tí kò pé jẹ́ àjàkálẹ̀ àrùn tí ó"
+" dákẹ́ pẹ̀lú àwọn àbájáde búburú. Àwọn oògùn wọ̀nyí le ní àwọn èròjà tí "
+"kò tọ́, ìwọ̀n tí kò tọ́, tàbí àwọn nǹkan olóró, èyí tí ó le fa àìṣe-"
+"oògùn, àwọn ìṣòro ìlera tó lágbára, àti ikú. Ìhàlẹ̀ yíì mú ìgbẹ́kẹ̀lé "
+"kúrò nínú ètò ìlera wa, tí ó sì fi gbogbo ọmọ ìlú sínú ewu."
+
+#: frontend/templates/about.html:85
+msgid "A Two-Pronged Defense"
+msgstr "Ààbò Onígun Méjì"
+
+#: frontend/templates/about.html:87
+msgid ""
+"MedGuard tackles this challenge with a dual-layered approach, empowering "
+"both the public and regulatory bodies like NAFDAC to become active "
+"guardians of our nation's medicine supply."
+msgstr ""
+"MedGuard koju ìpèníjà yíì pẹ̀lú ọ̀nà onípele méjì, nípa fífún àwọn ará "
+"ìlú àti àwọn àjọ ìṣàkóso bíi NAFDAC lágbára láti di olùṣọ́ tí ó ṣiṣẹ́ fún"
+" ìpèsè oògùn orílẹ̀-èdè wa."
+
+#: frontend/templates/about.html:92
+msgid "Counterfeit Drug Verification:"
+msgstr "Ìṣedájú Oògùn Ayédèrú:"
+
+#: frontend/templates/about.html:92
+msgid ""
+"We provide every Nigerian with simple, powerful tools to instantly verify"
+" the authenticity of their medication. Through QR code scanning and batch"
+" number verification, our platform serves as a frontline defense against "
+"dangerous fakes."
+msgstr ""
+"A pèsè fún gbogbo ọmọ Nàìjíríà pẹ̀lú àwọn irinṣẹ́ tí ó rọrùn àti tí ó "
+"lágbára láti ṣèdájú ìṣe-oògùn wọn lẹ́sẹ̀kẹsẹ̀. Nípasẹ̀ síṣayẹwo koodu QR "
+"àti ìṣedájú nọ́mbà ìpele, pẹpẹ wa jẹ́ ìgbàbò iwájú lòdì sí àwọn ayédèrú "
+"eewu."
+
+#: frontend/templates/about.html:95
+msgid "Pharmacovigilance & Safety Monitoring:"
+msgstr "Pharmacovigilance & Abojuto Aabo:"
+
+#: frontend/templates/about.html:95
+msgid ""
+"Our mission extends beyond counterfeits. MedGuard provides a direct "
+"channel for the public to report adverse drug reactions (ADRs) to "
+"legitimate medications. This crowdsourced data is critical for post-"
+"market surveillance and ensures that even approved drugs are continuously"
+" monitored for safety."
+msgstr ""
+"Iṣẹ́ wa kọjá àwọn ayédèrú. MedGuard pèsè ọ̀nà tààrà fún àwọn ará ìlú láti"
+" ròyìn àwọn ìṣẹ̀lẹ̀ búburú oògùn (ADRs) sí àwọn oògùn tí ó tọ́. Dátà tí a"
+" kójọ láti ọ̀dọ̀ àwọn ènìyàn yíì ṣe pàtàkì fún àbojútó lẹ́yìn ìtajà àti "
+"pé ó ríi dájú pé a ń bojú tó ààbò àwọn oògùn tí a fọwọ́sí."
+
+#: frontend/templates/about.html:99
+msgid "Our Core Features"
+msgstr "Àwọn Ohun Pàtàkì Wa"
+
+#: frontend/templates/about.html:102
+msgid "Instant QR & Batch Verification:"
+msgstr "Ìṣedájú Lẹ́sẹ̀kẹsẹ̀ pẹ̀lú QR & Nọ́mbà Ìpele:"
+
+#: frontend/templates/about.html:103
+msgid ""
+"Instantly validate a drug's authenticity against a secure, regulator-"
+"managed database using your smartphone camera or by entering a batch "
+"number."
+msgstr ""
+"Ṣèdájú ìṣe-oògùn kan lẹ́sẹ̀kẹsẹ̀ lòdì sí ìbùdó dátà tí ó ní ààbò, tí àwọn"
+" aláṣẹ ń ṣàkóso, nípa lílo kámẹ́rà foonu rẹ tàbí nípa titẹ nọ́mbà ìpele "
+"sii."
+
+#: frontend/templates/about.html:106
+msgid "Anonymous Counterfeit Reporting:"
+msgstr "Ìròyìn Ayédèrú Láì Sọ Orukọ:"
+
+#: frontend/templates/about.html:107
+msgid ""
+"Easily submit reports of suspicious medications, complete with "
+"photographic evidence and location data, to alert authorities in real-"
+"time."
+msgstr ""
+"Fi ìròyìn àwọn oògùn tí ó ń sé sí-e-méjì rọrùn, pẹ̀lú ẹ̀rí fọ́tò àti dátà"
+" ibi, láti kìlọ̀ fún àwọn aláṣẹ ní àsìkò gidi."
+
+#: frontend/templates/about.html:110
+msgid "Adverse Drug Reaction (ADR) Reporting:"
+msgstr "Ìròyìn Ìṣẹ̀lẹ̀ Búburú Oògùn (ADR):"
+
+#: frontend/templates/about.html:111
+msgid ""
+"After verifying a legitimate drug, users can report any unexpected side "
+"effects, contributing vital data to national pharmacovigilance efforts."
+msgstr ""
+"Lẹ́yìn ìṣedájú oògùn tí ó tọ́, àwọn olùlò le ròyìn àwọn ìṣẹ̀lẹ̀ tí a kò "
+"retí, nípa bẹ́ẹ̀ wọ́n ń ṣèrànwọ́ pẹ̀lú dátà pàtàkì fún àwọn ìgbìyànjú "
+"pharmacovigilance orílẹ̀-èdè."
+
+#: frontend/templates/about.html:114
+msgid "Offline SMS Functionality:"
+msgstr "Lílo SMS Láì Ní Íńtánẹ́ẹ̀tì:"
+
+#: frontend/templates/about.html:115
+msgid ""
+"For citizens without consistent internet access, our system works via "
+"SMS, ensuring that everyone can verify their medication, anytime, "
+"anywhere."
+msgstr ""
+"Fún àwọn ará ìlú tí kò ní ànfàní sí íńtánẹ́ẹ̀tì nígbà gbogbo, ètò wa ń "
+"ṣiṣẹ́ nípasẹ̀ SMS, nípa bẹ́ẹ̀ a ríi dájú pé gbogbo ènìyàn le ṣèdájú oògùn"
+" wọn, nígbàkúgbà, níbikíbi."
+
+#: frontend/templates/about.html:118
+msgid "Admin Dashboard for Regulators:"
+msgstr "Pẹpẹ Ìṣàkóso fún Àwọn Aláṣẹ:"
+
+#: frontend/templates/about.html:119
+msgid ""
+"A powerful, secure dashboard for authorities to view, filter, and manage "
+"all submitted counterfeit and ADR reports, complete with data "
+"visualizations and a live hotspot map."
+msgstr ""
+"Pẹpẹ ìṣàkóso tí ó lágbára, tí ó sì ní ààbò fún àwọn aláṣẹ láti wò, ṣàlò, "
+"àti ṣàkóso gbogbo àwọn ìròyìn ayédèrú àti ADR tí a fi ránṣẹ́, pẹ̀lú àwọn "
+"àwòrán dátà àti máàpù ibi tí ìṣẹ̀lẹ̀ ti pọ̀."
+
+#: frontend/templates/about.html:124
+msgid "Return to Home"
+msgstr "Padà sí Ojú-ewé Àkọ́kọ́"
+
+#: frontend/templates/base.html:344
+msgid "Home"
+msgstr ""
+
+#: frontend/templates/base.html:347
+msgid "About"
+msgstr ""
+
+#: frontend/templates/base.html:351
+#, fuzzy
+msgid "My Reports"
+msgstr "Ròyìn"
+
+#: frontend/templates/base.html:356
+msgid "Dashboard"
+msgstr ""
+
+#: frontend/templates/base.html:361
+msgid "Public DB Manager"
+msgstr ""
+
+#: frontend/templates/base.html:366
+msgid "Hotspot Map"
+msgstr ""
+
+#: frontend/templates/base.html:374
+msgid "Language"
+msgstr ""
+
+#: frontend/templates/base.html:405
+msgid "Admin Logout"
+msgstr ""
+
+#: frontend/templates/base.html:412
+msgid "Welcome,"
+msgstr ""
+
+#: frontend/templates/base.html:420
+msgid "Logout"
+msgstr ""
+
+#: frontend/templates/base.html:429 frontend/templates/login.html:6
+msgid "User Login"
+msgstr "Ìwọlé Olùlò"
+
+#: frontend/templates/base.html:437
+#, fuzzy
+msgid "Register"
+msgstr "Forúkọsílẹ̀ níbí"
+
+#: frontend/templates/base.html:477
+msgid "Confirm Action"
+msgstr ""
+
+#: frontend/templates/base.html:489
+msgid "Cancel"
+msgstr ""
+
+#: frontend/templates/base.html:496
+msgid "Confirm"
+msgstr ""
+
+#: frontend/templates/base.html:530
+msgid "Session Timeout Warning"
+msgstr ""
+
+#: frontend/templates/base.html:532
+msgid ""
+"Your session is about to expire due to inactivity. You will be\n"
+"          logged out in"
+msgstr ""
+
+#: frontend/templates/base.html:535
+msgid "seconds."
+msgstr ""
+
+#: frontend/templates/base.html:550
+msgid "Stay Logged In"
+msgstr ""
+
+#: frontend/templates/base.html:557
+msgid "Logout Now"
+msgstr ""
+
+#: frontend/templates/base.html:571
+msgid "MedGuard — Fighting counterfeit medicine, one scan at a time."
+msgstr ""
+
+#: frontend/templates/base.html:579
+#, fuzzy
+msgid "MedGuard Assistant"
+msgstr "MedGuard"
+
+#: frontend/templates/base.html:584
+msgid ""
+"Hello! How can I help you today? You can ask me how to verify a\n"
+"          drug, how to report a counterfeit, or what to do if you find "
+"one."
+msgstr ""
+
+#: frontend/templates/base.html:593
+msgid "Ask a question..."
+msgstr ""
+
+#: frontend/templates/base.html:595
+msgid "Send"
+msgstr ""
+
+#: frontend/templates/base.html:683
+msgid "I am sorry, I am having trouble connecting right now."
+msgstr ""
+
+#: frontend/templates/base.html:761
+msgid "Hello! I am the MedGuard Assistant. How can I help?"
+msgstr ""
+
+#: frontend/templates/base.html:764
+msgid "How to report a drug?"
+msgstr ""
+
+#: frontend/templates/base.html:768
+msgid "How to verify a drug?"
+msgstr ""
+
+#: frontend/templates/base.html:772
+msgid "Check a batch status"
+msgstr ""
+
 #: frontend/templates/index.html:4
 msgid "📷 Scan QR / Barcode"
-msgstr ""
+msgstr "📷 Ṣayẹwo QR / Koodu Pàápàá"
 
 #: frontend/templates/index.html:8
 msgid "Start Camera"
-msgstr ""
+msgstr "Bẹrẹ Kamẹra"
 
 #: frontend/templates/index.html:10
 msgid "Stop"
-msgstr ""
+msgstr "Dúró"
 
 #: frontend/templates/index.html:15
 msgid "🔍 Or Verify by Batch Number"
@@ -36,33 +333,68 @@ msgstr "Tabi Daju Nipa Nọmba Ipele"
 
 #: frontend/templates/index.html:21
 msgid "Enter batch number"
-msgstr ""
+msgstr "Tẹ nọmba ipele sii"
 
 #: frontend/templates/index.html:25
 msgid "Verify"
-msgstr ""
+msgstr "Dájú"
 
 #: frontend/templates/index.html:34
 msgid "🚨 Report Counterfeit"
-msgstr ""
+msgstr "🚨 Ròyìn Èròjà Ayédèrú"
 
 #: frontend/templates/index.html:39
 msgid "Drug name"
-msgstr ""
+msgstr "Orukọ oogun"
 
 #: frontend/templates/index.html:44
 msgid "Batch number"
-msgstr ""
+msgstr "Nọmba ipele"
 
 #: frontend/templates/index.html:50
 msgid "Location (optional)"
-msgstr ""
+msgstr "Ibi (kìí ṣe dandan)"
 
 #: frontend/templates/index.html:58
 msgid "Note (optional)"
-msgstr ""
+msgstr "Àkíyèsí (kìí ṣe dandan)"
 
 #: frontend/templates/index.html:64
 msgid "Report"
-msgstr ""
+msgstr "Ròyìn"
+
+#: frontend/templates/login.html:16
+msgid "Email Address"
+msgstr "Adirẹsi Imeeli"
+
+#: frontend/templates/login.html:20
+msgid "Password"
+msgstr "Ọrọ Aṣínà"
+
+#: frontend/templates/login.html:24
+msgid "Sign in"
+msgstr "Wọlé"
+
+#: frontend/templates/login.html:27
+msgid "Don't have an account?"
+msgstr "Ṣe o kò tíì ní àkáùntì?"
+
+#: frontend/templates/login.html:27
+msgid "Register here"
+msgstr "Forúkọsílẹ̀ níbí"
+
+#~ msgid "Create Your Account"
+#~ msgstr "Ṣẹda Àkáùntì Rẹ"
+
+#~ msgid "Full Name"
+#~ msgstr "Orúkọ Kíkún"
+
+#~ msgid "Create Account"
+#~ msgstr "Ṣẹda Àkáùntì"
+
+#~ msgid "Already have an account?"
+#~ msgstr "Ṣe o ti ní àkáùntì tẹ́lẹ̀?"
+
+#~ msgid "Login here"
+#~ msgstr "Wọlé níbí"
 

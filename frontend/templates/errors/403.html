@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="panel" style="text-align: center;">
+  <h2>Page Not Found</h2>
+  <p>The page you are looking for does not exist.</p>
+  <a href="{{ url_for('root') }}" class="btn btn-yellow">Go to Homepage</a>
+</div>
+{% endblock %}
