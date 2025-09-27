@@ -125,7 +125,7 @@ frontend/
 
    ```bash
    python -m venv venv
-   source venv/bin/activate   # On Windows: venv\Scripts\activate
+   source venv/bin/activate
    pip install -r requirements.txt
    ```
 
@@ -186,7 +186,7 @@ This project is licensed under the MIT License. See `LICENSE` for details.
 
 ## 🧑‍💻 Author
 
-Developed by **TIMVictor**  
+Collaboratively developed by **Victor, Samuel, and Desmond**
 Designed to protect communities from counterfeit drugs and safeguard public health.
 
 ---
