@@ -50,6 +50,7 @@ from backend.routes.public_db_admin import public_db_admin_bp
 from backend.routes.auth import auth_bp
 from backend.routes.analysis import analysis_bp
 from backend.routes.adr import adr_bp
+from backend.notifications import mail
 
 HAS_ADMIN = True
 
@@ -109,6 +110,7 @@ def create_app():
         return request.accept_languages.best_match(app.config['LANGUAGES'])
 
     babel = Babel(app, locale_selector=get_locale)
+    mail.init_app(app)
 
     @app.context_processor
     def inject_locale():
