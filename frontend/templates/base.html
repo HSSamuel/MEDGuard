@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ current_locale or 'en' }}">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>MedGuard</title>
+    <title>{{ _('MedGuard') }}</title>
     <link
       rel="icon"
       href="{{ url_for('static', filename='images/favicon.ico.png') }}"
@@ -241,6 +241,29 @@
         padding: 8px 15px;
       }
 
+      /* --- Language Selector Styles --- */
+      .nav-item.dropdown {
+        position: relative;
+      }
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        background-color: rgba(40, 60, 60, 0.95);
+        backdrop-filter: blur(5px);
+        min-width: 120px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        z-index: 1001;
+        list-style: none;
+        padding: 5px 0;
+        border-radius: 8px;
+      }
+      .dropdown-menu li a {
+        padding: 10px 20px;
+      }
+      .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+      }
+
       /* Hamburger Menu */
       .hamburger {
         display: none;
@@ -287,6 +310,11 @@
           width: 100%;
           padding: 15px;
         }
+        .dropdown-menu {
+          position: static;
+          background: transparent;
+          box-shadow: none;
+        }
       }
     </style>
   </head>
@@ -312,32 +340,55 @@
     <nav class="navbar container">
       <ul class="nav-list">
         <div class="nav-left">
-          <li class="nav-item"><a href="{{ url_for('root') }}">Home</a></li>
           <li class="nav-item">
-            <a href="{{ url_for('about_page') }}">About</a>
+            <a href="{{ url_for('root') }}">{{ _('Home') }}</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('about_page') }}">{{ _('About') }}</a>
           </li>
           {% if session.user_id %}
           <li class="nav-item">
-            <a href="{{ url_for('auth.my_reports') }}">My Reports</a>
+            <a href="{{ url_for('auth.my_reports') }}">{{ _('My Reports') }}</a>
           </li>
           {% endif %} {% if session.admin_id %}
           <li class="nav-item">
-            <a href="{{ url_for('admin_api.admin_dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('admin_api.admin_dashboard') }}"
+              >{{ _('Dashboard') }}</a
+            >
           </li>
           <li class="nav-item">
             <a href="{{ url_for('admin_api.public_db_manager_page') }}"
-              >Public DB Manager</a
+              >{{ _('Public DB Manager') }}</a
             >
           </li>
           <li class="nav-item">
             <a href="{{ url_for('admin_api.hotspot_map_page') }}"
-              >Hotspot Map</a
+              >{{ _('Hotspot Map') }}</a
             >
           </li>
           {% endif %}
         </div>
 
         <div class="nav-right">
+          <li class="nav-item dropdown">
+            <a href="#">{{ _('Language') }}</a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="{{ url_for('change_language', lang='en') }}"
+                  >English</a
+                >
+              </li>
+              <li>
+                <a href="{{ url_for('change_language', lang='fr') }}"
+                  >Français</a
+                >
+              </li>
+              <li>
+                <a href="{{ url_for('change_language', lang='yo') }}">Yorùbá</a>
+              </li>
+            </ul>
+          </li>
+
           {% if session.admin_id %}
           <li class="nav-item">
             <form
@@ -351,14 +402,14 @@
                 class="btn"
                 style="background: #dc3545; color: white; width: 100%"
               >
-                Admin Logout
+                {{ _('Admin Logout') }}
               </button>
             </form>
           </li>
           {% elif session.user_id %}
           <li class="nav-item">
             <span style="padding: 15px 20px; color: white"
-              >Welcome, {{ session.user_name }}</span
+              >{{ _('Welcome,') }} {{ session.user_name }}</span
             >
           </li>
           <li class="nav-item">
@@ -366,7 +417,7 @@
               href="{{ url_for('auth.logout') }}"
               class="btn"
               style="background-color: #dc3545"
-              >Logout</a
+              >{{ _('Logout') }}</a
             >
           </li>
           {% else %}
@@ -375,7 +426,7 @@
               href="{{ url_for('auth.login') }}"
               class="btn"
               style="background-color: #360fd358"
-              >User Login</a
+              >{{ _('User Login') }}</a
             >
           </li>
           <li class="nav-item">
@@ -383,7 +434,7 @@
               href="{{ url_for('auth.register') }}"
               class="btn"
               style="background-color: #04700774"
-              >Register</a
+              >{{ _('Register') }}</a
             >
           </li>
           {% endif %}
@@ -422,7 +473,9 @@
           border-top: 4px solid #f39c12;
         "
       >
-        <h3 id="confirm-modal-title" style="color: #92f394">Confirm Action</h3>
+        <h3 id="confirm-modal-title" style="color: #92f394">
+          {{ _('Confirm Action') }}
+        </h3>
         <p id="confirm-modal-text" style="color: #ffffff"></p>
         <div
           style="
@@ -433,14 +486,14 @@
           "
         >
           <button id="confirm-modal-cancel-btn" class="btn btn-outline">
-            Cancel
+            {{ _('Cancel') }}
           </button>
           <button
             id="confirm-modal-confirm-btn"
             class="btn"
             style="background-color: #dc3545; color: white"
           >
-            Confirm
+            {{ _('Confirm') }}
           </button>
         </div>
       </div>
@@ -474,12 +527,12 @@
           border-top: 4px solid #b45e19;
         "
       >
-        <h3 style="color: #92f394">Session Timeout Warning</h3>
+        <h3 style="color: #92f394">{{ _('Session Timeout Warning') }}</h3>
         <p style="color: #ffffff">
-          Your session is about to expire due to inactivity. You will be logged
-          out in
+          {{ _('Your session is about to expire due to inactivity. You will be
+          logged out in') }}
           <strong id="session-countdown" style="font-size: 1.2em">120</strong>
-          seconds.
+          {{ _('seconds.') }}
         </p>
         <div
           style="
@@ -494,14 +547,14 @@
             class="btn"
             style="background-color: #28a745; color: white"
           >
-            Stay Logged In
+            {{ _('Stay Logged In') }}
           </button>
           <button
             id="session-logout-btn"
             class="btn"
             style="background-color: #dc3545; color: white"
           >
-            Logout Now
+            {{ _('Logout Now') }}
           </button>
         </div>
       </div>
@@ -512,29 +565,34 @@
       <a
         href="{{ url_for('about_page') }}"
         style="color: #eee; text-decoration: none; margin-right: 15px"
-        >About MedGuard</a
+        >{{ _('About MedGuard') }}</a
       >
       <small
-        >© MedGuard — Fighting counterfeit medicine, one scan at a time.</small
+        >© {{ _('MedGuard — Fighting counterfeit medicine, one scan at a time.')
+        }}</small
       >
     </footer>
 
     <button id="chat-toggle-btn">?</button>
     <div id="chat-container" class="hidden">
       <div id="chat-header">
-        <h3>MedGuard Assistant</h3>
+        <h3>{{ _('MedGuard Assistant') }}</h3>
         <button id="chat-close-btn">&times;</button>
       </div>
       <div id="chat-messages">
         <div class="chat-message bot">
-          Hello! How can I help you today? You can ask me how to verify a drug,
-          how to report a counterfeit, or what to do if you find one.
+          {{ _('Hello! How can I help you today? You can ask me how to verify a
+          drug, how to report a counterfeit, or what to do if you find one.') }}
         </div>
       </div>
       <div id="chat-quick-replies" class="quick-replies-container"></div>
       <div id="chat-input-container">
-        <input type="text" id="chat-input" placeholder="Ask a question..." />
-        <button id="chat-send-btn">Send</button>
+        <input
+          type="text"
+          id="chat-input"
+          placeholder="{{ _('Ask a question...') }}"
+        />
+        <button id="chat-send-btn">{{ _('Send') }}</button>
       </div>
     </div>
 
@@ -621,7 +679,8 @@
               console.error("Error with AI chat:", error);
               addMessage(
                 {
-                  answer: "I'm sorry, I'm having trouble connecting right now.",
+                  answer:
+                    "{{ _('I'm sorry, I'm having trouble connecting right now.') }}",
                 },
                 "bot"
               );
@@ -698,11 +757,21 @@
             chatMessages.innerHTML = "";
             addMessage(
               {
-                answer: "Hello! I am the MedGuard Assistant. How can I help?",
+                answer:
+                  "{{ _('Hello! I am the MedGuard Assistant. How can I help?') }}",
                 quick_replies: [
-                  { text: "How to report a drug?", payload: "guide to report" },
-                  { text: "How to verify a drug?", payload: "verify" },
-                  { text: "Check a batch status", payload: "status of batch" },
+                  {
+                    text: "{{ _('How to report a drug?') }}",
+                    payload: "guide to report",
+                  },
+                  {
+                    text: "{{ _('How to verify a drug?') }}",
+                    payload: "verify",
+                  },
+                  {
+                    text: "{{ _('Check a batch status') }}",
+                    payload: "status of batch",
+                  },
                 ],
               },
               "bot"

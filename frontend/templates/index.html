@@ -1,26 +1,28 @@
 {% extends "base.html" %} {% block content %}
 <div class="main-content-wrapper">
   <div class="panel qr-panel">
-    <h2>📷 Scan QR / Barcode</h2>
+    <h2>{{ _('📷 Scan QR / Barcode') }}</h2>
     <div id="qr-reader" class="qr-reader"></div>
     <div style="margin-top: 10px">
-      <button id="start-scan" class="btn btn-yellow">Start Camera</button>
-      <button id="stop-scan" class="btn btn-outline">Stop</button>
+      <button id="start-scan" class="btn btn-yellow">
+        {{ _('Start Camera') }}
+      </button>
+      <button id="stop-scan" class="btn btn-outline">{{ _('Stop') }}</button>
     </div>
   </div>
 
   <div class="panel qr-panel">
-    <h2>🔍 Or Verify by Batch Number</h2>
+    <h2>{{ _('🔍 Or Verify by Batch Number') }}</h2>
     <form id="verify-form" class="inline-form" style="justify-content: center">
       <input
         id="verify-batch"
         name="batch_number"
         class="input"
-        placeholder="Enter batch number"
+        placeholder="{{ _('Enter batch number') }}"
         required
       />
       <button id="verify-btn" type="submit" class="btn btn-yellow">
-        Verify
+        {{ _('Verify') }}
       </button>
     </form>
   </div>
@@ -29,19 +31,23 @@
 
   <div class="panel report-panel">
     <div class="panel">
-      <h2>🚨 Report Counterfeit</h2>
+      <h2>{{ _('🚨 Report Counterfeit') }}</h2>
       <div class="inline-form" style="margin-bottom: 8px">
-        <input id="report-drug" class="input" placeholder="Drug name" />
+        <input
+          id="report-drug"
+          class="input"
+          placeholder="{{ _('Drug name') }}"
+        />
         <input
           id="report-batch"
           class="input"
-          placeholder="Batch number"
+          placeholder="{{ _('Batch number') }}"
           required
         />
         <input
           id="report-location"
           class="input"
-          placeholder="Location (optional)"
+          placeholder="{{ _('Location (optional)') }}"
         />
         <input type="hidden" id="report-latitude" name="latitude" />
         <input type="hidden" id="report-longitude" name="longitude" />
@@ -49,12 +55,14 @@
       <textarea
         id="report-note"
         class="input"
-        placeholder="Note (optional)"
+        placeholder="{{ _('Note (optional)') }}"
         style="width: 100%; min-height: 80px; margin-bottom: 8px"
       ></textarea>
       <div class="report-actions">
         <input type="file" id="report-image" class="input" accept="image/*" />
-        <button id="report-btn" class="btn btn-yellow">Report</button>
+        <button id="report-btn" class="btn btn-yellow">
+          {{ _('Report') }}
+        </button>
       </div>
     </div>
     {% endblock %} {% block scripts %}

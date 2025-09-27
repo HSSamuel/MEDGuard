@@ -14,16 +14,26 @@ from docx.oxml.ns import qn
 from docx.shared import Inches
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+from functools import wraps
 
 admin_bp = Blueprint("admin_api", __name__)
+
+def role_required(role):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if session.get("admin_role") != role:
+                return redirect(url_for("admin_login"))
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
 
 # =========================
 # Admin Dashboard
 # =========================
 @admin_bp.route('/dashboard')
+@role_required('regulator')
 def admin_dashboard():
-    if not session.get("admin_id"):
-        return redirect(url_for("admin_login"))
     try:
         conn = get_db()
         
@@ -88,6 +98,7 @@ def admin_dashboard():
 # Register a new drug batch
 # =========================
 @admin_bp.post("/register")
+@role_required('regulator')
 def admin_register():
     if not session.get("admin_id"):
         return jsonify({"error": "Authentication required"}), 401
@@ -135,6 +146,7 @@ def admin_register():
 # Registered Drugs Page
 # =========================
 @admin_bp.get("/drugs")
+@role_required('regulator')
 def admin_drugs():
     if not session.get("admin_id"):
         return redirect(url_for("admin_login"))
@@ -190,6 +202,7 @@ def admin_drugs():
 # Delete a registered drug
 # =========================
 @admin_bp.delete("/drugs/<int:drug_id>")
+@role_required('regulator')
 def delete_drug(drug_id):
     if not session.get("admin_id"):
         return jsonify({"error": "Authentication required"}), 401
@@ -207,6 +220,7 @@ def delete_drug(drug_id):
 # Export Registered Drugs (Word)
 # =========================
 @admin_bp.get("/drugs/export/word")
+@role_required('regulator')
 def export_drugs_word():
     if not session.get("admin_id"):
         return redirect(url_for("admin_login"))
@@ -292,6 +306,7 @@ def export_drugs_word():
 # Export Registered Drugs (PDF)
 # =========================
 @admin_bp.get("/drugs/export/pdf")
+@role_required('regulator')
 def export_drugs_pdf():
     if not session.get("admin_id"):
         return redirect(url_for("admin_login"))
@@ -370,6 +385,7 @@ def export_drugs_pdf():
 # Reports (All)
 # =========================
 @admin_bp.get("/reports")
+@role_required('regulator')
 def admin_reports():
     if not session.get("admin_id"):
         return redirect(url_for("admin_login"))
@@ -394,6 +410,7 @@ def admin_reports():
 # Reports (Today Only)
 # =========================
 @admin_bp.get("/reports/today")
+@role_required('regulator')
 def admin_reports_today():
     if not session.get("admin_id"):
         return redirect(url_for("admin_login"))
@@ -416,6 +433,7 @@ def admin_reports_today():
 # Reports by Date Range
 # =========================
 @admin_bp.get("/reports/range")
+@role_required('regulator')
 def admin_reports_range():
     if not session.get("admin_id"):
         return redirect(url_for("admin_login"))
@@ -442,6 +460,7 @@ def admin_reports_range():
 # Reports Count (Unread)
 # =========================
 @admin_bp.get("/reports/count")
+@role_required('regulator')
 def reports_count():
     if not session.get("admin_id"):
         return jsonify({"error": "Authentication required"}), 401
@@ -457,6 +476,7 @@ def reports_count():
 # API for Hotspot Map Data
 # =========================
 @admin_bp.route('/reports/locations')
+@role_required('regulator')
 def get_report_locations():
     if not session.get("admin_id"):
         return jsonify({"error": "Authentication required"}), 401
@@ -473,12 +493,14 @@ def get_report_locations():
 # Page Rendering Routes
 # =========================
 @admin_bp.route('/hotspot-map')
+@role_required('regulator')
 def hotspot_map_page():
     if not session.get("admin_id"):
         return redirect(url_for("admin_login"))
     return render_template('admin_map.html')
 
 @admin_bp.route('/public-db-manager')
+@role_required('regulator')
 def public_db_manager_page():
     if not session.get("admin_id"):
         return redirect(url_for("admin_login"))
@@ -489,6 +511,7 @@ def public_db_manager_page():
 # Analytics Endpoint
 # =========================
 @admin_bp.route('/reports/analytics')
+@role_required('regulator')
 def get_report_analytics():
     if not session.get("admin_id"):
         return jsonify({"error": "Authentication required"}), 401

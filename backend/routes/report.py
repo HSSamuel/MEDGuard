@@ -3,7 +3,7 @@ from flask import Blueprint, jsonify, request, current_app, session
 from werkzeug.utils import secure_filename
 from backend.database import get_db
 from datetime import datetime
-from backend.notifications import send_sms_alert
+from backend.notifications import send_sms_alert, send_email_alert
 
 report_bp = Blueprint("report_api", __name__)
 
@@ -52,6 +52,7 @@ def create_report():
 
     report_data_for_alert = { "drug_name": drug_name, "batch_number": batch_number, }
     send_sms_alert(report_data_for_alert)
+    send_email_alert(report_data_for_alert)
     
     return jsonify({"message": "🚨 Report received. Thank you for helping keep patients safe."}), 201
 

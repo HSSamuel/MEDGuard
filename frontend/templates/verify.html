@@ -143,7 +143,7 @@
     <div class="status-icon" style="color: #c62828">🌐</div>
     <h2 style="color: #c62828">External Website Link</h2>
     <p class="subtle">
-      This QR/Barcode  points to an external website. MedGuard cannot verify its
+      This {{ scan_type or 'code' }} points to an external website. MedGuard cannot verify its
       authenticity. Proceed with caution.
     </p>
 
@@ -151,7 +151,7 @@
     <div class="status-icon" style="color: #007bff">ℹ️</div>
     <h2 style="color: #007bff">Unregistered Product Code</h2>
     <p class="subtle">
-      This appears to be a standard product code, not a MedGuard verification
+      This appears to be a standard product {{ scan_type or 'code' }}, not a MedGuard verification
       code. MedGuard cannot verify this item, but it has not been flagged as
       counterfeit.
     </p>
@@ -160,7 +160,7 @@
     <div class="status-icon" style="color: #c62828">❌</div>
     <h2 style="color: #c62828">Not Found in MedGuard System</h2>
     <p class="subtle">
-      This QR/Barcode  is not registered in the MedGuard system. This drug may be
+      This {{ scan_type or 'code' }} is not registered in the MedGuard system. This drug may be
       counterfeit. Please report it.
     </p>
     {% endif %}
@@ -222,7 +222,7 @@
   </div>
   {% endif %} {% if scanned_content %}
   <div style="text-align: center; word-wrap: break-word; color: #333">
-    <p>The scanned QR/Barcode contained the following unrecognized data:</p>
+    <p>The scanned {{ scan_type or 'code' }} contained the following unrecognized data:</p>
     <strong
       style="background: #eee; padding: 5px; border-radius: 4px; color: #000"
       >{{ scanned_content }}</strong

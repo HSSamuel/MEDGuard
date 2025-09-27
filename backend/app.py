@@ -18,7 +18,8 @@ import logging
 import secrets
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
-from datetime import timedelta # MODIFIED: Import timedelta
+from datetime import timedelta
+from functools import wraps
 
 # --- Flask and Third-Party Libraries ---
 from flask import (
@@ -27,6 +28,7 @@ from flask import (
 )
 from flask_cors import CORS
 from werkzeug.security import check_password_hash
+from flask_babel import Babel
 
 # --- Application-Specific Imports ---
 # Imports configuration, database handlers, and data models
@@ -83,6 +85,10 @@ def create_app() -> Flask:
     )
     app.config.from_object(cfg)
 
+    # Add language configuration
+    app.config['LANGUAGES'] = ['en', 'fr', 'yo']
+    app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+
     # --- Session and Security Configuration ---
     # These settings help protect against common web vulnerabilities.
     app.config.update(
@@ -91,7 +97,6 @@ def create_app() -> Flask:
         SESSION_COOKIE_SAMESITE="Lax",
         SESSION_COOKIE_SECURE=not cfg.DEBUG,
         SESSION_REFRESH_EACH_REQUEST=False,
-        # MODIFIED: Set the session lifetime
         PERMANENT_SESSION_LIFETIME=timedelta(minutes=15)
     )
 
@@ -99,12 +104,38 @@ def create_app() -> Flask:
     CORS(app, resources={r"/api/*": {"origins": cfg.CORS_ORIGINS}}) # Enables Cross-Origin Resource Sharing for APIs
     _configure_logging(app) # Sets up the application's logging system
     init_db() # Initializes the database tables if they don't exist
+    babel = Babel(app)
+
+    @babel.localeselector
+    def get_locale():
+        # Check if a language is stored in the session
+        if 'language' in session and session['language'] in app.config['LANGUAGES']:
+            return session['language']
+        # Otherwise, use the best match from the browser's settings
+        return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+    @app.context_processor
+    def inject_locale():
+        return dict(current_locale=get_locale())
 
     # --- Request and Teardown Handlers ---
     @app.teardown_appcontext
     def teardown_db(exception):
         """Ensures the database connection is closed after each request to free up resources."""
         close_db()
+
+    # =============================================================================
+    # R O L E - B A S E D   A C C E S S   C O N T R O L
+    # =============================================================================
+    def role_required(role):
+        def decorator(f):
+            @wraps(f)
+            def decorated_function(*args, **kwargs):
+                if session.get("admin_role") != role:
+                    abort(403)  # Forbidden
+                return f(*args, **kwargs)
+            return decorated_function
+        return decorator
 
     # =============================================================================
     # C O R E   R O U T E S
@@ -139,6 +170,13 @@ def create_app() -> Flask:
         if not drug:
             abort(404)
         return render_template("adr_report.html", drug=drug)
+
+    # NEW ROUTE FOR CHANGING LANGUAGE
+    @app.route('/change-language/<lang>')
+    def change_language(lang):
+        if lang in app.config['LANGUAGES']:
+            session['language'] = lang
+        return redirect(request.referrer or url_for('root'))
 
 
     # --- Admin Authentication Routes ---
@@ -207,7 +245,12 @@ def create_app() -> Flask:
     @app.errorhandler(404)
     def not_found(e):
         """Returns a user-friendly 404 Not Found page."""
-        return jsonify(error="Not Found"), 404
+        return render_template("errors/404.html"), 404
+        
+    @app.errorhandler(403)
+    def forbidden(e):
+        """Returns a user-friendly 403 Forbidden page."""
+        return render_template("errors/403.html"), 403
     # ... (other error handlers can be added here)
 
     return app
@@ -247,3 +290,4 @@ if __name__ == "__main__":
         port=app.config.get("PORT", 5000),
         debug=app.config.get("DEBUG", True),
     )
+

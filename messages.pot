@@ -1,0 +1,67 @@
+# Translations template for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-09-27 08:48+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: frontend/templates/index.html:4
+msgid "📷 Scan QR / Barcode"
+msgstr ""
+
+#: frontend/templates/index.html:8
+msgid "Start Camera"
+msgstr ""
+
+#: frontend/templates/index.html:10
+msgid "Stop"
+msgstr ""
+
+#: frontend/templates/index.html:15
+msgid "🔍 Or Verify by Batch Number"
+msgstr ""
+
+#: frontend/templates/index.html:21
+msgid "Enter batch number"
+msgstr ""
+
+#: frontend/templates/index.html:25
+msgid "Verify"
+msgstr ""
+
+#: frontend/templates/index.html:34
+msgid "🚨 Report Counterfeit"
+msgstr ""
+
+#: frontend/templates/index.html:39
+msgid "Drug name"
+msgstr ""
+
+#: frontend/templates/index.html:44
+msgid "Batch number"
+msgstr ""
+
+#: frontend/templates/index.html:50
+msgid "Location (optional)"
+msgstr ""
+
+#: frontend/templates/index.html:58
+msgid "Note (optional)"
+msgstr ""
+
+#: frontend/templates/index.html:64
+msgid "Report"
+msgstr ""
+
