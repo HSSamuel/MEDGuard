@@ -205,7 +205,6 @@ msgid "About"
 msgstr ""
 
 #: frontend/templates/base.html:351
-#, fuzzy
 msgid "My Reports"
 msgstr "Signaler"
 
@@ -242,7 +241,6 @@ msgid "User Login"
 msgstr "Connexion Utilisateur"
 
 #: frontend/templates/base.html:437
-#, fuzzy
 msgid "Register"
 msgstr "Inscrivez-vous ici"
 
@@ -285,7 +283,6 @@ msgid "MedGuard — Fighting counterfeit medicine, one scan at a time."
 msgstr ""
 
 #: frontend/templates/base.html:579
-#, fuzzy
 msgid "MedGuard Assistant"
 msgstr "MedGuard"
 
