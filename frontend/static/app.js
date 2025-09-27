@@ -1,7 +1,7 @@
 // =========================
 // Rotating tagline
 // =========================
-const taglines = [
+const taglines = window.translations.taglines || [
   "Because your health deserves the truth.",
   "No more guessing — just scanning.",
   "Keeping counterfeit meds off the streets.",
@@ -59,7 +59,11 @@ function startScanner() {
     )
     .catch((err) => {
       console.error("Unable to start scanning:", err);
-      showMessage("Camera access failed. Please check permissions.", "error");
+      showMessage(
+        window.translations.cameraAccessFailed ||
+          "Camera access failed. Please check permissions.",
+        "error"
+      );
     });
 }
 
@@ -74,7 +78,10 @@ function stopScanner() {
 // =========================
 function openVerificationPage(batchNumber) {
   if (!batchNumber) {
-    showMessage("Please enter a batch number.", "error");
+    showMessage(
+      window.translations.enterBatchNumber || "Please enter a batch number.",
+      "error"
+    );
     return;
   }
   window.open(`/verify/${encodeURIComponent(batchNumber)}`, "_blank");
@@ -92,7 +99,11 @@ function reportCounterfeit() {
   const image = document.getElementById("report-image").files[0];
 
   if (!batch) {
-    showMessage("Batch number is required to report.", "error");
+    showMessage(
+      window.translations.batchRequired ||
+        "Batch number is required to report.",
+      "error"
+    );
     return;
   }
 
@@ -150,11 +161,19 @@ function sendReportData(
   })
     .then((res) => res.json())
     .then((data) => {
-      showMessage(data.message || "Report submitted successfully", "success");
+      showMessage(
+        data.message ||
+          window.translations.reportSuccess ||
+          "Report submitted successfully",
+        "success"
+      );
     })
     .catch((err) => {
       console.error(err);
-      showMessage("Error submitting report", "error");
+      showMessage(
+        window.translations.errorSubmitting || "Error submitting report",
+        "error"
+      );
     })
     .finally(() => {
       reportBtn.textContent = "Report";
@@ -196,7 +215,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (batchInput && batchInput.value) {
         openVerificationPage(batchInput.value.trim());
       } else {
-        alert("Please enter a batch number.");
+        alert(
+          window.translations.enterBatchNumber || "Please enter a batch number."
+        );
       }
     });
   }

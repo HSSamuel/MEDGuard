@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-27 09:58+0100\n"
+"POT-Creation-Date: 2025-09-27 11:42+0100\n"
 "PO-Revision-Date: 2025-09-27 10:00+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -196,45 +196,549 @@ msgstr ""
 msgid "Return to Home"
 msgstr "Retour à l'Accueil"
 
+#: frontend/templates/admin.html:71
+msgid "🛠 Admin — Register New Drug Batch"
+msgstr "🛠 Admin — Enregistrer un Nouveau Lot de Médicaments"
+
+#: frontend/templates/admin.html:90
+msgid "Loading time..."
+msgstr "Chargement de l'heure..."
+
+#: frontend/templates/admin.html:109
+msgid "Session ends in:"
+msgstr "La session se termine dans :"
+
+#: frontend/templates/admin.html:119
+msgid ""
+"Use this form to register a new drug batch and generate its QR code "
+"instantly."
+msgstr ""
+"Utilisez ce formulaire pour enregistrer un nouveau lot de médicaments et "
+"générer son code QR instantanément."
+
+#: frontend/templates/admin.html:124
+msgid "💊 Registered Drugs"
+msgstr "💊 Médicaments Enregistrés"
+
+#: frontend/templates/admin.html:127
+msgid "📱 Simulate SMS"
+msgstr "📱 Simuler un SMS"
+
+#: frontend/templates/admin.html:132
+msgid "📦 Batch Details"
+msgstr "📦 Détails du Lot"
+
+#: frontend/templates/admin.html:147
+msgid "Close Scanner"
+msgstr "Fermer le Scanner"
+
+#: frontend/templates/admin.html:166
+msgid "Mfg Date"
+msgstr "Date de Fabrication"
+
+#: frontend/templates/admin.html:177
+msgid "Expiry Date"
+msgstr "Date d'Expiration"
+
+#: frontend/templates/admin.html:191
+msgid "Register &amp; Get QR"
+msgstr "Enregistrer & Obtenir le QR"
+
+#: frontend/templates/admin.html:198
+msgid "📷 Scan to Pre-fill"
+msgstr "📷 Scanner pour Pré-remplir"
+
+#: frontend/templates/admin.html:212
+msgid "📄 Generated QR Code"
+msgstr "📄 Code QR Généré"
+
+#: frontend/templates/admin.html:213
+msgid "Right-click and save the image below to print or share."
+msgstr "Faites un clic droit et enregistrez l'image ci-dessous pour l'imprimer ou la partager."
+
+#: frontend/templates/admin.html:229
+msgid "🚨 Counterfeit Reports"
+msgstr "🚨 Rapports de Contrefaçon"
+
+#: frontend/templates/admin.html:235
+msgid "Today’s Reports"
+msgstr "Rapports d'Aujourd'hui"
+
+#: frontend/templates/admin.html:252
+msgid "View All Reports"
+msgstr "Voir Tous les Rapports"
+
+#: frontend/templates/admin.html:260
+msgid "🔍 Search reports..."
+msgstr "🔍 Rechercher des rapports..."
+
+#: frontend/templates/admin.html:266 frontend/templates/admin_drugs.html:110
+#: frontend/templates/adr_report.html:61
+msgid "From:"
+msgstr "De :"
+
+#: frontend/templates/admin.html:268 frontend/templates/admin_drugs.html:112
+#: frontend/templates/adr_report.html:66
+msgid "To:"
+msgstr "À :"
+
+#: frontend/templates/admin.html:270
+msgid "Filter"
+msgstr "Filtrer"
+
+#: frontend/templates/admin.html:277 frontend/templates/admin.html:439
+#: frontend/templates/admin_drugs.html:137
+msgid "ID"
+msgstr "ID"
+
+#: frontend/templates/admin.html:278 frontend/templates/admin.html:440
+#: frontend/templates/my_reports.html:12
+msgid "Drug Name"
+msgstr "Nom du Médicament"
+
+#: frontend/templates/admin.html:279
+msgid "Batch"
+msgstr "Lot"
+
+#: frontend/templates/admin.html:280 frontend/templates/my_reports.html:14
+msgid "Location"
+msgstr "Lieu"
+
+#: frontend/templates/admin.html:281 frontend/templates/my_reports.html:15
+msgid "Note"
+msgstr "Note"
+
+#: frontend/templates/admin.html:282
+msgid "Image"
+msgstr "Image"
+
+#: frontend/templates/admin.html:283
+msgid "Analysis"
+msgstr "Analyse"
+
+#: frontend/templates/admin.html:284
+msgid "Date"
+msgstr "Date"
+
+#: frontend/templates/admin.html:285
+msgid "Reporter"
+msgstr "Rapporteur"
+
+#: frontend/templates/admin.html:286 frontend/templates/admin.html:445
+#: frontend/templates/admin_drugs.html:142
+msgid "Status"
+msgstr "Statut"
+
+#: frontend/templates/admin.html:287 frontend/templates/admin.html:446
+#: frontend/templates/admin_drugs.html:144
+#: frontend/templates/my_reports.html:18
+msgid "Actions"
+msgstr "Actions"
+
+#: frontend/templates/admin.html:318
+msgid "No Image"
+msgstr "Pas d'Image"
+
+#: frontend/templates/admin.html:329
+msgid "Analyze"
+msgstr "Analyser"
+
+#: frontend/templates/admin.html:332
+msgid "N/A"
+msgstr "N/A"
+
+#: frontend/templates/admin.html:340
+msgid "New"
+msgstr "Nouveau"
+
+#: frontend/templates/admin.html:342
+msgid "Checked"
+msgstr "Vérifié"
+
+#: frontend/templates/admin.html:347 frontend/templates/admin.html:460
+#: frontend/templates/admin_drugs.html:167
+#: frontend/templates/my_reports.html:47
+msgid "Delete"
+msgstr "Supprimer"
+
+#: frontend/templates/admin.html:356
+msgid "No reports submitted yet."
+msgstr "Aucun rapport soumis pour le moment."
+
+#: frontend/templates/admin.html:364
+msgid "💊 Adverse Drug Reaction Reports"
+msgstr "💊 Rapports de Réactions Indésirables aux Médicaments"
+
+#: frontend/templates/admin.html:373
+msgid "Search by drug, batch, or reaction..."
+msgstr "Rechercher par médicament, lot ou réaction..."
+
+#: frontend/templates/admin.html:388
+msgid "Filter ADR"
+msgstr "Filtrer les EIM"
+
+#: frontend/templates/admin.html:394 frontend/templates/admin_drugs.html:120
+msgid "Export Word"
+msgstr "Exporter en Word"
+
+#: frontend/templates/admin.html:398 frontend/templates/admin_drugs.html:121
+msgid "Export PDF"
+msgstr "Exporter en PDF"
+
+#: frontend/templates/admin.html:441
+#: frontend/templates/my_reports.html:13
+msgid "Batch Number"
+msgstr "Numéro de Lot"
+
+#: frontend/templates/admin.html:442
+msgid "Patient Info"
+msgstr "Infos Patient"
+
+#: frontend/templates/admin.html:443
+msgid "Reaction Description"
+msgstr "Description de la Réaction"
+
+#: frontend/templates/admin.html:444 frontend/templates/my_reports.html:16
+msgid "Report Date"
+msgstr "Date du Rapport"
+
+#: frontend/templates/admin.html:471
+msgid "No Adverse Drug Reaction reports match the current filters."
+msgstr "Aucun rapport de réaction indésirable ne correspond aux filtres actuels."
+
+#: frontend/templates/admin.html:565
+msgid "Confirm Deletion"
+msgstr "Confirmer la Suppression"
+
+#: frontend/templates/admin.html:566
+msgid "Are you sure you want to delete ADR Report #"
+msgstr "Êtes-vous sûr de vouloir supprimer le rapport d'EIM #"
+
+#: frontend/templates/admin.html:566
+msgid "? This is permanent."
+msgstr "? Cette action est permanente."
+
+#: frontend/templates/admin.html:579
+msgid "Failed to delete report:"
+msgstr "Échec de la suppression du rapport :"
+
+#: frontend/templates/admin.html:640
+msgid "Error checking for new reports:"
+msgstr "Erreur lors de la vérification de nouveaux rapports :"
+
+#: frontend/templates/admin.html:665
+msgid "Please select both a start and end date."
+msgstr "Veuillez sélectionner une date de début et de fin."
+
+#: frontend/templates/admin_drugs.html:92
+msgid "Search, filter, or export registered drug batches."
+msgstr "Recherchez, filtrez ou exportez des lots de médicaments enregistrés."
+
+#: frontend/templates/admin_drugs.html:95
+msgid "Search by name or batch number"
+msgstr "Rechercher par nom ou numéro de lot"
+
+#: frontend/templates/admin_drugs.html:97
+msgid "-- All --"
+msgstr "-- Tous --"
+
+#: frontend/templates/admin_drugs.html:98
+msgid "Valid"
+msgstr "Valide"
+
+#: frontend/templates/admin_drugs.html:99
+msgid "Expired"
+msgstr "Expiré"
+
+#: frontend/templates/admin_drugs.html:100
+msgid "Expiring Soon"
+msgstr "Expire Bientôt"
+
+#: frontend/templates/admin_drugs.html:102
+msgid "🔍 Search"
+msgstr "🔍 Rechercher"
+
+#: frontend/templates/admin_drugs.html:114
+msgid "📅 Apply"
+msgstr "📅 Appliquer"
+
+#: frontend/templates/admin_drugs.html:138
+msgid "Name"
+msgstr "Nom"
+
+#: frontend/templates/admin_drugs.html:139
+msgid "Batch #"
+msgstr "Lot #"
+
+#: frontend/templates/admin_drugs.html:140
+msgid "Manufacturer"
+msgstr "Fabricant"
+
+#: frontend/templates/admin_drugs.html:143
+msgid "Registered On"
+msgstr "Enregistré le"
+
+#: frontend/templates/admin_drugs.html:176
+msgid "No drugs found."
+msgstr "Aucun médicament trouvé."
+
+#: frontend/templates/admin_drugs.html:184
+msgid "⬅ Prev"
+msgstr "⬅ Préc"
+
+#: frontend/templates/admin_drugs.html:186
+msgid "Page"
+msgstr "Page"
+
+#: frontend/templates/admin_drugs.html:186
+msgid "of"
+msgstr "de"
+
+#: frontend/templates/admin_drugs.html:188
+msgid "Next ➡"
+msgstr "Suiv ➡"
+
+#: frontend/templates/admin_drugs.html:194
+msgid "⬅ Back to Dashboard"
+msgstr "⬅ Retour au Tableau de Bord"
+
+#: frontend/templates/admin_drugs.html:202
+msgid "Are you sure you want to delete this drug?"
+msgstr "Êtes-vous sûr de vouloir supprimer ce médicament ?"
+
+#: frontend/templates/admin_drugs.html:221
+msgid "Are you sure you want to delete the drug"
+msgstr "Êtes-vous sûr de vouloir supprimer le médicament"
+
+#: frontend/templates/admin_drugs.html:221
+msgid "? This action cannot be undone."
+msgstr "? Cette action ne peut pas être annulée."
+
+#: frontend/templates/admin_login.html:5
+msgid "🔐 Regulator Login"
+msgstr "🔐 Connexion Régulateur"
+
+#: frontend/templates/admin_login.html:14
+msgid "Official email"
+msgstr "Email officiel"
+
+#: frontend/templates/admin_login.html:22
+msgid "Show Password"
+msgstr "Afficher le mot de passe"
+
+#: frontend/templates/admin_map.html:3
+msgid "📍 Live Counterfeit Hotspot Map"
+msgstr "📍 Carte en direct des points chauds de contrefaçon"
+
+#: frontend/templates/admin_map.html:5
+msgid ""
+"This map displays the real-time locations of all submitted counterfeit "
+"drug reports. Use this intelligence to identify clusters and potential "
+"hotspots for targeted investigation."
+msgstr ""
+"Cette carte affiche les emplacements en temps réel de tous les rapports de"
+" médicaments contrefaits soumis. Utilisez cette information pour "
+"identifier les clusters et les points chauds potentiels pour une enquête "
+"ciblée."
+
+#: frontend/templates/admin_map.html:44
+msgid "Your session has expired. Please log in again to view the map."
+msgstr "Votre session a expiré. Veuillez vous reconnecter pour voir la carte."
+
+#: frontend/templates/admin_public_db.html:9
+msgid "Public Drug Data Manager"
+msgstr "Gestionnaire de Données Publiques sur les Médicaments"
+
+#: frontend/templates/admin_public_db.html:11
+msgid ""
+"View, add, or edit entries in the public drug database. This information"
+" is shown to users when a scanned drug is not in the main MedGuard "
+"registry."
+msgstr ""
+"Visualisez, ajoutez ou modifiez les entrées dans la base de données "
+"publique des médicaments. Ces informations sont présentées aux "
+"utilisateurs lorsqu'un médicament scanné ne figure pas dans le registre "
+"principal de MedGuard."
+
+#: frontend/templates/admin_public_db.html:16
+msgid "Current Public Drug List"
+msgstr "Liste Actuelle des Médicaments Publics"
+
+#: frontend/templates/admin_public_db.html:22
+msgid "Drug Name"
+msgstr "Nom du Médicament"
+
+#: frontend/templates/admin_public_db.html:23
+msgid "Manufacturer"
+msgstr "Fabricant"
+
+#: frontend/templates/admin_public_db.html:30
+msgid "➕ Add New Drug"
+msgstr "➕ Ajouter un Nouveau Médicament"
+
+#: frontend/templates/admin_public_db.html:35
+msgid "Add New Drug Entry"
+msgstr "Ajouter une Nouvelle Entrée de Médicament"
+
+#: frontend/templates/admin_public_db.html:41
+msgid "Batch Number (Unique Key):"
+msgstr "Numéro de Lot (Clé Unique) :"
+
+#: frontend/templates/admin_public_db.html:52
+msgid "Drug Name:"
+msgstr "Nom du Médicament :"
+
+#: frontend/templates/admin_public_db.html:63
+msgid "Manufacturer:"
+msgstr "Fabricant :"
+
+#: frontend/templates/admin_public_db.html:74
+msgid "NAFDAC Status:"
+msgstr "Statut NAFDAC :"
+
+#: frontend/templates/admin_public_db.html:85
+msgid "Expiry Date (YYYY-MM-DD):"
+msgstr "Date d'Expiration (AAAA-MM-JJ) :"
+
+#: frontend/templates/admin_public_db.html:98
+msgid "Save Entry"
+msgstr "Enregistrer l'Entrée"
+
+#: frontend/templates/adr_report.html:27
+msgid "Report an Adverse Reaction"
+msgstr "Signaler une Réaction Indésirable"
+
+#: frontend/templates/adr_report.html:29
+msgid ""
+"You are reporting a side effect for the following medication. Please "
+"provide as much detail as possible. Your report is anonymous and helps "
+"protect public health."
+msgstr ""
+"Vous signalez un effet secondaire pour le médicament suivant. Veuillez "
+"fournir autant de détails que possible. Votre rapport est anonyme et aide "
+"à protéger la santé publique."
+
+#: frontend/templates/adr_report.html:34
+msgid "Drug Name:"
+msgstr "Nom du Médicament :"
+
+#: frontend/templates/adr_report.html:35
+msgid "Batch Number:"
+msgstr "Numéro de Lot :"
+
+#: frontend/templates/adr_report.html:36
+msgid "Manufacturer:"
+msgstr "Fabricant :"
+
+#: frontend/templates/adr_report.html:43
+msgid "Patient's Age Range"
+msgstr "Tranche d'Âge du Patient"
+
+#: frontend/templates/adr_report.html:46
+msgid "Please select an age range..."
+msgstr "Veuillez sélectionner une tranche d'âge..."
+
+#: frontend/templates/adr_report.html:48
+msgid "0 - 17 years"
+msgstr "0 - 17 ans"
+
+#: frontend/templates/adr_report.html:49
+msgid "18 - 29 years"
+msgstr "18 - 29 ans"
+
+#: frontend/templates/adr_report.html:50
+msgid "30 - 49 years"
+msgstr "30 - 49 ans"
+
+#: frontend/templates/adr_report.html:51
+msgid "50 - 65 years"
+msgstr "50 - 65 ans"
+
+#: frontend/templates/adr_report.html:52
+msgid "66 years and over"
+msgstr "66 ans et plus"
+
+#: frontend/templates/adr_report.html:57
+msgid "Patient's Gender"
+msgstr "Sexe du Patient"
+
+#: frontend/templates/adr_report.html:60
+msgid "Please select a gender..."
+msgstr "Veuillez sélectionner un sexe..."
+
+#: frontend/templates/adr_report.html:61
+msgid "Male"
+msgstr "Homme"
+
+#: frontend/templates/adr_report.html:62
+msgid "Female"
+msgstr "Femme"
+
+#: frontend/templates/adr_report.html:63
+msgid "Prefer not to say"
+msgstr "Je préfère ne pas le dire"
+
+#: frontend/templates/adr_report.html:68
+msgid "When did the reaction start?"
+msgstr "Quand la réaction a-t-elle commencé ?"
+
+#: frontend/templates/adr_report.html:73
+msgid "Please describe the side effect(s)"
+msgstr "Veuillez décrire le(s) effet(s) secondaire(s)"
+
+#: frontend/templates/adr_report.html:84
+msgid "Was the patient taking any other medications at the time?"
+msgstr "Le patient prenait-il d'autres médicaments à ce moment-là ?"
+
+#: frontend/templates/adr_report.html:90
+msgid "List other drugs, vitamins, or supplements. If none, leave blank."
+msgstr ""
+"Énumérez les autres médicaments, vitamines ou suppléments. Si aucun, "
+"laissez vide."
+
+#: frontend/templates/adr_report.html:96
+msgid "Submit Secure Report"
+msgstr "Soumettre le Rapport Sécurisé"
+
 #: frontend/templates/base.html:344
 msgid "Home"
-msgstr ""
+msgstr "Accueil"
 
 #: frontend/templates/base.html:347
 msgid "About"
-msgstr ""
+msgstr "À propos"
 
 #: frontend/templates/base.html:351
 msgid "My Reports"
-msgstr "Signaler"
+msgstr "Mes Rapports"
 
 #: frontend/templates/base.html:356
 msgid "Dashboard"
-msgstr ""
+msgstr "Tableau de Bord"
 
 #: frontend/templates/base.html:361
 msgid "Public DB Manager"
-msgstr ""
+msgstr "Gestionnaire BD Publique"
 
 #: frontend/templates/base.html:366
 msgid "Hotspot Map"
-msgstr ""
+msgstr "Carte des Points Chauds"
 
 #: frontend/templates/base.html:374
 msgid "Language"
-msgstr ""
+msgstr "Langue"
 
 #: frontend/templates/base.html:405
 msgid "Admin Logout"
-msgstr ""
+msgstr "Déconnexion Admin"
 
 #: frontend/templates/base.html:412
 msgid "Welcome,"
-msgstr ""
+msgstr "Bienvenue,"
 
 #: frontend/templates/base.html:420
 msgid "Logout"
-msgstr ""
+msgstr "Déconnexion"
 
 #: frontend/templates/base.html:429 frontend/templates/login.html:6
 msgid "User Login"
@@ -242,49 +746,51 @@ msgstr "Connexion Utilisateur"
 
 #: frontend/templates/base.html:437
 msgid "Register"
-msgstr "Inscrivez-vous ici"
+msgstr "S'inscrire"
 
 #: frontend/templates/base.html:477
 msgid "Confirm Action"
-msgstr ""
+msgstr "Confirmer l'Action"
 
 #: frontend/templates/base.html:489
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: frontend/templates/base.html:496
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmer"
 
 #: frontend/templates/base.html:530
 msgid "Session Timeout Warning"
-msgstr ""
+msgstr "Avertissement d'Expiration de Session"
 
 #: frontend/templates/base.html:532
 msgid ""
 "Your session is about to expire due to inactivity. You will be\n"
 "          logged out in"
 msgstr ""
+"Votre session est sur le point d'expirer en raison de l'inactivité. Vous "
+"serez déconnecté dans"
 
 #: frontend/templates/base.html:535
 msgid "seconds."
-msgstr ""
+msgstr "secondes."
 
 #: frontend/templates/base.html:550
 msgid "Stay Logged In"
-msgstr ""
+msgstr "Rester Connecté"
 
 #: frontend/templates/base.html:557
 msgid "Logout Now"
-msgstr ""
+msgstr "Se Déconnecter Maintenant"
 
 #: frontend/templates/base.html:571
 msgid "MedGuard — Fighting counterfeit medicine, one scan at a time."
-msgstr ""
+msgstr "MedGuard — Lutter contre les médicaments contrefaits, un scan à la fois."
 
 #: frontend/templates/base.html:579
 msgid "MedGuard Assistant"
-msgstr "MedGuard"
+msgstr "Assistant MedGuard"
 
 #: frontend/templates/base.html:584
 msgid ""
@@ -292,14 +798,346 @@ msgid ""
 "          drug, how to report a counterfeit, or what to do if you find "
 "one."
 msgstr ""
+"Bonjour ! Comment puis-je vous aider aujourd'hui ? Vous pouvez me "
+"demander comment vérifier un médicament, comment signaler une "
+"contrefaçon, ou quoi faire si vous en trouvez une."
 
 #: frontend/templates/base.html:593
 msgid "Ask a question..."
-msgstr ""
+msgstr "Posez une question..."
 
 #: frontend/templates/base.html:595
 msgid "Send"
+msgstr "Envoyer"
+
+#: frontend/templates/base.html:683
+msgid "I am sorry, I am having trouble connecting right now."
+msgstr "Je suis désolé, j'ai des difficultés à me connecter en ce moment."
+
+#: frontend/templates/base.html:761
+msgid "Hello! I am the MedGuard Assistant. How can I help?"
+msgstr "Bonjour ! Je suis l'Assistant MedGuard. Comment puis-je vous aider ?"
+
+#: frontend/templates/base.html:764
+msgid "How to report a drug?"
+msgstr "Comment signaler un médicament ?"
+
+#: frontend/templates/base.html:768
+msgid "How to verify a drug?"
+msgstr "Comment vérifier un médicament ?"
+
+#: frontend/templates/base.html:772
+msgid "Check a batch status"
+msgstr "Vérifier le statut d'un lot"
+
+#: frontend/templates/errors/403.html:5
+#: frontend/templates/errors/404.html:5
+msgid "Page Not Found"
+msgstr "Page non trouvée"
+
+#: frontend/templates/errors/403.html:6
+#: frontend/templates/errors/404.html:6
+msgid "The page you are looking for does not exist."
+msgstr "La page que vous recherchez n'existe pas."
+
+#: frontend/templates/errors/403.html:7
+#: frontend/templates/errors/404.html:7
+msgid "Go to Homepage"
+msgstr "Aller à la page d'accueil"
+
+#: frontend/templates/login.html:16
+#: frontend/templates/register.html:15
+msgid "Email Address"
+msgstr "Adresse E-mail"
+
+#: frontend/templates/login.html:20
+#: frontend/templates/register.html:19
+msgid "Password"
+msgstr "Mot de passe"
+
+#: frontend/templates/login.html:24
+msgid "Sign in"
+msgstr "Se connecter"
+
+#: frontend/templates/login.html:27
+msgid "Don't have an account?"
+msgstr "Vous n'avez pas de compte ?"
+
+#: frontend/templates/login.html:27
+msgid "Register here"
+msgstr "Inscrivez-vous ici"
+
+#: frontend/templates/my_reports.html:3
+msgid "My Submitted Reports"
+msgstr "Mes Rapports Soumis"
+
+#: frontend/templates/my_reports.html:4
+msgid "Here is a history of the counterfeit drug reports you have submitted."
+msgstr "Voici un historique des rapports de médicaments contrefaits que vous avez soumis."
+
+#: frontend/templates/my_reports.html:17
+msgid "Regulator Status"
+msgstr "Statut du Régulateur"
+
+#: frontend/templates/my_reports.html:30
+msgid "Pending Review"
+msgstr "En Attente d'Examen"
+
+#: frontend/templates/my_reports.html:33
+msgid "Reviewed"
+msgstr "Examiné"
+
+#: frontend/templates/my_reports.html:41
+msgid "You have not submitted any reports yet."
+msgstr "Vous n'avez encore soumis aucun rapport."
+
+#: frontend/templates/my_reports.html:68
+msgid "Delete Report"
+msgstr "Supprimer le Rapport"
+
+#: frontend/templates/my_reports.html:69
+msgid "Are you sure you want to delete this report? This action is permanent."
+msgstr "Êtes-vous sûr de vouloir supprimer ce rapport ? Cette action est permanente."
+
+#: frontend/templates/my_reports.html:86
+msgid "Failed to delete report:"
+msgstr "Échec de la suppression du rapport :"
+
+#: frontend/templates/register.html:6
+msgid "➕ Create Your Account"
+msgstr "➕ Créez Votre Compte"
+
+#: frontend/templates/register.html:11
+msgid "Full Name"
+msgstr "Nom Complet"
+
+#: frontend/templates/register.html:23
+msgid "Create Account"
+msgstr "Créer un Compte"
+
+#: frontend/templates/register.html:26
+msgid "Already have an account?"
+msgstr "Vous avez déjà un compte ?"
+
+#: frontend/templates/register.html:26
+msgid "Login here"
+msgstr "Connectez-vous ici"
+
+#: frontend/templates/sms_check.html:4
+msgid "Offline / SMS Verification Simulation"
+msgstr "Simulation de Vérification Hors Ligne / SMS"
+
+#: frontend/templates/sms_check.html:6
+msgid ""
+"This simulates sending an SMS with a batch number and receiving a text "
+"reply from the MedGuard system."
 msgstr ""
+"Ceci simule l'envoi d'un SMS avec un numéro de lot et la réception d'une "
+"réponse textuelle du système MedGuard."
+
+#: frontend/templates/sms_check.html:13
+msgid "Enter batch number"
+msgstr "Entrez le numéro de lot"
+
+#: frontend/templates/sms_check.html:16
+msgid "Simulate SMS"
+msgstr "Simuler un SMS"
+
+#: frontend/templates/sms_check.html:22
+msgid "📲 Simulated SMS Reply:"
+msgstr "📲 Réponse SMS Simulée :"
+
+#: frontend/templates/verify.html:92
+msgid "Batch Verified by MedGuard"
+msgstr "Lot Vérifié par MedGuard"
+
+#: frontend/templates/verify.html:94
+msgid "This is an authentic drug registered in the MedGuard system."
+msgstr "Il s'agit d'un médicament authentique enregistré dans le système MedGuard."
+
+#: frontend/templates/verify.html:97
+msgid "Warning: Drug Expired"
+msgstr "Avertissement : Médicament Expiré"
+
+#: frontend/templates/verify.html:99
+msgid ""
+"This is a registered drug, but it has passed its expiry date. Do not use."
+msgstr ""
+"Il s'agit d'un médicament enregistré, mais sa date de péremption est "
+"dépassée. Ne pas utiliser."
+
+#: frontend/templates/verify.html:102
+msgid "Public Information Found"
+msgstr "Informations Publiques Trouvées"
+
+#: frontend/templates/verify.html:104
+msgid ""
+"Disclaimer: This information is from a public database and has "
+"<u>not</u> been independently verified by MedGuard."
+msgstr ""
+"Avis de non-responsabilité : Ces informations proviennent d'une base de "
+"données publique et n'ont <u>pas</u> été vérifiées indépendamment par "
+"MedGuard."
+
+#: frontend/templates/verify.html:107
+msgid "External Website Link"
+msgstr "Lien vers un Site Web Externe"
+
+#: frontend/templates/verify.html:109
+msgid "This"
+msgstr "Ce"
+
+#: frontend/templates/verify.html:109
+msgid ""
+"points to an external website. MedGuard cannot verify its authenticity. "
+"Proceed with caution."
+msgstr ""
+"code pointe vers un site web externe. MedGuard ne peut pas vérifier son "
+"authenticité. Procédez avec prudence."
+
+#: frontend/templates/verify.html:113
+msgid "Unregistered Product Code"
+msgstr "Code Produit non Enregistré"
+
+#: frontend/templates/verify.html:115
+msgid "This appears to be a standard product"
+msgstr "Cela semble être un produit standard"
+
+#: frontend/templates/verify.html:115
+msgid ""
+", not a MedGuard verification code. MedGuard cannot verify this item, but"
+" it has not been flagged as counterfeit."
+msgstr ""
+", pas un code de vérification MedGuard. MedGuard ne peut pas vérifier cet"
+" article, mais il n'a pas été signalé comme contrefait."
+
+#: frontend/templates/verify.html:120
+msgid "Not Found in MedGuard System"
+msgstr "Non Trouvé dans le Système MedGuard"
+
+#: frontend/templates/verify.html:122
+msgid "is not registered in the MedGuard system. This drug may be counterfeit. Please report it."
+msgstr "n'est pas enregistré dans le système MedGuard. Ce médicament peut être contrefait. Veuillez le signaler."
+
+#: frontend/templates/verify.html:150
+msgid "NAFDAC Status:"
+msgstr "Statut NAFDAC :"
+
+#: frontend/templates/verify.html:154
+msgid "Details:"
+msgstr "Détails :"
+
+#: frontend/templates/verify.html:160
+msgid "The scanned code links to the following address:"
+msgstr "Le code scanné renvoie à l'adresse suivante :"
+
+#: frontend/templates/verify.html:168
+msgid "Proceed to Website"
+msgstr "Aller sur le Site Web"
+
+#: frontend/templates/verify.html:173
+msgid "The scanned"
+msgstr "Le"
+
+#: frontend/templates/verify.html:173
+msgid "contained the following unrecognized data:"
+msgstr "scanné contenait les données non reconnues suivantes :"
+
+#: frontend/templates/verify.html:180
+msgid "What To Do Next"
+msgstr "Que Faire Ensuite"
+
+#: frontend/templates/verify.html:183
+msgid ""
+"<strong>Cross-check with NAFDAC:</strong> You can search for the drug on "
+"the official NAFDAC Greenbook or use their Mobile Authentication Service "
+"(MAS) for certain products."
+msgstr ""
+"<strong>Vérification croisée avec la NAFDAC :</strong> Vous pouvez "
+"rechercher le médicament sur le Greenbook officiel de la NAFDAC ou "
+"utiliser leur Service d'Authentification Mobile (MAS) pour certains "
+"produits."
+
+#: frontend/templates/verify.html:188
+msgid ""
+"<strong>Report to MedGuard:</strong> If you are suspicious, use the "
+"\"Report Counterfeit\" form on our main page to alert regulators through "
+"our system."
+msgstr ""
+"<strong>Signaler à MedGuard :</strong> Si vous avez des doutes, utilisez "
+"le formulaire \"Signaler une Contrefaçon\" sur notre page principale pour"
+" alerter les régulateurs via notre système."
+
+#: frontend/templates/verify.html:193
+msgid ""
+"<strong>Report Officially to NAFDAC:</strong> For a direct report to the"
+" authorities, you can contact NAFDAC's Pharmacovigilance department via "
+"email at"
+msgstr ""
+"<strong>Signaler Officiellement à la NAFDAC :</strong> Pour un rapport "
+"direct aux autorités, vous pouvez contacter le département de "
+"Pharmacovigilance de la NAFDAC par e-mail à"
+
+#: frontend/templates/verify.html:200
+msgid "Experiencing a Side Effect?"
+msgstr "Vous ressentez un effet secondaire ?"
+
+#: frontend/templates/verify.html:201
+msgid ""
+"Help keep our medicines safe by reporting any unexpected reactions. Your "
+"contribution is vital for public health."
+msgstr ""
+"Aidez à maintenir la sécurité de nos médicaments en signalant toute "
+"réaction inattendue. Votre contribution est vitale pour la santé "
+"publique."
+
+#: frontend/templates/verify.html:203
+msgid "Report a Side Effect"
+msgstr "Signaler un Effet Secondaire"
+
+#: frontend/templates/verify.html:208
+msgid "Checked on"
+msgstr "Vérifié le"
+
+#: frontend/templates/verify.html:211
+msgid "Scan Another Code"
+msgstr "Scanner un Autre Code"
+
+#: frontend/templates/index.html:105
+msgid "Because your health deserves the truth."
+msgstr "Parce que votre santé mérite la vérité."
+
+#: frontend/templates/index.html:106
+msgid "No more guessing — just scanning."
+msgstr "Plus de devinettes — juste un scan."
+
+#: frontend/templates/index.html:107
+msgid "Keeping counterfeit meds off the streets."
+msgstr "Gardons les médicaments contrefaits hors des rues."
+
+#: frontend/templates/index.html:108
+msgid "Your pocket pharmacist."
+msgstr "Votre pharmacien de poche."
+
+#: frontend/templates/index.html:110
+msgid "Batch number is required to report."
+msgstr "Le numéro de lot est requis pour signaler."
+
+#: frontend/templates/index.html:111
+msgid "Error submitting report."
+msgstr "Erreur lors de la soumission du rapport."
+
+#: frontend/templates/index.html:112
+msgid "Report submitted successfully"
+msgstr "Rapport soumis avec succès"
+
+#: frontend/templates/index.html:113
+msgid "Camera access failed. Please check permissions."
+msgstr "L'accès à la caméra a échoué. Veuillez vérifier les autorisations."
+
+#: frontend/templates/index.html:114
+msgid "Please enter a batch number."
+msgstr "Veuillez entrer un numéro de lot."
 
 #: frontend/templates/base.html:683
 msgid "I am sorry, I am having trouble connecting right now."
@@ -388,19 +1226,3 @@ msgstr "Vous n'avez pas de compte ?"
 #: frontend/templates/login.html:27
 msgid "Register here"
 msgstr "Inscrivez-vous ici"
-
-#~ msgid "Create Your Account"
-#~ msgstr "Créez Votre Compte"
-
-#~ msgid "Full Name"
-#~ msgstr "Nom Complet"
-
-#~ msgid "Create Account"
-#~ msgstr "Créer un Compte"
-
-#~ msgid "Already have an account?"
-#~ msgstr "Vous avez déjà un compte ?"
-
-#~ msgid "Login here"
-#~ msgstr "Connectez-vous ici"
-

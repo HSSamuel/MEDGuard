@@ -85,7 +85,7 @@
       gap: 15px;
     "
   >
-    <h2>🛠 Admin — Register New Drug Batch</h2>
+    <h2>{{ _('🛠 Admin — Register New Drug Batch') }}</h2>
 
     <div
       id="timers-container"
@@ -105,7 +105,7 @@
         "
       >
         <span>🗓️</span>
-        <span id="live-clock">Loading time...</span>
+        <span id="live-clock">{{ _('Loading time...') }}</span>
       </div>
       <div
         id="session-timer-container"
@@ -123,7 +123,7 @@
       >
         <span>⏳</span>
         <span
-          >Session ends in:
+          >{{ _('Session ends in:') }}
           <strong
             id="session-countdown-display"
             style="min-width: 45px; display: inline-block; text-align: center"
@@ -135,22 +135,21 @@
   </div>
 
   <p style="opacity: 0.85; margin-top: 0">
-    Use this form to register a new drug batch and generate its QR code
-    instantly.
+    {{ _('Use this form to register a new drug batch and generate its QR code instantly.') }}
   </p>
 </div>
 
 <div class="panel nav-shortcuts">
   <a href="{{ url_for('admin_api.admin_drugs') }}" class="btn"
-    >💊 Registered Drugs</a
+    >{{ _('💊 Registered Drugs') }}</a
   >
   <a href="{{ url_for('render_sms_check') }}" class="btn btn-outline"
-    >📱 Simulate SMS</a
+    >{{ _('📱 Simulate SMS') }}</a
   >
 </div>
 
 <div class="panel">
-  <h2>📦 Batch Details</h2>
+  <h2>{{ _('📦 Batch Details') }}</h2>
 
   <div
     id="registration-scanner-container"
@@ -170,7 +169,7 @@
       class="btn btn-outline"
       style="margin-top: 10px"
     >
-      Close Scanner
+      {{ _('Close Scanner') }}
     </button>
   </div>
 
@@ -184,14 +183,14 @@
         id="drug-name"
         name="name"
         class="input"
-        placeholder="Drug name"
+        placeholder="{{ _('Drug name') }}"
         required
       />
       <input
         id="batch-number"
         name="batch_number"
         class="input"
-        placeholder="Batch number"
+        placeholder="{{ _('Batch number') }}"
         required
       />
     </div>
@@ -200,7 +199,7 @@
         <label
           for="mfg-date"
           style="display: block; font-weight: bold; margin-bottom: 4px"
-          >Mfg Date</label
+          >{{ _('Mfg Date') }}</label
         >
         <input
           id="mfg-date"
@@ -214,7 +213,7 @@
         <label
           for="expiry-date"
           style="display: block; font-weight: bold; margin-bottom: 4px"
-          >Expiry Date</label
+          >{{ _('Expiry Date') }}</label
         >
         <input
           id="expiry-date"
@@ -230,13 +229,13 @@
         id="manufacturer"
         name="manufacturer"
         class="input"
-        placeholder="Manufacturer"
+        placeholder="{{ _('Manufacturer') }}"
         required
       />
     </div>
     <div style="margin-top: 20px" class="inline-form">
       <button type="submit" class="btn btn-yellow">
-        Register &amp; Get QR
+        {{ _('Register &amp; Get QR') }}
       </button>
       <button
         type="button"
@@ -244,7 +243,7 @@
         class="btn"
         style="background-color: #007bff; color: white"
       >
-        📷 Scan to Pre-fill
+        {{ _('📷 Scan to Pre-fill') }}
       </button>
     </div>
   </form>
@@ -262,8 +261,8 @@
   endif
   %}
 >
-  <h2>📄 Generated QR Code</h2>
-  <p>Right-click and save the image below to print or share.</p>
+  <h2>{{ _('📄 Generated QR Code') }}</h2>
+  <p>{{ _('Right-click and save the image below to print or share.') }}</p>
   {% if qr_image %}
   <img
     src="data:image/png;base64,{{ qr_image }}"
@@ -279,13 +278,13 @@
 </div>
 
 <div class="panel" id="counterfeit-reports">
-  <h2>🚨 Counterfeit Reports</h2>
+  <h2>{{ _('🚨 Counterfeit Reports') }}</h2>
   <div class="nav-shortcuts" style="margin-bottom: 15px">
     <a
       href="{{ url_for('admin_api.admin_reports_today') }}?scroll=reports"
       id="new-reports-btn-today"
       class="btn btn-yellow"
-      >Today’s Reports
+      >{{ _('Today’s Reports') }}
       <span
         id="new-report-badge"
         class="badge"
@@ -302,7 +301,7 @@
       href="{{ url_for('admin_api.admin_reports') }}?scroll=reports"
       id="new-reports-btn"
       class="btn btn-outline"
-      >View All Reports</a
+      >{{ _('View All Reports') }}</a
     >
   </div>
 
@@ -311,34 +310,34 @@
       type="text"
       id="report-search"
       class="input"
-      placeholder="🔍 Search reports..."
+      placeholder="{{ _('🔍 Search reports...') }}"
       style="width: 100%"
     />
   </div>
 
   <div class="date-filters" style="margin-bottom: 20px">
-    <label for="start" style="font-weight: bold">From:</label>
+    <label for="start" style="font-weight: bold">{{ _('From:') }}</label>
     <input type="date" id="start" name="start" class="input" required />
-    <label for="end" style="font-weight: bold">To:</label>
+    <label for="end" style="font-weight: bold">{{ _('To:') }}</label>
     <input type="date" id="end" name="end" class="input" required />
-    <a id="range-reports-btn" href="#" class="btn btn-yellow">Filter</a>
+    <a id="range-reports-btn" href="#" class="btn btn-yellow">{{ _('Filter') }}</a>
   </div>
 
   <div style="overflow-x: auto; -webkit-overflow-scrolling: touch">
     <table class="table" id="reports-table">
       <thead>
         <tr>
-          <th data-label="ID">ID</th>
-          <th data-label="Drug Name">Drug Name</th>
-          <th data-label="Batch">Batch</th>
-          <th data-label="Location">Location</th>
-          <th data-label="Note">Note</th>
-          <th data-label="Image">Image</th>
-          <th data-label="Analysis">Analysis</th>
-          <th data-label="Date">Date</th>
-          <th data-label="Reporter">Reporter</th>
-          <th data-label="Status">Status</th>
-          <th data-label="Actions">Actions</th>
+          <th data-label="ID">{{ _('ID') }}</th>
+          <th data-label="Drug Name">{{ _('Drug Name') }}</th>
+          <th data-label="Batch">{{ _('Batch') }}</th>
+          <th data-label="Location">{{ _('Location') }}</th>
+          <th data-label="Note">{{ _('Note') }}</th>
+          <th data-label="Image">{{ _('Image') }}</th>
+          <th data-label="Analysis">{{ _('Analysis') }}</th>
+          <th data-label="Date">{{ _('Date') }}</th>
+          <th data-label="Reporter">{{ _('Reporter') }}</th>
+          <th data-label="Status">{{ _('Status') }}</th>
+          <th data-label="Actions">{{ _('Actions') }}</th>
         </tr>
       </thead>
       <tbody id="reports-body">
@@ -366,7 +365,7 @@
                 alt="Report Image"
               />
             </a>
-            {% else %} No Image {% endif %}
+            {% else %} {{ _('No Image') }} {% endif %}
           </td>
           <td data-label="Analysis">
             <div class="analysis-container" id="analysis-{{ report.id }}">
@@ -377,9 +376,9 @@
                 class="btn btn-outline analyze-btn"
                 data-id="{{ report.id }}"
               >
-                Analyze
+                {{ _('Analyze') }}
               </button>
-              {% else %} N/A {% endif %}
+              {% else %} {{ _('N/A') }} {% endif %}
             </div>
           </td>
           <td data-label="Date">{{ report.reported_on.split(' ')[0] }}</td>
@@ -388,9 +387,9 @@
           </td>
           <td data-label="Status">
             {% if report.status == 0 %}
-            <span class="badge badge-new">New</span>
+            <span class="badge badge-new">{{ _('New') }}</span>
             {% else %}
-            <span class="badge badge-checked">Checked</span>
+            <span class="badge badge-checked">{{ _('Checked') }}</span>
             {% endif %}
           </td>
           <td data-label="Actions">
@@ -399,14 +398,14 @@
               data-id="{{ report.id }}"
               style="background-color: #dc3545; color: white"
             >
-              Delete
+              {{ _('Delete') }}
             </button>
           </td>
         </tr>
         {% endfor %} {% else %}
         <tr>
           <td colspan="11" style="text-align: center">
-            No reports submitted yet.
+            {{ _('No reports submitted yet.') }}
           </td>
         </tr>
         {% endif %}
@@ -416,7 +415,7 @@
 </div>
 
 <div class="panel" id="adr-reports">
-  <h2>💊 Adverse Drug Reaction Reports</h2>
+  <h2>{{ _('💊 Adverse Drug Reaction Reports') }}</h2>
 
   <form
     method="get"
@@ -428,11 +427,11 @@
       type="text"
       name="adr_search"
       value="{{ adr_search }}"
-      placeholder="Search by drug, batch, or reaction..."
+      placeholder="{{ _('Search by drug, batch, or reaction...') }}"
       class="input"
       style="flex-grow: 1"
     />
-    <label for="adr_start">From:</label>
+    <label for="adr_start">{{ _('From:') }}</label>
     <input
       type="date"
       id="adr_start"
@@ -440,7 +439,7 @@
       value="{{ adr_start }}"
       class="input"
     />
-    <label for="adr_end">To:</label>
+    <label for="adr_end">{{ _('To:') }}</label>
     <input
       type="date"
       id="adr_end"
@@ -448,19 +447,19 @@
       value="{{ adr_end }}"
       class="input"
     />
-    <button type="submit" class="btn btn-yellow">Filter ADR</button>
+    <button type="submit" class="btn btn-yellow">{{ _('Filter ADR') }}</button>
   </form>
 
   <div class="export-links" style="text-align: right; margin-bottom: 20px">
     <a
       href="{{ url_for('adr_api.export_adr_reports_word', adr_search=adr_search, adr_start=adr_start, adr_end=adr_end) }}"
       class="btn btn-outline"
-      >Export Word</a
+      >{{ _('Export Word') }}</a
     >
     <a
       href="{{ url_for('adr_api.export_adr_reports_pdf', adr_search=adr_search, adr_start=adr_start, adr_end=adr_end) }}"
       class="btn btn-outline"
-      >Export PDF</a
+      >{{ _('Export PDF') }}</a
     >
   </div>
 
@@ -468,14 +467,14 @@
     <table class="table" id="adr-reports-table">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Drug Name</th>
-          <th>Batch Number</th>
-          <th>Patient Info</th>
-          <th>Reaction Description</th>
-          <th>Report Date</th>
-          <th>Status</th>
-          <th>Actions</th>
+          <th>{{ _('ID') }}</th>
+          <th>{{ _('Drug Name') }}</th>
+          <th>{{ _('Batch Number') }}</th>
+          <th>{{ _('Patient Info') }}</th>
+          <th>{{ _('Reaction Description') }}</th>
+          <th>{{ _('Report Date') }}</th>
+          <th>{{ _('Status') }}</th>
+          <th>{{ _('Actions') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -504,14 +503,14 @@
               data-id="{{ report.id }}"
               style="background-color: #dc3545; color: white"
             >
-              Delete
+              {{ _('Delete') }}
             </button>
           </td>
         </tr>
         {% endfor %} {% else %}
         <tr>
           <td colspan="8" style="text-align: center">
-            No Adverse Drug Reaction reports match the current filters.
+            {{ _('No Adverse Drug Reaction reports match the current filters.') }}
           </td>
         </tr>
         {% endif %}
@@ -584,8 +583,8 @@
             const row = button.closest("tr");
 
             showConfirmModal(
-              "Confirm Deletion",
-              `Are you sure you want to delete ADR Report #${reportId}? This is permanent.`,
+              "{{ _('Confirm Deletion') }}",
+              `{{ _('Are you sure you want to delete ADR Report #') }}${reportId}? {{ _('This is permanent.') }}`,
               () => {
                 fetch(`/api/adr-report/${reportId}`, { method: "DELETE" })
                   .then((response) =>
@@ -602,7 +601,7 @@
                     }
                   })
                   .catch((error) =>
-                    showToast(`Failed to delete report: ${error.message}`, true)
+                    showToast(`{{ _('Failed to delete report:') }} ${error.message}`, true)
                   );
               }
             );
@@ -676,7 +675,7 @@
           currentNewReportCount = newCount;
         })
         .catch((error) =>
-          console.error("Error checking for new reports:", error)
+          console.error("{{ _('Error checking for new reports:') }}", error)
         );
     };
 
@@ -704,7 +703,7 @@
         const start = startInput.value;
         const end = endInput.value;
         if (!start || !end) {
-          alert("Please select both a start and end date.");
+          alert("{{ _('Please select both a start and end date.') }}");
           return;
         }
         window.location.href = `{{ url_for('admin_api.admin_reports_range') }}?start=${start}&end=${end}&scroll=reports`;

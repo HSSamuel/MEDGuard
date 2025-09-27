@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-27 09:58+0100\n"
+"POT-Creation-Date: 2025-09-27 11:42+0100\n"
 "PO-Revision-Date: 2025-09-27 10:00+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: yo\n"
@@ -187,45 +187,546 @@ msgstr ""
 msgid "Return to Home"
 msgstr "Padà sí Ojú-ewé Àkọ́kọ́"
 
+#: frontend/templates/admin.html:71
+msgid "🛠 Admin — Register New Drug Batch"
+msgstr "🛠 Abójútó — Forúkọsílẹ̀ Ìpele Oògùn Tuntun"
+
+#: frontend/templates/admin.html:90
+msgid "Loading time..."
+msgstr "Àkókò ń ṣàgbéjáde..."
+
+#: frontend/templates/admin.html:109
+msgid "Session ends in:"
+msgstr "Ìgbà ìṣiṣẹ́ yóò parí ní:"
+
+#: frontend/templates/admin.html:119
+msgid ""
+"Use this form to register a new drug batch and generate its QR code "
+"instantly."
+msgstr ""
+"Lo fọ́ọ̀mù yí láti forúkọsílẹ̀ ìpele oògùn tuntun kí o sì gba kóòdù QR rẹ̀ "
+"lẹ́sẹ̀kẹsẹ̀."
+
+#: frontend/templates/admin.html:124
+msgid "💊 Registered Drugs"
+msgstr "💊 Àwọn Oògùn Tí A Ti Forúkọsílẹ̀"
+
+#: frontend/templates/admin.html:127
+msgid "📱 Simulate SMS"
+msgstr "📱 Ṣe Àfarawé SMS"
+
+#: frontend/templates/admin.html:132
+msgid "📦 Batch Details"
+msgstr "📦 Àlàyé Ìpele"
+
+#: frontend/templates/admin.html:147
+msgid "Close Scanner"
+msgstr "Pa Skenà"
+
+#: frontend/templates/admin.html:166
+msgid "Mfg Date"
+msgstr "Déètì Ìṣelọ́pọ̀"
+
+#: frontend/templates/admin.html:177
+msgid "Expiry Date"
+msgstr "Déètì Ìparí"
+
+#: frontend/templates/admin.html:191
+msgid "Register &amp; Get QR"
+msgstr "Forúkọsílẹ̀ & Gba QR"
+
+#: frontend/templates/admin.html:198
+msgid "📷 Scan to Pre-fill"
+msgstr "📷 Ṣàbójútó láti Kọ Tẹ́lẹ̀"
+
+#: frontend/templates/admin.html:212
+msgid "📄 Generated QR Code"
+msgstr "📄 Kóòdù QR Tí A Ṣẹ̀dá"
+
+#: frontend/templates/admin.html:213
+msgid "Right-click and save the image below to print or share."
+msgstr "Tẹ-ọtun kí o sì fi àwòrán ìsàlẹ̀ pamọ́ láti tẹ̀ jáde tàbí pín."
+
+#: frontend/templates/admin.html:229
+msgid "🚨 Counterfeit Reports"
+msgstr "🚨 Àwọn Ìròyìn Ayédèrú"
+
+#: frontend/templates/admin.html:235
+msgid "Today’s Reports"
+msgstr "Àwọn Ìròyìn Òní"
+
+#: frontend/templates/admin.html:252
+msgid "View All Reports"
+msgstr "Wo Gbogbo Ìròyìn"
+
+#: frontend/templates/admin.html:260
+msgid "🔍 Search reports..."
+msgstr "🔍 Wá ìròyìn..."
+
+#: frontend/templates/admin.html:266 frontend/templates/admin_drugs.html:110
+#: frontend/templates/adr_report.html:61
+msgid "From:"
+msgstr "Láti:"
+
+#: frontend/templates/admin.html:268 frontend/templates/admin_drugs.html:112
+#: frontend/templates/adr_report.html:66
+msgid "To:"
+msgstr "Sí:"
+
+#: frontend/templates/admin.html:270
+msgid "Filter"
+msgstr "Ṣàṣàyàn"
+
+#: frontend/templates/admin.html:277 frontend/templates/admin.html:439
+#: frontend/templates/admin_drugs.html:137
+msgid "ID"
+msgstr "ID"
+
+#: frontend/templates/admin.html:278 frontend/templates/admin.html:440
+#: frontend/templates/my_reports.html:12
+msgid "Drug Name"
+msgstr "Orúkọ Oògùn"
+
+#: frontend/templates/admin.html:279
+msgid "Batch"
+msgstr "Ìpele"
+
+#: frontend/templates/admin.html:280 frontend/templates/my_reports.html:14
+msgid "Location"
+msgstr "Ibùdó"
+
+#: frontend/templates/admin.html:281 frontend/templates/my_reports.html:15
+msgid "Note"
+msgstr "Àkíyèsí"
+
+#: frontend/templates/admin.html:282
+msgid "Image"
+msgstr "Àwòrán"
+
+#: frontend/templates/admin.html:283
+msgid "Analysis"
+msgstr "Ìtúpalẹ̀"
+
+#: frontend/templates/admin.html:284
+msgid "Date"
+msgstr "Déètì"
+
+#: frontend/templates/admin.html:285
+msgid "Reporter"
+msgstr "Olùròyìn"
+
+#: frontend/templates/admin.html:286 frontend/templates/admin.html:445
+#: frontend/templates/admin_drugs.html:142
+msgid "Status"
+msgstr "Ipò"
+
+#: frontend/templates/admin.html:287 frontend/templates/admin.html:446
+#: frontend/templates/admin_drugs.html:144
+#: frontend/templates/my_reports.html:18
+msgid "Actions"
+msgstr "Àwọn Ìgbésẹ̀"
+
+#: frontend/templates/admin.html:318
+msgid "No Image"
+msgstr "Kò sí Àwòrán"
+
+#: frontend/templates/admin.html:329
+msgid "Analyze"
+msgstr "Ṣe Ìtúpalẹ̀"
+
+#: frontend/templates/admin.html:332
+msgid "N/A"
+msgstr "Kò Sí"
+
+#: frontend/templates/admin.html:340
+msgid "New"
+msgstr "Tuntun"
+
+#: frontend/templates/admin.html:342
+msgid "Checked"
+msgstr "Ti Ṣàyẹ̀wò"
+
+#: frontend/templates/admin.html:347 frontend/templates/admin.html:460
+#: frontend/templates/admin_drugs.html:167
+#: frontend/templates/my_reports.html:47
+msgid "Delete"
+msgstr "Paarẹ́"
+
+#: frontend/templates/admin.html:356
+msgid "No reports submitted yet."
+msgstr "Kò sí ìròyìn kankan tí a ti gbà síbẹ̀."
+
+#: frontend/templates/admin.html:364
+msgid "💊 Adverse Drug Reaction Reports"
+msgstr "💊 Àwọn Ìròyìn Ìṣẹ̀lẹ̀ Oògùn Búburú"
+
+#: frontend/templates/admin.html:373
+msgid "Search by drug, batch, or reaction..."
+msgstr "Wá nípa oògùn, ìpele, tàbí ìṣẹ̀lẹ̀..."
+
+#: frontend/templates/admin.html:388
+msgid "Filter ADR"
+msgstr "Ṣàṣàyàn ADR"
+
+#: frontend/templates/admin.html:394 frontend/templates/admin_drugs.html:120
+msgid "Export Word"
+msgstr "Kó jáde sí Word"
+
+#: frontend/templates/admin.html:398 frontend/templates/admin_drugs.html:121
+msgid "Export PDF"
+msgstr "Kó jáde sí PDF"
+
+#: frontend/templates/admin.html:441
+#: frontend/templates/my_reports.html:13
+msgid "Batch Number"
+msgstr "Nọ́mbà Ìpele"
+
+#: frontend/templates/admin.html:442
+msgid "Patient Info"
+msgstr "Ìwífún Aláìsàn"
+
+#: frontend/templates/admin.html:443
+msgid "Reaction Description"
+msgstr "Àpèjúwe Ìṣẹ̀lẹ̀"
+
+#: frontend/templates/admin.html:444 frontend/templates/my_reports.html:16
+msgid "Report Date"
+msgstr "Déètì Ìròyìn"
+
+#: frontend/templates/admin.html:471
+msgid "No Adverse Drug Reaction reports match the current filters."
+msgstr "Kò sí ìròyìn Ìṣẹ̀lẹ̀ Oògùn Búburú tí ó bá àwọn àṣàyàn lọ́wọ́lọ́wọ́ mu."
+
+#: frontend/templates/admin.html:565
+msgid "Confirm Deletion"
+msgstr "Jẹ́rìí sí Pípaarẹ́"
+
+#: frontend/templates/admin.html:566
+msgid "Are you sure you want to delete ADR Report #"
+msgstr "Ṣé o dájú pé o fẹ́ pa Ìròyìn ADR #"
+
+#: frontend/templates/admin.html:566
+msgid "? This is permanent."
+msgstr " rẹ́? Ìgbésẹ̀ yí kò ṣeé yí padà."
+
+#: frontend/templates/admin.html:579
+msgid "Failed to delete report:"
+msgstr "Ìtìbómi láti pa ìròyìn rẹ́:"
+
+#: frontend/templates/admin.html:640
+msgid "Error checking for new reports:"
+msgstr "Àṣìṣe nígbà tí a ń ṣàyẹ̀wò àwọn ìròyìn tuntun:"
+
+#: frontend/templates/admin.html:665
+msgid "Please select both a start and end date."
+msgstr "Jọ̀wọ́ yan déètì ìbẹ̀rẹ̀ àti ìparí."
+
+#: frontend/templates/admin_drugs.html:92
+msgid "Search, filter, or export registered drug batches."
+msgstr "Wá, ṣàṣàyàn, tàbí kó àwọn ìpele oògùn tí a forúkọsílẹ̀ jáde."
+
+#: frontend/templates/admin_drugs.html:95
+msgid "Search by name or batch number"
+msgstr "Wá nípa orúkọ tàbí nọ́mbà ìpele"
+
+#: frontend/templates/admin_drugs.html:97
+msgid "-- All --"
+msgstr "-- Gbogbo --"
+
+#: frontend/templates/admin_drugs.html:98
+msgid "Valid"
+msgstr "Tọ̀nà"
+
+#: frontend/templates/admin_drugs.html:99
+msgid "Expired"
+msgstr "Ó ti parí"
+
+#: frontend/templates/admin_drugs.html:100
+msgid "Expiring Soon"
+msgstr "Ó Fẹ́rẹ̀ẹ́ Parí"
+
+#: frontend/templates/admin_drugs.html:102
+msgid "🔍 Search"
+msgstr "🔍 Wá"
+
+#: frontend/templates/admin_drugs.html:114
+msgid "📅 Apply"
+msgstr "📅 Fi sílò"
+
+#: frontend/templates/admin_drugs.html:138
+msgid "Name"
+msgstr "Orúkọ"
+
+#: frontend/templates/admin_drugs.html:139
+msgid "Batch #"
+msgstr "Ìpele #"
+
+#: frontend/templates/admin_drugs.html:140
+msgid "Manufacturer"
+msgstr "Olùṣelọ́pọ̀"
+
+#: frontend/templates/admin_drugs.html:143
+msgid "Registered On"
+msgstr "Forúkọsílẹ̀ Ní"
+
+#: frontend/templates/admin_drugs.html:176
+msgid "No drugs found."
+msgstr "Kò sí oògùn kankan."
+
+#: frontend/templates/admin_drugs.html:184
+msgid "⬅ Prev"
+msgstr "⬅ Tẹ́lẹ̀"
+
+#: frontend/templates/admin_drugs.html:186
+msgid "Page"
+msgstr "Ojú-ewé"
+
+#: frontend/templates/admin_drugs.html:186
+msgid "of"
+msgstr "nínú"
+
+#: frontend/templates/admin_drugs.html:188
+msgid "Next ➡"
+msgstr "T’ó Kàn ➡"
+
+#: frontend/templates/admin_drugs.html:194
+msgid "⬅ Back to Dashboard"
+msgstr "⬅ Padà sí Pẹpẹ Ìṣàkóso"
+
+#: frontend/templates/admin_drugs.html:202
+msgid "Are you sure you want to delete this drug?"
+msgstr "Ṣé o dájú pé o fẹ́ pa oògùn yí rẹ́?"
+
+#: frontend/templates/admin_drugs.html:221
+msgid "Are you sure you want to delete the drug"
+msgstr "Ṣé o dájú pé o fẹ́ pa oògùn náà"
+
+#: frontend/templates/admin_drugs.html:221
+msgid "? This action cannot be undone."
+msgstr " rẹ́? Ìgbésẹ̀ yí kò ṣeé yí padà."
+
+#: frontend/templates/admin_login.html:5
+msgid "🔐 Regulator Login"
+msgstr "🔐 Ìwọlé Aláṣẹ"
+
+#: frontend/templates/admin_login.html:14
+msgid "Official email"
+msgstr "Imeeli ìjọba"
+
+#: frontend/templates/admin_login.html:22
+msgid "Show Password"
+msgstr "Fi Ọ̀rọ̀ Aṣínà Hàn"
+
+#: frontend/templates/admin_map.html:3
+msgid "📍 Live Counterfeit Hotspot Map"
+msgstr "📍 Mápù Gidi ti Ibùdó Ayédèrú"
+
+#: frontend/templates/admin_map.html:5
+msgid ""
+"This map displays the real-time locations of all submitted counterfeit "
+"drug reports. Use this intelligence to identify clusters and potential "
+"hotspots for targeted investigation."
+msgstr ""
+"Mápù yí fi àwọn ibùdó gidi hàn ti gbogbo ìròyìn oògùn ayédèrú. Lo "
+"ìmọ̀ yí láti ṣe ìdámọ̀ àwọn àkójọpọ̀ àti àwọn ibi tí ó ṣeéṣe fún "
+"ìwádìí."
+
+#: frontend/templates/admin_map.html:44
+msgid "Your session has expired. Please log in again to view the map."
+msgstr "Ìgbà ìṣiṣẹ́ rẹ ti parí. Jọ̀wọ́ wọlé lẹ́ẹ̀kansíi láti wo mápù."
+
+#: frontend/templates/admin_public_db.html:9
+msgid "Public Drug Data Manager"
+msgstr "Olùṣàkóso Dátà Oògùn Gbogbogbòò"
+
+#: frontend/templates/admin_public_db.html:11
+msgid ""
+"View, add, or edit entries in the public drug database. This information"
+" is shown to users when a scanned drug is not in the main MedGuard "
+"registry."
+msgstr ""
+"Wo, fikún, tàbí ṣàtúnṣe àwọn àkọsílẹ̀ nínú ìbùdó dátà oògùn gbogbogbòò. "
+"A máa ń fi ìwífún yí han àwọn olùlò nígbà tí oògùn tí a ṣàbójútó kò sí "
+"nínú ìforúkọsílẹ̀ MedGuard."
+
+#: frontend/templates/admin_public_db.html:16
+msgid "Current Public Drug List"
+msgstr "Àkójọ Oògùn Gbogbogbòò Lọ́wọ́lọ́wọ́"
+
+#: frontend/templates/admin_public_db.html:22
+msgid "Drug Name"
+msgstr "Orúkọ Oògùn"
+
+#: frontend/templates/admin_public_db.html:23
+msgid "Manufacturer"
+msgstr "Olùṣelọ́pọ̀"
+
+#: frontend/templates/admin_public_db.html:30
+msgid "➕ Add New Drug"
+msgstr "➕ Fi Oògùn Tuntun Kún"
+
+#: frontend/templates/admin_public_db.html:35
+msgid "Add New Drug Entry"
+msgstr "Fi Àkọsílẹ̀ Oògùn Tuntun Kún"
+
+#: frontend/templates/admin_public_db.html:41
+msgid "Batch Number (Unique Key):"
+msgstr "Nọ́mbà Ìpele (Kọ́kọ́rọ́ Aláìlẹ́gbẹ́):"
+
+#: frontend/templates/admin_public_db.html:52
+msgid "Drug Name:"
+msgstr "Orúkọ Oògùn:"
+
+#: frontend/templates/admin_public_db.html:63
+msgid "Manufacturer:"
+msgstr "Olùṣelọ́pọ̀:"
+
+#: frontend/templates/admin_public_db.html:74
+msgid "NAFDAC Status:"
+msgstr "Ipò NAFDAC:"
+
+#: frontend/templates/admin_public_db.html:85
+msgid "Expiry Date (YYYY-MM-DD):"
+msgstr "Déètì Ìparí (ỌỌỌỌ-OṣÙ-ỌJỌ́):"
+
+#: frontend/templates/admin_public_db.html:98
+msgid "Save Entry"
+msgstr "Fi Àkọsílẹ̀ Pamọ́"
+
+#: frontend/templates/adr_report.html:27
+msgid "Report an Adverse Reaction"
+msgstr "Ròyìn Ìṣẹ̀lẹ̀ Àìdára"
+
+#: frontend/templates/adr_report.html:29
+msgid ""
+"You are reporting a side effect for the following medication. Please "
+"provide as much detail as possible. Your report is anonymous and helps "
+"protect public health."
+msgstr ""
+"O ń ròyìn ìṣẹ̀lẹ̀ àìdára fún oògùn yìí. Jọ̀wọ́ pèsè àlàyé kíkún. Ìròyìn "
+"rẹ jẹ́ àìlórúkọ ó sì ń ṣèrànwọ́ láti dáàbò bo ìlera gbogbo ènìyàn."
+
+#: frontend/templates/adr_report.html:34
+msgid "Drug Name:"
+msgstr "Orúkọ Oògùn:"
+
+#: frontend/templates/adr_report.html:35
+msgid "Batch Number:"
+msgstr "Nọ́mbà Ìpele:"
+
+#: frontend/templates/adr_report.html:36
+msgid "Manufacturer:"
+msgstr "Olùṣelọ́pọ̀:"
+
+#: frontend/templates/adr_report.html:43
+msgid "Patient's Age Range"
+msgstr "Sáà Orí-ọjọ́ Aláìsàn"
+
+#: frontend/templates/adr_report.html:46
+msgid "Please select an age range..."
+msgstr "Jọ̀wọ́ yan sáà orí-ọjọ́..."
+
+#: frontend/templates/adr_report.html:48
+msgid "0 - 17 years"
+msgstr "Ọdún 0 - 17"
+
+#: frontend/templates/adr_report.html:49
+msgid "18 - 29 years"
+msgstr "Ọdún 18 - 29"
+
+#: frontend/templates/adr_report.html:50
+msgid "30 - 49 years"
+msgstr "Ọdún 30 - 49"
+
+#: frontend/templates/adr_report.html:51
+msgid "50 - 65 years"
+msgstr "Ọdún 50 - 65"
+
+#: frontend/templates/adr_report.html:52
+msgid "66 years and over"
+msgstr "Ọdún 66 àti jù bẹ́ẹ̀ lọ"
+
+#: frontend/templates/adr_report.html:57
+msgid "Patient's Gender"
+msgstr "Akọ-ń-bábo Aláìsàn"
+
+#: frontend/templates/adr_report.html:60
+msgid "Please select a gender..."
+msgstr "Jọ̀wọ́ yan akọ-ń-bábo..."
+
+#: frontend/templates/adr_report.html:61
+msgid "Male"
+msgstr "Okùnrin"
+
+#: frontend/templates/adr_report.html:62
+msgid "Female"
+msgstr "Obìnrin"
+
+#: frontend/templates/adr_report.html:63
+msgid "Prefer not to say"
+msgstr "Mi ò fẹ́ sọ"
+
+#: frontend/templates/adr_report.html:68
+msgid "When did the reaction start?"
+msgstr "Nígbà wo ni ìṣẹ̀lẹ̀ náà bẹ̀rẹ̀?"
+
+#: frontend/templates/adr_report.html:73
+msgid "Please describe the side effect(s)"
+msgstr "Jọ̀wọ́ ṣàpèjúwe ìṣẹ̀lẹ̀ àìdára náà"
+
+#: frontend/templates/adr_report.html:84
+msgid "Was the patient taking any other medications at the time?"
+msgstr "Ṣé aláìsàn náà ń lo oògùn mìíràn ní àkókò náà?"
+
+#: frontend/templates/adr_report.html:90
+msgid "List other drugs, vitamins, or supplements. If none, leave blank."
+msgstr ""
+"Kọ orúkọ àwọn oògùn, fítámì, tàbí àfikún mìíràn. Bí kò bá sí, fi "
+"sílẹ̀ ní òfo."
+
+#: frontend/templates/adr_report.html:96
+msgid "Submit Secure Report"
+msgstr "Fi Ìròyìn Aláàbò Ránṣẹ́"
+
 #: frontend/templates/base.html:344
 msgid "Home"
-msgstr ""
+msgstr "Ilé"
 
 #: frontend/templates/base.html:347
 msgid "About"
-msgstr ""
+msgstr "Nípa"
 
 #: frontend/templates/base.html:351
 msgid "My Reports"
-msgstr "Ròyìn"
+msgstr "Àwọn Ìròyìn Mi"
 
 #: frontend/templates/base.html:356
 msgid "Dashboard"
-msgstr ""
+msgstr "Pẹpẹ Ìṣàkóso"
 
 #: frontend/templates/base.html:361
 msgid "Public DB Manager"
-msgstr ""
+msgstr "Olùṣàkóso DB Gbogbogbòò"
 
 #: frontend/templates/base.html:366
 msgid "Hotspot Map"
-msgstr ""
+msgstr "Mápù Ibùdó"
 
 #: frontend/templates/base.html:374
 msgid "Language"
-msgstr ""
+msgstr "Èdè"
 
 #: frontend/templates/base.html:405
 msgid "Admin Logout"
-msgstr ""
+msgstr "Ìjáde Abójútó"
 
 #: frontend/templates/base.html:412
 msgid "Welcome,"
-msgstr ""
+msgstr "Ẹ kú àbọ̀,"
 
 #: frontend/templates/base.html:420
 msgid "Logout"
-msgstr ""
+msgstr "Jáde"
 
 #: frontend/templates/base.html:429 frontend/templates/login.html:6
 msgid "User Login"
@@ -233,49 +734,50 @@ msgstr "Ìwọlé Olùlò"
 
 #: frontend/templates/base.html:437
 msgid "Register"
-msgstr "Forúkọsílẹ̀ níbí"
+msgstr "Forúkọsílẹ̀"
 
 #: frontend/templates/base.html:477
 msgid "Confirm Action"
-msgstr ""
+msgstr "Jẹ́rìí sí Ìgbésẹ̀"
 
 #: frontend/templates/base.html:489
 msgid "Cancel"
-msgstr ""
+msgstr "Fagilé"
 
 #: frontend/templates/base.html:496
 msgid "Confirm"
-msgstr ""
+msgstr "Jẹ́rìí"
 
 #: frontend/templates/base.html:530
 msgid "Session Timeout Warning"
-msgstr ""
+msgstr "Ìkìlọ̀ Ìparí Ìgbà Ìṣiṣẹ́"
 
 #: frontend/templates/base.html:532
 msgid ""
 "Your session is about to expire due to inactivity. You will be\n"
 "          logged out in"
 msgstr ""
+"Ìgbà ìṣiṣẹ́ rẹ fẹ́rẹ̀ẹ́ parí nítorí àìṣiṣẹ́. A óò yọ ọ́ kúrò ní ìṣẹ́jú"
 
 #: frontend/templates/base.html:535
 msgid "seconds."
-msgstr ""
+msgstr "aáyá."
 
 #: frontend/templates/base.html:550
 msgid "Stay Logged In"
-msgstr ""
+msgstr "Dúró Nínú Ìwọlé"
 
 #: frontend/templates/base.html:557
 msgid "Logout Now"
-msgstr ""
+msgstr "Jáde Nísinsìnyí"
 
 #: frontend/templates/base.html:571
 msgid "MedGuard — Fighting counterfeit medicine, one scan at a time."
-msgstr ""
+msgstr "MedGuard — Ìjàkadì lòdì sí oògùn ayédèrú, ìṣàbójútó kan ní àkókò kan."
 
 #: frontend/templates/base.html:579
 msgid "MedGuard Assistant"
-msgstr "MedGuard"
+msgstr "Olùrànlọ́wọ́ MedGuard"
 
 #: frontend/templates/base.html:584
 msgid ""
@@ -283,30 +785,341 @@ msgid ""
 "          drug, how to report a counterfeit, or what to do if you find "
 "one."
 msgstr ""
+"Pẹ́lẹ́ o! Báwo ni mo ṣe lè ràn ọ́ lọ́wọ́ lónìí? O lè bèèrè bí a ṣe ń "
+"ṣàyẹ̀wò oògùn, bí a ṣe ń ròyìn ayédèrú, tàbí ohun tí o lè ṣe tí o bá rí "
+"ọ̀kan."
 
 #: frontend/templates/base.html:593
 msgid "Ask a question..."
-msgstr ""
+msgstr "Bèèrè ìbéèrè..."
 
 #: frontend/templates/base.html:595
 msgid "Send"
-msgstr ""
+msgstr "Fi Ránṣẹ́"
 
 #: frontend/templates/base.html:683
 msgid "I am sorry, I am having trouble connecting right now."
-msgstr ""
+msgstr "Mabinu, mi o le sopọ mọ intanẹẹti ni akoko yii."
 
 #: frontend/templates/base.html:761
 msgid "Hello! I am the MedGuard Assistant. How can I help?"
-msgstr ""
+msgstr "Pẹ́lẹ́ o! Èmi ni Olùrànlọ́wọ́ MedGuard. Báwo ni mo ṣe lè ràn ọ́ lọ́wọ́?"
 
 #: frontend/templates/base.html:764
 msgid "How to report a drug?"
-msgstr ""
+msgstr "Báwo ni a ṣe ń ròyìn oògùn?"
 
 #: frontend/templates/base.html:768
 msgid "How to verify a drug?"
+msgstr "Báwo ni a ṣe ń ṣàyẹ̀wò oògùn?"
+
+#: frontend/templates/base.html:772
+msgid "Check a batch status"
+msgstr "Ṣàyẹ̀wò ipò ìpele"
+
+#: frontend/templates/errors/403.html:5
+#: frontend/templates/errors/404.html:5
+msgid "Page Not Found"
+msgstr "A ko ri oju-iwe naa"
+
+#: frontend/templates/errors/403.html:6
+#: frontend/templates/errors/404.html:6
+msgid "The page you are looking for does not exist."
+msgstr "Oju-iwe ti o n wa ko si."
+
+#: frontend/templates/errors/403.html:7
+#: frontend/templates/errors/404.html:7
+msgid "Go to Homepage"
+msgstr "Lọ si oju-iwe akọkọ"
+
+#: frontend/templates/login.html:16
+#: frontend/templates/register.html:15
+msgid "Email Address"
+msgstr "Adirẹsi Imeeli"
+
+#: frontend/templates/login.html:20
+#: frontend/templates/register.html:19
+msgid "Password"
+msgstr "Ọrọ Aṣínà"
+
+#: frontend/templates/login.html:24
+msgid "Sign in"
+msgstr "Wọlé"
+
+#: frontend/templates/login.html:27
+msgid "Don't have an account?"
+msgstr "Ṣe o kò tíì ní àkáùntì?"
+
+#: frontend/templates/login.html:27
+msgid "Register here"
+msgstr "Forúkọsílẹ̀ níbí"
+
+#: frontend/templates/my_reports.html:3
+msgid "My Submitted Reports"
+msgstr "Àwọn Ìròyìn Tí Mo Ti Fi Ránṣẹ́"
+
+#: frontend/templates/my_reports.html:4
+msgid "Here is a history of the counterfeit drug reports you have submitted."
+msgstr "Èyí ni ìtàn àwọn ìròyìn oògùn ayédèrú tí o ti fi ránṣẹ́."
+
+#: frontend/templates/my_reports.html:17
+msgid "Regulator Status"
+msgstr "Ipò Aláṣẹ"
+
+#: frontend/templates/my_reports.html:30
+msgid "Pending Review"
+msgstr "Nduro de Ayẹwo"
+
+#: frontend/templates/my_reports.html:33
+msgid "Reviewed"
+msgstr "Ti Ṣàyẹ̀wò"
+
+#: frontend/templates/my_reports.html:41
+msgid "You have not submitted any reports yet."
+msgstr "O kò tíì fi ìròyìn kankan ránṣẹ́."
+
+#: frontend/templates/my_reports.html:68
+msgid "Delete Report"
+msgstr "Pa Ìròyìn Rẹ́"
+
+#: frontend/templates/my_reports.html:69
+msgid "Are you sure you want to delete this report? This action is permanent."
+msgstr "Ṣé o dájú pé o fẹ́ pa ìròyìn yí rẹ́? Ìgbésẹ̀ yí kò ṣeé yí padà."
+
+#: frontend/templates/my_reports.html:86
+msgid "Failed to delete report:"
+msgstr "Ìtìbómi láti pa ìròyìn rẹ́:"
+
+#: frontend/templates/register.html:6
+msgid "➕ Create Your Account"
+msgstr "➕ Ṣẹda Àkáùntì Rẹ"
+
+#: frontend/templates/register.html:11
+msgid "Full Name"
+msgstr "Orúkọ Kíkún"
+
+#: frontend/templates/register.html:23
+msgid "Create Account"
+msgstr "Ṣẹda Àkáùntì"
+
+#: frontend/templates/register.html:26
+msgid "Already have an account?"
+msgstr "Ṣe o ti ní àkáùntì tẹ́lẹ̀?"
+
+#: frontend/templates/register.html:26
+msgid "Login here"
+msgstr "Wọlé níbí"
+
+#: frontend/templates/sms_check.html:4
+msgid "Offline / SMS Verification Simulation"
+msgstr "Àfarawé Ìṣàyẹ̀wò Láìsí Íńtánẹ́ẹ̀tì / SMS"
+
+#: frontend/templates/sms_check.html:6
+msgid ""
+"This simulates sending an SMS with a batch number and receiving a text "
+"reply from the MedGuard system."
 msgstr ""
+"Èyí ń ṣe àfarawé fífi SMS ránṣẹ́ pẹ̀lú nọ́mbà ìpele àti gbígba ìdáhùn "
+"padà láti inú ètò MedGuard."
+
+#: frontend/templates/sms_check.html:13
+msgid "Enter batch number"
+msgstr "Tẹ nọmba ipele sii"
+
+#: frontend/templates/sms_check.html:16
+msgid "Simulate SMS"
+msgstr "Ṣe Àfarawé SMS"
+
+#: frontend/templates/sms_check.html:22
+msgid "📲 Simulated SMS Reply:"
+msgstr "📲 Ìdáhùn SMS Tí A Ṣàfarawé:"
+
+#: frontend/templates/verify.html:92
+msgid "Batch Verified by MedGuard"
+msgstr "Ìpele Ti Jẹ́ Ìdánilójú Nípasẹ̀ MedGuard"
+
+#: frontend/templates/verify.html:94
+msgid "This is an authentic drug registered in the MedGuard system."
+msgstr "Èyí jẹ́ oògùn tòótọ́ tí a forúkọsílẹ̀ nínú ètò MedGuard."
+
+#: frontend/templates/verify.html:97
+msgid "Warning: Drug Expired"
+msgstr "Ìkìlọ̀: Oògùn Ti Parí"
+
+#: frontend/templates/verify.html:99
+msgid ""
+"This is a registered drug, but it has passed its expiry date. Do not use."
+msgstr ""
+"Èyí jẹ́ oògùn tí a forúkọsílẹ̀, ṣùgbọ́n déètì ìparí rẹ̀ ti kọjá. Máṣe lò "
+"ó."
+
+#: frontend/templates/verify.html:102
+msgid "Public Information Found"
+msgstr "A Rí Ìwífún Gbogbogbòò"
+
+#: frontend/templates/verify.html:104
+msgid ""
+"Disclaimer: This information is from a public database and has "
+"<u>not</u> been independently verified by MedGuard."
+msgstr ""
+"Àlàyé: Ìwífún yìí wá láti inú ìbùdó dátà gbogbogbòò, MedGuard kò sì ti "
+"ṣe ìdánilójú rẹ̀."
+
+#: frontend/templates/verify.html:107
+msgid "External Website Link"
+msgstr "Ìsopọ̀ sí Oju-ìwé Wẹ́ẹ̀bù Òde"
+
+#: frontend/templates/verify.html:109
+msgid "This"
+msgstr "Èyí"
+
+#: frontend/templates/verify.html:109
+msgid ""
+"points to an external website. MedGuard cannot verify its authenticity. "
+"Proceed with caution."
+msgstr ""
+"kóòdù yí tọ́ka sí ojú-ìwé wẹ́ẹ̀bù òde. MedGuard kò le ṣe ìdánilójú rẹ̀. "
+"Máa báa lọ pẹ̀lú ìṣọ́ra."
+
+#: frontend/templates/verify.html:113
+msgid "Unregistered Product Code"
+msgstr "Kóòdù Ọja Tí A Kò Forúkọsílẹ̀"
+
+#: frontend/templates/verify.html:115
+msgid "This appears to be a standard product"
+msgstr "Èyí dàbí pé ó jẹ́ ọja lásán"
+
+#: frontend/templates/verify.html:115
+msgid ""
+", not a MedGuard verification code. MedGuard cannot verify this item, but"
+" it has not been flagged as counterfeit."
+msgstr ""
+", kì í ṣe kóòdù ìdánilójú MedGuard. MedGuard kò le ṣe ìdánilójú nǹkan "
+"yìí, ṣùgbọ́n a kò tíì fi sí àmì pé ó jẹ́ ayédèrú."
+
+#: frontend/templates/verify.html:120
+msgid "Not Found in MedGuard System"
+msgstr "A Kò Rí Nínú Ètò MedGuard"
+
+#: frontend/templates/verify.html:122
+msgid "is not registered in the MedGuard system. This drug may be counterfeit. Please report it."
+msgstr "kò sí nínu ètò MedGuard. Ó lè jẹ́ oògùn ayédèrú. Jọ̀wọ́ ròyìn rẹ̀."
+
+#: frontend/templates/verify.html:150
+msgid "NAFDAC Status:"
+msgstr "Ipò NAFDAC:"
+
+#: frontend/templates/verify.html:154
+msgid "Details:"
+msgstr "Àlàyé:"
+
+#: frontend/templates/verify.html:160
+msgid "The scanned code links to the following address:"
+msgstr "Kóòdù tí a ṣàbójútó sopọ̀ mọ́ àdírẹ́sì ìsàlẹ̀ yìí:"
+
+#: frontend/templates/verify.html:168
+msgid "Proceed to Website"
+msgstr "Lọ sí Ojú-ìwé Wẹ́ẹ̀bù"
+
+#: frontend/templates/verify.html:173
+msgid "The scanned"
+msgstr "Èyí tí a ṣàbójútó"
+
+#: frontend/templates/verify.html:173
+msgid "contained the following unrecognized data:"
+msgstr "ní àwọn dátà àìmọ̀ wọ̀nyí:"
+
+#: frontend/templates/verify.html:180
+msgid "What To Do Next"
+msgstr "Kíni Kóò Kàn Ṣe"
+
+#: frontend/templates/verify.html:183
+msgid ""
+"<strong>Cross-check with NAFDAC:</strong> You can search for the drug on "
+"the official NAFDAC Greenbook or use their Mobile Authentication Service "
+"(MAS) for certain products."
+msgstr ""
+"<strong>Ṣàyẹ̀wò pẹ̀lú NAFDAC:</strong> O le wá oògùn náà lórí ìwé "
+"Greenbook ti NAFDAC tàbí lo Iṣẹ́ Ìdánilójú Alágbèéká (MAS) wọn fún "
+"àwọn ọja kan."
+
+#: frontend/templates/verify.html:188
+msgid ""
+"<strong>Report to MedGuard:</strong> If you are suspicious, use the "
+"\"Report Counterfeit\" form on our main page to alert regulators through "
+"our system."
+msgstr ""
+"<strong>Ròyìn fún MedGuard:</strong> Bí o bá fura, lo fọ́ọ̀mù \"Ròyìn "
+"Ayédèrú\" lórí ojú-ìwé àkọ́kọ́ wa láti fi tó àwọn aláṣẹ létí."
+
+#: frontend/templates/verify.html:193
+msgid ""
+"<strong>Report Officially to NAFDAC:</strong> For a direct report to the"
+" authorities, you can contact NAFDAC's Pharmacovigilance department via "
+"email at"
+msgstr ""
+"<strong>Ròyìn fún NAFDAC:</strong> Fún ìròyìn tààrà sí àwọn aláṣẹ, o "
+"le kàn sí ẹ̀ka Pharmacovigilance ti NAFDAC nípasẹ̀ imeeli ní"
+
+#: frontend/templates/verify.html:200
+msgid "Experiencing a Side Effect?"
+msgstr "Ṣé O Ní Ìṣẹ̀lẹ̀ Àìdára?"
+
+#: frontend/templates/verify.html:201
+msgid ""
+"Help keep our medicines safe by reporting any unexpected reactions. Your "
+"contribution is vital for public health."
+msgstr ""
+"Ṣèrànwọ́ láti jẹ́ kí àwọn oògùn wa wà ní ààbò nípa ríròyìn àwọn "
+"ìṣẹ̀lẹ̀ àìròtẹ́lẹ̀. Ìkópa rẹ ṣe pàtàkì fún ìlera gbogbo ènìyàn."
+
+#: frontend/templates/verify.html:203
+msgid "Report a Side Effect"
+msgstr "Ròyìn Ìṣẹ̀lẹ̀ Àìdára"
+
+#: frontend/templates/verify.html:208
+msgid "Checked on"
+msgstr "A Ṣàyẹ̀wò Ní"
+
+#: frontend/templates/verify.html:211
+msgid "Scan Another Code"
+msgstr "Ṣàbójútó Kóòdù Mìíràn"
+
+#: frontend/templates/index.html:105
+msgid "Because your health deserves the truth."
+msgstr "Nítorí ìlera rẹ yẹ fún òtítọ́."
+
+#: frontend/templates/index.html:106
+msgid "No more guessing — just scanning."
+msgstr "Kò sí àròbádé mọ́ — ìṣayẹ̀wò lásán."
+
+#: frontend/templates/index.html:107
+msgid "Keeping counterfeit meds off the streets."
+msgstr "Jẹ́ kí a pa oògùn ayédèrú kúrò ní ojú pópó."
+
+#: frontend/templates/index.html:108
+msgid "Your pocket pharmacist."
+msgstr "Oníṣègùn àpò rẹ."
+
+#: frontend/templates/index.html:110
+msgid "Batch number is required to report."
+msgstr "Nọ́mbà ìpele ṣe pàtàkì láti fi ròyìn."
+
+#: frontend/templates/index.html:111
+msgid "Error submitting report."
+msgstr "Àṣìṣe wà nígbà tí o ń fi ìròyìn ránṣẹ́."
+
+#: frontend/templates/index.html:112
+msgid "Report submitted successfully"
+msgstr "Ìròyìn ti jáwọ́ pẹ̀lú àṣeyọrí"
+
+#: frontend/templates/index.html:113
+msgid "Camera access failed. Please check permissions."
+msgstr "Àyè sí kámẹ́rà kùnà. Jọ̀wọ́ ṣàyẹ̀wò àwọn ìyọ̀ǹda."
+
+#: frontend/templates/index.html:114
+msgid "Please enter a batch number."
+msgstr "Jọ̀wọ́ tẹ nọ́mbà ìpele sii."
 
 #: frontend/templates/base.html:772
 msgid "Check a batch status"
@@ -379,19 +1192,3 @@ msgstr "Ṣe o kò tíì ní àkáùntì?"
 #: frontend/templates/login.html:27
 msgid "Register here"
 msgstr "Forúkọsílẹ̀ níbí"
-
-#~ msgid "Create Your Account"
-#~ msgstr "Ṣẹda Àkáùntì Rẹ"
-
-#~ msgid "Full Name"
-#~ msgstr "Orúkọ Kíkún"
-
-#~ msgid "Create Account"
-#~ msgstr "Ṣẹda Àkáùntì"
-
-#~ msgid "Already have an account?"
-#~ msgstr "Ṣe o ti ní àkáùntì tẹ́lẹ̀?"
-
-#~ msgid "Login here"
-#~ msgstr "Wọlé níbí"
-

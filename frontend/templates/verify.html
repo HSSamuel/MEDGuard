@@ -117,51 +117,55 @@
         margin-bottom: 20px;
       "
     >
-      <h3 style="margin-top: 0; color: #856404">🚨 Security Alert</h3>
+      <h3 style="margin-top: 0; color: #856404">
+        {{ _('🚨 Security Alert') }}
+      </h3>
       <p style="margin-bottom: 0">{{ anomaly_warning }}</p>
     </div>
     {% endif %} {% if status == 'valid' %}
     <div class="status-icon" style="color: #2e7d32">✅</div>
-    <h2 style="color: #2e7d32">Batch Verified by MedGuard</h2>
+    <h2 style="color: #2e7d32">{{ _('Batch Verified by MedGuard') }}</h2>
     <p class="subtle">
-      This is an authentic drug registered in the MedGuard system.
+      {{ _('This is an authentic drug registered in the MedGuard system.') }}
     </p>
     {% elif status == 'expired' %}
     <div class="status-icon" style="color: #ff8f00">⚠️</div>
-    <h2 style="color: #ff8f00">Warning: Drug Expired</h2>
+    <h2 style="color: #ff8f00">{{ _('Warning: Drug Expired') }}</h2>
     <p class="subtle">
-      This is a registered drug, but it has passed its expiry date. Do not use.
+      {{ _('This is a registered drug, but it has passed its expiry date. Do not
+      use.') }}
     </p>
     {% elif status == 'public_info_found' %}
     <div class="status-icon" style="color: #007bff">ℹ️</div>
-    <h2 style="color: #007bff">Public Information Found</h2>
+    <h2 style="color: #007bff">{{ _('Public Information Found') }}</h2>
     <p class="subtle" style="font-weight: bold">
-      Disclaimer: This information is from a public database and has
-      <u>not</u> been independently verified by MedGuard.
+      {{ _('Disclaimer: This information is from a public database and has
+      <u>not</u> been independently verified by MedGuard.') }}
     </p>
     {% elif status == 'external_url' %}
     <div class="status-icon" style="color: #c62828">🌐</div>
-    <h2 style="color: #c62828">External Website Link</h2>
+    <h2 style="color: #c62828">{{ _('External Website Link') }}</h2>
     <p class="subtle">
-      This {{ scan_type or 'code' }} points to an external website. MedGuard cannot verify its
-      authenticity. Proceed with caution.
+      {{ _('This') }} {{ scan_type or 'code' }} {{ _('points to an external
+      website. MedGuard cannot verify its authenticity. Proceed with caution.')
+      }}
     </p>
 
     {% elif status == 'unregistered_product_code' %}
     <div class="status-icon" style="color: #007bff">ℹ️</div>
-    <h2 style="color: #007bff">Unregistered Product Code</h2>
+    <h2 style="color: #007bff">{{ _('Unregistered Product Code') }}</h2>
     <p class="subtle">
-      This appears to be a standard product {{ scan_type or 'code' }}, not a MedGuard verification
-      code. MedGuard cannot verify this item, but it has not been flagged as
-      counterfeit.
+      {{ _('This appears to be a standard product') }} {{ scan_type or 'code'
+      }}{{ _(', not a MedGuard verification code. MedGuard cannot verify this
+      item, but it has not been flagged as counterfeit.') }}
     </p>
 
     {% else %} {# This handles 'notfound' and any other case #}
     <div class="status-icon" style="color: #c62828">❌</div>
-    <h2 style="color: #c62828">Not Found in MedGuard System</h2>
+    <h2 style="color: #c62828">{{ _('Not Found in MedGuard System') }}</h2>
     <p class="subtle">
-      This {{ scan_type or 'code' }} is not registered in the MedGuard system. This drug may be
-      counterfeit. Please report it.
+      {{ _('This') }} {{ scan_type or 'code' }} {{ _('is not registered in the
+      MedGuard system. This drug may be counterfeit. Please report it.') }}
     </p>
     {% endif %}
   </div>
@@ -169,44 +173,44 @@
   {% if batch %}
   <table class="details-table">
     <tr>
-      <td><strong>Drug Name:</strong></td>
+      <td><strong>{{ _('Drug Name:') }}</strong></td>
       <td>{{ batch.drug_name }}</td>
     </tr>
     <tr>
-      <td><strong>Batch Number:</strong></td>
+      <td><strong>{{ _('Batch Number:') }}</strong></td>
       <td>{{ batch.batch_number }}</td>
     </tr>
     <tr>
-      <td><strong>Manufacturer:</strong></td>
+      <td><strong>{{ _('Manufacturer:') }}</strong></td>
       <td>{{ batch.manufacturer }}</td>
     </tr>
     <tr>
-      <td><strong>Expiry Date:</strong></td>
+      <td><strong>{{ _('Expiry Date:') }}</strong></td>
       <td>{{ batch.expiry_date }}</td>
     </tr>
   </table>
   {% endif %} {% if public_data %}
   <table class="details-table">
     <tr>
-      <td><strong>Drug Name:</strong></td>
+      <td><strong>{{ _('Drug Name:') }}</strong></td>
       <td>{{ public_data.drug_name }}</td>
     </tr>
     <tr>
-      <td><strong>Manufacturer:</strong></td>
+      <td><strong>{{ _('Manufacturer:') }}</strong></td>
       <td>{{ public_data.manufacturer }}</td>
     </tr>
     <tr>
-      <td><strong>NAFDAC Status:</strong></td>
+      <td><strong>{{ _('NAFDAC Status:') }}</strong></td>
       <td>{{ public_data.status }}</td>
     </tr>
     <tr>
-      <td><strong>Details:</strong></td>
+      <td><strong>{{ _('Details:') }}</strong></td>
       <td>{{ public_data.details }}</td>
     </tr>
   </table>
   {% endif %} {% if external_url %}
   <div style="text-align: center; word-wrap: break-word; color: #333">
-    <p>The scanned code links to the following address:</p>
+    <p>{{ _('The scanned code links to the following address:') }}</p>
     <strong
       style="background: #eee; padding: 5px; border-radius: 4px; color: #000"
       >{{ external_url }}</strong
@@ -217,12 +221,15 @@
       class="btn-link"
       target="_blank"
       rel="noopener noreferrer"
-      >Proceed to Website</a
+      >{{ _('Proceed to Website') }}</a
     >
   </div>
   {% endif %} {% if scanned_content %}
   <div style="text-align: center; word-wrap: break-word; color: #333">
-    <p>The scanned {{ scan_type or 'code' }} contained the following unrecognized data:</p>
+    <p>
+      {{ _('The scanned') }} {{ scan_type or 'code' }} {{ _('contained the
+      following unrecognized data:') }}
+    </p>
     <strong
       style="background: #eee; padding: 5px; border-radius: 4px; color: #000"
       >{{ scanned_content }}</strong
@@ -231,42 +238,49 @@
   {% endif %} {% if status == 'notfound' or status ==
   'unregistered_product_code' %}
   <div class="next-steps">
-    <h3>What To Do Next</h3>
+    <h3>{{ _('What To Do Next') }}</h3>
     <ul>
       <li>
-        <strong>Cross-check with NAFDAC:</strong> You can search for the drug on
-        the official NAFDAC Greenbook or use their Mobile Authentication Service
-        (MAS) for certain products.
+        {{ _('<strong>Cross-check with NAFDAC:</strong> You can search for the
+        drug on the official NAFDAC Greenbook or use their Mobile Authentication
+        Service (MAS) for certain products.') }}
       </li>
       <li>
-        <strong>Report to MedGuard:</strong> If you are suspicious, use the
-        "Report Counterfeit" form on our main page to alert regulators through
-        our system.
+        {{ _('<strong>Report to MedGuard:</strong> If you are suspicious, use
+        the "Report Counterfeit" form on our main page to alert regulators
+        through our system.') }}
       </li>
       <li>
-        <strong>Report Officially to NAFDAC:</strong> For a direct report to the
-        authorities, you can contact NAFDAC's Pharmacovigilance department via
-        email at <a href="mailto:nafdac@nafdac.gov.ng">nafdac@nafdac.gov.ng</a>.
+        {{ _('<strong>Report Officially to NAFDAC:</strong> For a direct report
+        to the authorities, you can contact NAFDAC\'s Pharmacovigilance
+        department via email at') }}
+        <a href="mailto:nafdac@nafdac.gov.ng">nafdac@nafdac.gov.ng</a>.
       </li>
     </ul>
   </div>
-  {% endif %}
-
-  {% if status == 'valid' and batch %}
+  {% endif %} {% if status == 'valid' and batch %}
   <div class="next-steps">
-      <h3>Experiencing a Side Effect?</h3>
-      <p style="text-align: center;">Help keep our medicines safe by reporting any unexpected reactions. Your contribution is vital for public health.</p>
-      <div style="text-align: center;">
-          <a href="{{ url_for('adr_report_form', drug_id=batch.id) }}" class="btn-link" style="background-color: #ff8f00;">Report a Side Effect</a>
-      </div>
+    <h3>{{ _('Experiencing a Side Effect?') }}</h3>
+    <p style="text-align: center">
+      {{ _('Help keep our medicines safe by reporting any unexpected reactions.
+      Your contribution is vital for public health.') }}
+    </p>
+    <div style="text-align: center">
+      <a
+        href="{{ url_for('adr_report_form', drug_id=batch.id) }}"
+        class="btn-link"
+        style="background-color: #ff8f00"
+        >{{ _('Report a Side Effect') }}</a
+      >
+    </div>
   </div>
   {% endif %}
 
-  <div class="verified-on">Checked on {{ verified_on }}</div>
+  <div class="verified-on">{{ _('Checked on') }} {{ verified_on }}</div>
 
   <div style="text-align: center; margin-top: 30px">
     <a href="/" class="btn-link" style="background-color: #555"
-      >Scan Another Code</a
+      >{{ _('Scan Another Code') }}</a
     >
   </div>
 </div>

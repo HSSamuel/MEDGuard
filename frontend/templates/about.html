@@ -50,7 +50,7 @@
     font-size: 18px;
     border-radius: 8px;
     text-decoration: none;
-    transition: background-color 0.3s;
+    transition: background-color: 0.3s;
   }
   .btn-home:hover {
     background-color: #1a593e;
@@ -65,93 +65,63 @@
       style="max-height: 90px"
     />
     <h1 style="color: var(--mg-yellow); margin-top: 15px; font-size: 2.5em">
-      About MedGuard
+      {{ _('About MedGuard') }}
     </h1>
     <p style="font-size: 1.2em; font-style: italic; text-align: center">
-      Your Partner in Pharmaceutical Safety
+      {{ _('Your Partner in Pharmaceutical Safety') }}
     </p>
   </div>
 
   <div class="about-content">
     <p>
-      <strong>MedGuard</strong> is a comprehensive, multi-faceted public health
-      platform designed with a singular, critical mission: to build a resilient
-      and transparent pharmaceutical supply chain in Nigeria. We aim to
-      safeguard public health by detecting, reporting, and managing counterfeit
-      drugs while also monitoring the safety of legitimate medications through
-      adverse reaction reporting.
+      <strong>{{ _('MedGuard') }}</strong> {{ _('is a comprehensive, multi-faceted public health platform designed with a singular, critical mission: to build a resilient and transparent pharmaceutical supply chain in Nigeria. We aim to safeguard public health by detecting, reporting, and managing counterfeit drugs while also monitoring the safety of legitimate medications through adverse reaction reporting.') }}
     </p>
 
-    <h3>The Silent Epidemic</h3>
+    <h3>{{ _('The Silent Epidemic') }}</h3>
     <p>
-      The circulation of counterfeit and substandard drugs is a silent epidemic
-      with devastating consequences. These fake medications can contain
-      incorrect ingredients, the wrong dosage, or even toxic substances, leading
-      to treatment failure, severe health complications, and death. This threat
-      erodes public trust in our healthcare system, putting every citizen at
-      risk.
+      {{ _('The circulation of counterfeit and substandard drugs is a silent epidemic with devastating consequences. These fake medications can contain incorrect ingredients, the wrong dosage, or even toxic substances, leading to treatment failure, severe health complications, and death. This threat erodes public trust in our healthcare system, putting every citizen at risk.') }}
     </p>
 
-    <h3>A Two-Pronged Defense</h3>
+    <h3>{{ _('A Two-Pronged Defense') }}</h3>
     <p>
-      MedGuard tackles this challenge with a dual-layered approach, empowering
-      both the public and regulatory bodies like NAFDAC to become active
-      guardians of our nation's medicine supply.
+      {{ _('MedGuard tackles this challenge with a dual-layered approach, empowering both the public and regulatory bodies like NAFDAC to become active guardians of our nation\'s medicine supply.') }}
     </p>
 
     <ul class="feature-list">
       <li>
-        <strong>Counterfeit Drug Verification:</strong> We provide every
-        Nigerian with simple, powerful tools to instantly verify the
-        authenticity of their medication. Through QR code scanning and batch
-        number verification, our platform serves as a frontline defense against
-        dangerous fakes.
+        <strong>{{ _('Counterfeit Drug Verification:') }}</strong> {{ _('We provide every Nigerian with simple, powerful tools to instantly verify the authenticity of their medication. Through QR code scanning and batch number verification, our platform serves as a frontline defense against dangerous fakes.') }}
       </li>
       <li>
-        <strong>Pharmacovigilance & Safety Monitoring:</strong> Our mission
-        extends beyond counterfeits. MedGuard provides a direct channel for the
-        public to report adverse drug reactions (ADRs) to legitimate
-        medications. This crowdsourced data is critical for post-market
-        surveillance and ensures that even approved drugs are continuously
-        monitored for safety.
+        <strong>{{ _('Pharmacovigilance & Safety Monitoring:') }}</strong> {{ _('Our mission extends beyond counterfeits. MedGuard provides a direct channel for the public to report adverse drug reactions (ADRs) to legitimate medications. This crowdsourced data is critical for post-market surveillance and ensures that even approved drugs are continuously monitored for safety.') }}
       </li>
     </ul>
 
-    <h3>Our Core Features</h3>
+    <h3>{{ _('Our Core Features') }}</h3>
     <ul class="feature-list">
       <li>
-        <strong>Instant QR & Batch Verification:</strong>
-        Instantly validate a drug's authenticity against a secure,
-        regulator-managed database using your smartphone camera or by entering a
-        batch number.
+        <strong>{{ _('Instant QR & Batch Verification:') }}</strong>
+        {{ _('Instantly validate a drug\'s authenticity against a secure, regulator-managed database using your smartphone camera or by entering a batch number.') }}
       </li>
       <li>
-        <strong>Anonymous Counterfeit Reporting:</strong>
-        Easily submit reports of suspicious medications, complete with
-        photographic evidence and location data, to alert authorities in
-        real-time.
+        <strong>{{ _('Anonymous Counterfeit Reporting:') }}</strong>
+        {{ _('Easily submit reports of suspicious medications, complete with photographic evidence and location data, to alert authorities in real-time.') }}
       </li>
       <li>
-        <strong>Adverse Drug Reaction (ADR) Reporting:</strong>
-        After verifying a legitimate drug, users can report any unexpected side
-        effects, contributing vital data to national pharmacovigilance efforts.
+        <strong>{{ _('Adverse Drug Reaction (ADR) Reporting:') }}</strong>
+        {{ _('After verifying a legitimate drug, users can report any unexpected side effects, contributing vital data to national pharmacovigilance efforts.') }}
       </li>
       <li>
-        <strong>Offline SMS Functionality:</strong>
-        For citizens without consistent internet access, our system works via
-        SMS, ensuring that everyone can verify their medication, anytime,
-        anywhere.
+        <strong>{{ _('Offline SMS Functionality:') }}</strong>
+        {{ _('For citizens without consistent internet access, our system works via SMS, ensuring that everyone can verify their medication, anytime, anywhere.') }}
       </li>
       <li>
-        <strong>Admin Dashboard for Regulators:</strong>
-        A powerful, secure dashboard for authorities to view, filter, and manage
-        all submitted counterfeit and ADR reports, complete with data
-        visualizations and a live hotspot map.
+        <strong>{{ _('Admin Dashboard for Regulators:') }}</strong>
+        {{ _('A powerful, secure dashboard for authorities to view, filter, and manage all submitted counterfeit and ADR reports, complete with data visualizations and a live hotspot map.') }}
       </li>
     </ul>
 
     <div class="center-container">
-      <a href="/" class="btn-home">Return to Home</a>
+      <a href="/" class="btn-home">{{ _('Return to Home') }}</a>
     </div>
   </div>
 </div>

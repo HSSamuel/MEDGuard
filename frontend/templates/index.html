@@ -67,6 +67,25 @@
     </div>
     {% endblock %} {% block scripts %}
     <script src="https://unpkg.com/html5-qrcode@2.3.8/minified/html5-qrcode.min.js"></script>
+
+    {% block js_translations %}
+    <script>
+      window.translations = {
+        taglines: [
+          "{{ _('Because your health deserves the truth.') }}",
+          "{{ _('No more guessing — just scanning.') }}",
+          "{{ _('Keeping counterfeit meds off the streets.') }}",
+          "{{ _('Your pocket pharmacist.') }}"
+        ],
+        batchRequired: "{{ _('Batch number is required to report.') }}",
+        errorSubmitting: "{{ _('Error submitting report.') }}",
+        reportSuccess: "{{ _('Report submitted successfully') }}",
+        cameraAccessFailed: "{{ _('Camera access failed. Please check permissions.') }}",
+        enterBatchNumber: "{{ _('Please enter a batch number.') }}"
+      };
+    </script>
+    {% endblock %}
+    
     <script src="{{ url_for('static', filename='app.js') }}"></script>
     {% endblock %}
   </div>

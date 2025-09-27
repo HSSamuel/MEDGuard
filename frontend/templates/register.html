@@ -3,26 +3,26 @@
 {% block content %}
 <div style="display: flex; justify-content: center; align-items: center; min-height: 60vh;">
   <div class="panel" style="max-width: 400px; width: 100%;">
-    <h2 style="text-align: center;">➕ Create Your Account</h2>
+    <h2 style="text-align: center;">{{ _('➕ Create Your Account') }}</h2>
 
     <form method="POST" action="{{ url_for('auth.register') }}">
       <div class="form-group" style="margin-bottom: 15px;">
-          <label for="full_name" style="display: block; margin-bottom: 5px;">Full Name</label>
+          <label for="full_name" style="display: block; margin-bottom: 5px;">{{ _('Full Name') }}</label>
           <input name="full_name" id="full_name" class="input" type="text" required style="width: 100%;">
       </div>
       <div class="form-group" style="margin-bottom: 15px;">
-          <label for="email" style="display: block; margin-bottom: 5px;">Email Address</label>
+          <label for="email" style="display: block; margin-bottom: 5px;">{{ _('Email Address') }}</label>
           <input name="email" id="email" class="input" type="email" required style="width: 100%;">
       </div>
       <div class="form-group" style="margin-bottom: 15px;">
-          <label for="password" style="display: block; margin-bottom: 5px;">Password</label>
+          <label for="password" style="display: block; margin-bottom: 5px;">{{ _('Password') }}</label>
           <input name="password" id="password" class="input" type="password" required style="width: 100%;">
       </div>
       
-      <button class="btn btn-yellow" type="submit" style="width: 100%; padding: 12px; font-size: 16px;">Create Account</button>
+      <button class="btn btn-yellow" type="submit" style="width: 100%; padding: 12px; font-size: 16px;">{{ _('Create Account') }}</button>
     </form>
     <div style="text-align: center; margin-top: 15px;">
-        <p>Already have an account? <a href="{{ url_for('auth.login') }}" style="color: #8bff9a;">Login here</a></p>
+        <p>{{ _('Already have an account?') }} <a href="{{ url_for('auth.login') }}" style="color: #8bff9a;">{{ _('Login here') }}</a></p>
     </div>
   </div>
 </div>
