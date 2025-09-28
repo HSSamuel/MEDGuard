@@ -1,37 +1,26 @@
+# --- Core Flask & Web Server ---
 Flask==3.0.3
 Flask-Cors==4.0.1
-Flask-SocketIO==5.3.0
 gunicorn==22.0.0
-Jinja2==3.1.6
-python-docx==1.1.2
-qrcode==7.4.2
-reportlab==4.4.3
+waitress==2.1.2
 Werkzeug==3.0.1
-babel==2.17.0
-flask-babel==4.0.0
-blinker==1.9.0
-click==8.3.0
+Jinja2==3.1.6
 itsdangerous==2.2.0
 MarkupSafe==3.0.2
-pillow==10.4.0
-requests==2.32.5
-twilio==8.0.0
-# AI and Google Dependencies
-cohere==5.18.0
-google-ai-generativelanguage==0.6.15
-google-api-core==2.25.1
-google-auth==2.40.3
-google-generativeai==0.8.5
-huggingface-hub==0.35.1
+blinker==1.9.0
+click==8.3.0
 
-flask==3.0.3
-flask-cors==4.0.1
+# --- Internationalization (i18n) ---
+babel==2.17.0
+flask-babel==4.0.0
+
+# --- Utilities & Document Handling ---
 qrcode==7.4.2
 pillow==10.4.0
-reportlab>=4.0.0
 python-docx==1.1.2
-gunicorn==22.0.0
-waitress==2.1.2           # For local Windows development
-werkzeug==3.0.1           # For check_password_hash
-python-dotenv==1.0.1      # For environment variable loading (if used)
-twilio==8.0.0             # For sending SMS notifications
+reportlab==4.4.3
+python-dotenv==1.0.1
+
+# --- External Services ---
+twilio==8.0.0
+requests==2.32.5
