@@ -3,8 +3,11 @@ import multiprocessing
 # Number of workers (e.g., 2 * CPU cores + 1)
 workers = multiprocessing.cpu_count() * 2 + 1
 
-# Bind to all interfaces on port 8000
-bind = "0.0.0.0:8000"
+# Set the worker class to eventlet for WebSocket support
+worker_class = 'eventlet'
+
+# Bind to the port Render expects
+bind = "0.0.0.0:10000"
 
 
 def post_fork(server, worker):
