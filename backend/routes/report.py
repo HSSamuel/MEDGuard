@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 from backend.database import get_db
 from datetime import datetime
 from flask_socketio import emit
+from backend.notifications import send_sms_alert, send_email_alert
 
 report_bp = Blueprint("report_api", __name__)
 
@@ -49,6 +50,14 @@ def create_report():
         (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, datetime.now(), 0)
     )
     conn.commit()
+
+    report_details = {
+        "drug_name": drug_name,
+        "batch_number": batch_number,
+        "location": location
+    }
+    send_sms_alert(report_details)
+    send_email_alert(report_details)
 
     # Emit a WebSocket event to notify connected admin clients
     try:
