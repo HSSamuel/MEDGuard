@@ -9,6 +9,9 @@ worker_class = 'eventlet'
 # Bind to the port Render expects
 bind = "0.0.0.0:10000"
 
+# Optional: Increase the timeout to give workers more time
+timeout = 120
+
 
 def post_fork(server, worker):
     server.log.info("Worker spawned (pid: %d)", worker.pid)
