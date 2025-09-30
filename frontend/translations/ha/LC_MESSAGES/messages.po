@@ -1,0 +1,1216 @@
+# Hausa translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-09-27 11:42+0100\n"
+"PO-Revision-Date: 2025-09-30 10:00+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ha\n"
+"Language-Team: ha <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: frontend/templates/about.html:68 frontend/templates/base.html:568
+msgid "About MedGuard"
+msgstr "Game da MedGuard"
+
+#: frontend/templates/about.html:71
+msgid "Your Partner in Pharmaceutical Safety"
+msgstr "Abokin Harkar Ku a Tsaron Magunguna"
+
+#: frontend/templates/about.html:77 frontend/templates/base.html:6
+msgid "MedGuard"
+msgstr "MedGuard"
+
+#: frontend/templates/about.html:77
+msgid ""
+"is a comprehensive, multi-faceted public health platform designed with a "
+"singular, critical mission: to build a resilient and transparent "
+"pharmaceutical supply chain in Nigeria. We aim to safeguard public health"
+" by detecting, reporting, and managing counterfeit drugs while also "
+"monitoring the safety of legitimate medications through adverse reaction "
+"reporting."
+msgstr ""
+"wani dandali ne na lafiyar jama'a mai fa'ida da yawa wanda aka tsara shi da "
+"manufa guda ɗaya mai mahimmanci: don gina ingantaccen tsarin samar da "
+"magunguna a Najeriya. Muna da nufin kare lafiyar jama'a ta hanyar ganowa, "
+"bayar da rahoto, da kuma kula da magungunan jabu yayin da muke sa ido kan "
+"tsaron magunguna na gaske ta hanyar rahoton illar da magani ya haifar."
+
+#: frontend/templates/about.html:80
+msgid "The Silent Epidemic"
+msgstr "Anoba A Cikin Shiru"
+
+#: frontend/templates/about.html:82
+msgid ""
+"The circulation of counterfeit and substandard drugs is a silent epidemic"
+" with devastating consequences. These fake medications can contain "
+"incorrect ingredients, the wrong dosage, or even toxic substances, "
+"leading to treatment failure, severe health complications, and death. "
+"This threat erodes public trust in our healthcare system, putting every "
+"citizen at risk."
+msgstr ""
+"Yaduwar magungunan jabu da marasa inganci annoba ce a cikin shiru mai "
+"mummunan sakamako. Waɗannan magungunan na bogi na iya ƙunsar abubuwan da "
+"ba daidai ba, sashi mara daidai, ko ma abubuwa masu guba, wanda ke haifar "
+"da gazawar magani, matsanancin matsalolin lafiya, da mutuwa. Wannan barazanar"
+" tana lalata amincewar jama'a ga tsarin kula da lafiyarmu, wanda ke jefa "
+"kowane ɗan ƙasa cikin haɗari."
+
+#: frontend/templates/about.html:85
+msgid "A Two-Pronged Defense"
+msgstr "Kariya Mai Hanyoyi Biyu"
+
+#: frontend/templates/about.html:87
+msgid ""
+"MedGuard tackles this challenge with a dual-layered approach, empowering "
+"both the public and regulatory bodies like NAFDAC to become active "
+"guardians of our nation's medicine supply."
+msgstr ""
+"MedGuard na magance wannan ƙalubale ta hanyar hanyoyi biyu, wanda ke "
+"ba da ƙarfi ga jama'a da hukumomin da ke kula da harkokin kamar NAFDAC "
+"su zama masu himma wajen kare samar da magunguna na ƙasarmu."
+
+#: frontend/templates/about.html:92
+msgid "Counterfeit Drug Verification:"
+msgstr "Tabbatar da Maganin Jabu:"
+
+#: frontend/templates/about.html:92
+msgid ""
+"We provide every Nigerian with simple, powerful tools to instantly verify"
+" the authenticity of their medication. Through QR code scanning and batch"
+" number verification, our platform serves as a frontline defense against "
+"dangerous fakes."
+msgstr ""
+"Muna samar wa kowane ɗan Najeriya da kayan aiki masu sauƙi da ƙarfi don "
+"tabbatar da sahihancin maganinsu nan take. Ta hanyar duba lambar QR da "
+"tabbatar da lambar rukunin, dandalinmu yana aiki a matsayin kariya ta "
+"farko daga magungunan jabu masu haɗari."
+
+#: frontend/templates/about.html:95
+msgid "Pharmacovigilance & Safety Monitoring:"
+msgstr "Sa ido kan Magunguna & Kula da Tsaro:"
+
+#: frontend/templates/about.html:95
+msgid ""
+"Our mission extends beyond counterfeits. MedGuard provides a direct "
+"channel for the public to report adverse drug reactions (ADRs) to "
+"legitimate medications. This crowdsourced data is critical for post-"
+"market surveillance and ensures that even approved drugs are continuously"
+" monitored for safety."
+msgstr ""
+"Ayyukanmu ya wuce magungunan jabu kawai. MedGuard na samar da hanya kai "
+"tsaye ga jama'a don bayar da rahoton illar da magani ya haifar (ADRs) ga "
+"magunguna na gaske. Wannan bayanin da aka tattara daga jama'a yana da "
+"mahimmanci ga sa ido bayan kasuwa kuma yana tabbatar da cewa ana ci gaba "
+"da sa ido kan tsaron ko da magungunan da aka amince da su."
+
+#: frontend/templates/about.html:99
+msgid "Our Core Features"
+msgstr "Muhimman Ayyukanmu"
+
+#: frontend/templates/about.html:102
+msgid "Instant QR & Batch Verification:"
+msgstr "Tabbatar da QR & Lamba Nan Take:"
+
+#: frontend/templates/about.html:103
+msgid ""
+"Instantly validate a drug's authenticity against a secure, regulator-"
+"managed database using your smartphone camera or by entering a batch "
+"number."
+msgstr ""
+"Tabbatar da sahihancin magani nan take ta hanyar kwatanta shi da wani "
+"tumbun bayanai mai tsaro da hukuma ke sarrafawa ta amfani da kyamarar "
+"wayarka ko shigar da lambar rukunin."
+
+#: frontend/templates/about.html:106
+msgid "Anonymous Counterfeit Reporting:"
+msgstr "Bayar da Rahoton Jabu Ba tare da Sunaba:"
+
+#: frontend/templates/about.html:107
+msgid ""
+"Easily submit reports of suspicious medications, complete with "
+"photographic evidence and location data, to alert authorities in real-"
+"time."
+msgstr ""
+"A sauƙaƙe, aika da rahotannin magunguna masu tuhuma, tare da hujjar hoto "
+"da bayanan wuri, don faɗakar da hukumomi a ainihin lokacin."
+
+#: frontend/templates/about.html:110
+msgid "Adverse Drug Reaction (ADR) Reporting:"
+msgstr "Bayar da Rahoton Illar Magani (ADR):"
+
+#: frontend/templates/about.html:111
+msgid ""
+"After verifying a legitimate drug, users can report any unexpected side "
+"effects, contributing vital data to national pharmacovigilance efforts."
+msgstr ""
+"Bayan tabbatar da magani na gaske, masu amfani za su iya bayar da rahoton "
+"duk wani tasiri da ba a zata ba, wanda ke ba da gudummawar muhimman "
+"bayanai ga kokarin sa ido kan magunguna na kasa."
+
+#: frontend/templates/about.html:114
+msgid "Offline SMS Functionality:"
+msgstr "Aiki ta SMS ba tare da Intanet ba:"
+
+#: frontend/templates/about.html:115
+msgid ""
+"For citizens without consistent internet access, our system works via "
+"SMS, ensuring that everyone can verify their medication, anytime, "
+"anywhere."
+msgstr ""
+"Ga 'yan ƙasa da ba su da damar intanet a koda yaushe, tsarinmu yana aiki "
+"ta hanyar SMS, wanda ke tabbatar da cewa kowa zai iya tabbatar da "
+"maganinsa, a kowane lokaci, a ko'ina."
+
+#: frontend/templates/about.html:118
+msgid "Admin Dashboard for Regulators:"
+msgstr "Dashboard na Gudanarwa ga Hukumomi:"
+
+#: frontend/templates/about.html:119
+msgid ""
+"A powerful, secure dashboard for authorities to view, filter, and manage "
+"all submitted counterfeit and ADR reports, complete with data "
+"visualizations and a live hotspot map."
+msgstr ""
+"Dashboard mai ƙarfi, mai tsaro ga hukumomi don dubawa, tacewa, da kuma "
+"sarrafa dukkan rahotannin jabu da ADR da aka aika, tare da zane-zanen "
+"bayanai da taswirar wuraren da abin ya fi zafi a ainihin lokacin."
+
+#: frontend/templates/about.html:124
+msgid "Return to Home"
+msgstr "Koma Babban Shafin"
+
+#: frontend/templates/admin.html:71
+msgid "🛠 Admin — Register New Drug Batch"
+msgstr "🛠 Gudanarwa — Yi Rijistar Sabon Rukunin Magani"
+
+#: frontend/templates/admin.html:90
+msgid "Loading time..."
+msgstr "Ana kawo lokaci..."
+
+#: frontend/templates/admin.html:109
+msgid "Session ends in:"
+msgstr "Zaman zai ƙare a cikin:"
+
+#: frontend/templates/admin.html:119
+msgid ""
+"Use this form to register a new drug batch and generate its QR code "
+"instantly."
+msgstr ""
+"Yi amfani da wannan fom don yin rijistar sabon rukunin magani da samar da "
+"lambarsa ta QR nan take."
+
+#: frontend/templates/admin.html:124
+msgid "💊 Registered Drugs"
+msgstr "💊 Magungunan da aka Yi Rijista"
+
+#: frontend/templates/admin.html:127
+msgid "📱 Simulate SMS"
+msgstr "📱 Kwaikwayi SMS"
+
+#: frontend/templates/admin.html:132
+msgid "📦 Batch Details"
+msgstr "📦 Bayanan Rukuni"
+
+#: frontend/templates/admin.html:147
+msgid "Close Scanner"
+msgstr "Rufe Mai Dubawa"
+
+#: frontend/templates/admin.html:166
+msgid "Mfg Date"
+msgstr "Ranar Kera"
+
+#: frontend/templates/admin.html:177
+msgid "Expiry Date"
+msgstr "Ranar Karewa"
+
+#: frontend/templates/admin.html:191
+msgid "Register &amp; Get QR"
+msgstr "Yi Rijista & Samu QR"
+
+#: frontend/templates/admin.html:198
+msgid "📷 Scan to Pre-fill"
+msgstr "📷 Duba don Cika Bayanai"
+
+#: frontend/templates/admin.html:212
+msgid "📄 Generated QR Code"
+msgstr "📄 Lambar QR da aka Samar"
+
+#: frontend/templates/admin.html:213
+msgid "Right-click and save the image below to print or share."
+msgstr "Danna-dama ka adana hoton da ke ƙasa don bugawa ko rabawa."
+
+#: frontend/templates/admin.html:229
+msgid "🚨 Counterfeit Reports"
+msgstr "🚨 Rahotannin Jabu"
+
+#: frontend/templates/admin.html:235
+msgid "Today’s Reports"
+msgstr "Rahotannin Yau"
+
+#: frontend/templates/admin.html:252
+msgid "View All Reports"
+msgstr "Duba Dukkan Rahotanni"
+
+#: frontend/templates/admin.html:260
+msgid "🔍 Search reports..."
+msgstr "🔍 Bincika rahotanni..."
+
+#: frontend/templates/admin.html:266 frontend/templates/admin_drugs.html:110
+#: frontend/templates/adr_report.html:61
+msgid "From:"
+msgstr "Daga:"
+
+#: frontend/templates/admin.html:268 frontend/templates/admin_drugs.html:112
+#: frontend/templates/adr_report.html:66
+msgid "To:"
+msgstr "Zuwa:"
+
+#: frontend/templates/admin.html:270
+msgid "Filter"
+msgstr "Tace"
+
+#: frontend/templates/admin.html:277 frontend/templates/admin.html:439
+#: frontend/templates/admin_drugs.html:137
+msgid "ID"
+msgstr "ID"
+
+#: frontend/templates/admin.html:278 frontend/templates/admin.html:440
+#: frontend/templates/my_reports.html:12
+msgid "Drug Name"
+msgstr "Sunan Magani"
+
+#: frontend/templates/admin.html:279
+msgid "Batch"
+msgstr "Rukuni"
+
+#: frontend/templates/admin.html:280 frontend/templates/my_reports.html:14
+msgid "Location"
+msgstr "Wuri"
+
+#: frontend/templates/admin.html:281 frontend/templates/my_reports.html:15
+msgid "Note"
+msgstr "Bayani"
+
+#: frontend/templates/admin.html:282
+msgid "Image"
+msgstr "Hoto"
+
+#: frontend/templates/admin.html:283
+msgid "Analysis"
+msgstr "Bincike"
+
+#: frontend/templates/admin.html:284
+msgid "Date"
+msgstr "Rana"
+
+#: frontend/templates/admin.html:285
+msgid "Reporter"
+msgstr "Mai Rahoto"
+
+#: frontend/templates/admin.html:286 frontend/templates/admin.html:445
+#: frontend/templates/admin_drugs.html:142
+msgid "Status"
+msgstr "Hali"
+
+#: frontend/templates/admin.html:287 frontend/templates/admin.html:446
+#: frontend/templates/admin_drugs.html:144
+#: frontend/templates/my_reports.html:18
+msgid "Actions"
+msgstr "Ayyuka"
+
+#: frontend/templates/admin.html:318
+msgid "No Image"
+msgstr "Babu Hoto"
+
+#: frontend/templates/admin.html:329
+msgid "Analyze"
+msgstr "Bincika"
+
+#: frontend/templates/admin.html:332
+msgid "N/A"
+msgstr "Babu"
+
+#: frontend/templates/admin.html:340
+msgid "New"
+msgstr "Sabo"
+
+#: frontend/templates/admin.html:342
+msgid "Checked"
+msgstr "An Duba"
+
+#: frontend/templates/admin.html:347 frontend/templates/admin.html:460
+#: frontend/templates/admin_drugs.html:167
+#: frontend/templates/my_reports.html:47
+msgid "Delete"
+msgstr "Share"
+
+#: frontend/templates/admin.html:356
+msgid "No reports submitted yet."
+msgstr "Babu rahoton da aka aika tukuna."
+
+#: frontend/templates/admin.html:364
+msgid "💊 Adverse Drug Reaction Reports"
+msgstr "💊 Rahotannin Illar Magani"
+
+#: frontend/templates/admin.html:373
+msgid "Search by drug, batch, or reaction..."
+msgstr "Bincika ta magani, rukuni, ko illa..."
+
+#: frontend/templates/admin.html:388
+msgid "Filter ADR"
+msgstr "Tace ADR"
+
+#: frontend/templates/admin.html:394 frontend/templates/admin_drugs.html:120
+msgid "Export Word"
+msgstr "Fitar zuwa Word"
+
+#: frontend/templates/admin.html:398 frontend/templates/admin_drugs.html:121
+msgid "Export PDF"
+msgstr "Fitar zuwa PDF"
+
+#: frontend/templates/admin.html:441
+#: frontend/templates/my_reports.html:13
+msgid "Batch Number"
+msgstr "Lambar Rukuni"
+
+#: frontend/templates/admin.html:442
+msgid "Patient Info"
+msgstr "Bayanin Mara Lafiya"
+
+#: frontend/templates/admin.html:443
+msgid "Reaction Description"
+msgstr "Bayanin Illar"
+
+#: frontend/templates/admin.html:444 frontend/templates/my_reports.html:16
+msgid "Report Date"
+msgstr "Ranar Rahoto"
+
+#: frontend/templates/admin.html:471
+msgid "No Adverse Drug Reaction reports match the current filters."
+msgstr "Babu rahoton illar magani da ya dace da matattaran yanzu."
+
+#: frontend/templates/admin.html:565
+msgid "Confirm Deletion"
+msgstr "Tabbatar da Sharewa"
+
+#: frontend/templates/admin.html:566
+msgid "Are you sure you want to delete ADR Report #"
+msgstr "Ka tabbata kana so ka share Rahoton ADR mai lamba #"
+
+#: frontend/templates/admin.html:566
+msgid "? This is permanent."
+msgstr "? Wannan na dindindin ne."
+
+#: frontend/templates/admin.html:579
+msgid "Failed to delete report:"
+msgstr "An kasa share rahoto:"
+
+#: frontend/templates/admin.html:640
+msgid "Error checking for new reports:"
+msgstr "Kuskure wajen duba sabbin rahotanni:"
+
+#: frontend/templates/admin.html:665
+msgid "Please select both a start and end date."
+msgstr "Da fatan za a zaɓi ranar farawa da ta ƙarewa."
+
+#: frontend/templates/admin_drugs.html:92
+msgid "Search, filter, or export registered drug batches."
+msgstr "Bincika, tace, ko fitar da rukunin magungunan da aka yi rijista."
+
+#: frontend/templates/admin_drugs.html:95
+msgid "Search by name or batch number"
+msgstr "Bincika ta suna ko lambar rukuni"
+
+#: frontend/templates/admin_drugs.html:97
+msgid "-- All --"
+msgstr "-- Duka --"
+
+#: frontend/templates/admin_drugs.html:98
+msgid "Valid"
+msgstr "Mai Inganci"
+
+#: frontend/templates/admin_drugs.html:99
+msgid "Expired"
+msgstr "Ya Kare"
+
+#: frontend/templates/admin_drugs.html:100
+msgid "Expiring Soon"
+msgstr "Zai Kare Ba da Dadewa Ba"
+
+#: frontend/templates/admin_drugs.html:102
+msgid "🔍 Search"
+msgstr "🔍 Bincika"
+
+#: frontend/templates/admin_drugs.html:114
+msgid "📅 Apply"
+msgstr "📅 Aiwatar"
+
+#: frontend/templates/admin_drugs.html:138
+msgid "Name"
+msgstr "Suna"
+
+#: frontend/templates/admin_drugs.html:139
+msgid "Batch #"
+msgstr "Rukuni #"
+
+#: frontend/templates/admin_drugs.html:140
+msgid "Manufacturer"
+msgstr "Maikera"
+
+#: frontend/templates/admin_drugs.html:143
+msgid "Registered On"
+msgstr "An Yi Rijista a"
+
+#: frontend/templates/admin_drugs.html:176
+msgid "No drugs found."
+msgstr "Ba a sami magunguna ba."
+
+#: frontend/templates/admin_drugs.html:184
+msgid "⬅ Prev"
+msgstr "⬅ Baya"
+
+#: frontend/templates/admin_drugs.html:186
+msgid "Page"
+msgstr "Shafi"
+
+#: frontend/templates/admin_drugs.html:186
+msgid "of"
+msgstr "na"
+
+#: frontend/templates/admin_drugs.html:188
+msgid "Next ➡"
+msgstr "Gaba ➡"
+
+#: frontend/templates/admin_drugs.html:194
+msgid "⬅ Back to Dashboard"
+msgstr "⬅ Koma Dashboard"
+
+#: frontend/templates/admin_drugs.html:202
+msgid "Are you sure you want to delete this drug?"
+msgstr "Ka tabbata kana so ka share wannan maganin?"
+
+#: frontend/templates/admin_drugs.html:221
+msgid "Are you sure you want to delete the drug"
+msgstr "Ka tabbata kana so ka share maganin"
+
+#: frontend/templates/admin_drugs.html:221
+msgid "? This action cannot be undone."
+msgstr "? Ba za a iya mayar da wannan aikin ba."
+
+#: frontend/templates/admin_login.html:5
+msgid "🔐 Regulator Login"
+msgstr "🔐 Shiga ga Hukuma"
+
+#: frontend/templates/admin_login.html:14
+msgid "Official email"
+msgstr "Imel na hukuma"
+
+#: frontend/templates/admin_login.html:22
+msgid "Show Password"
+msgstr "Nuna Kalmar Sirri"
+
+#: frontend/templates/admin_map.html:3
+msgid "📍 Live Counterfeit Hotspot Map"
+msgstr "📍 Taswirar Wuraren Jabu a Ainihin Lokaci"
+
+#: frontend/templates/admin_map.html:5
+msgid ""
+"This map displays the real-time locations of all submitted counterfeit "
+"drug reports. Use this intelligence to identify clusters and potential "
+"hotspots for targeted investigation."
+msgstr ""
+"Wannan taswirar tana nuna wuraren da aka aika rahotannin magungunan jabu a "
+"ainihin lokacin. Yi amfani da wannan bayanin don gano gungu da wuraren da "
+"za a iya samun matsala don bincike na musamman."
+
+#: frontend/templates/admin_map.html:44
+msgid "Your session has expired. Please log in again to view the map."
+msgstr "Zaman ka ya kare. Da fatan za a sake shiga don duba taswirar."
+
+#: frontend/templates/admin_public_db.html:9
+msgid "Public Drug Data Manager"
+msgstr "Manajan Bayanan Magunguna na Jama'a"
+
+#: frontend/templates/admin_public_db.html:11
+msgid ""
+"View, add, or edit entries in the public drug database. This information"
+" is shown to users when a scanned drug is not in the main MedGuard "
+"registry."
+msgstr ""
+"Duba, ƙara, ko gyara shigarwar a cikin tumbun bayanan magunguna na jama'a. "
+"Ana nuna wannan bayanin ga masu amfani lokacin da maganin da aka duba ba "
+"ya cikin babban rijistar MedGuard."
+
+#: frontend/templates/admin_public_db.html:16
+msgid "Current Public Drug List"
+msgstr "Jerin Magunguna na Jama'a na Yanzu"
+
+#: frontend/templates/admin_public_db.html:22
+msgid "Drug Name"
+msgstr "Sunan Magani"
+
+#: frontend/templates/admin_public_db.html:23
+msgid "Manufacturer"
+msgstr "Maikera"
+
+#: frontend/templates/admin_public_db.html:30
+msgid "➕ Add New Drug"
+msgstr "➕ Ƙara Sabon Magani"
+
+#: frontend/templates/admin_public_db.html:35
+msgid "Add New Drug Entry"
+msgstr "Ƙara Sabuwar Shigarwar Magani"
+
+#: frontend/templates/admin_public_db.html:41
+msgid "Batch Number (Unique Key):"
+msgstr "Lambar Rukuni (Mabuɗi na Musamman):"
+
+#: frontend/templates/admin_public_db.html:52
+msgid "Drug Name:"
+msgstr "Sunan Magani:"
+
+#: frontend/templates/admin_public_db.html:63
+msgid "Manufacturer:"
+msgstr "Maikera:"
+
+#: frontend/templates/admin_public_db.html:74
+msgid "NAFDAC Status:"
+msgstr "Hali na NAFDAC:"
+
+#: frontend/templates/admin_public_db.html:85
+msgid "Expiry Date (YYYY-MM-DD):"
+msgstr "Ranar Karewa (YYYY-MM-DD):"
+
+#: frontend/templates/admin_public_db.html:98
+msgid "Save Entry"
+msgstr "Adana Shigarwa"
+
+#: frontend/templates/adr_report.html:27
+msgid "Report an Adverse Reaction"
+msgstr "Bayar da Rahoton Illar Magani"
+
+#: frontend/templates/adr_report.html:29
+msgid ""
+"You are reporting a side effect for the following medication. Please "
+"provide as much detail as possible. Your report is anonymous and helps "
+"protect public health."
+msgstr ""
+"Kuna bayar da rahoton wata illa ga magani mai zuwa. Da fatan za a ba da "
+"cikakken bayani gwargwadon iko. Rahotonku ba shi da suna kuma yana taimakawa"
+" wajen kare lafiyar jama'a."
+
+#: frontend/templates/adr_report.html:34
+msgid "Drug Name:"
+msgstr "Sunan Magani:"
+
+#: frontend/templates/adr_report.html:35
+msgid "Batch Number:"
+msgstr "Lambar Rukuni:"
+
+#: frontend/templates/adr_report.html:36
+msgid "Manufacturer:"
+msgstr "Maikera:"
+
+#: frontend/templates/adr_report.html:43
+msgid "Patient's Age Range"
+msgstr "Shekarun Mara Lafiya"
+
+#: frontend/templates/adr_report.html:46
+msgid "Please select an age range..."
+msgstr "Da fatan za a zaɓi shekaru..."
+
+#: frontend/templates/adr_report.html:48
+msgid "0 - 17 years"
+msgstr "Shekaru 0 - 17"
+
+#: frontend/templates/adr_report.html:49
+msgid "18 - 29 years"
+msgstr "Shekaru 18 - 29"
+
+#: frontend/templates/adr_report.html:50
+msgid "30 - 49 years"
+msgstr "Shekaru 30 - 49"
+
+#: frontend/templates/adr_report.html:51
+msgid "50 - 65 years"
+msgstr "Shekaru 50 - 65"
+
+#: frontend/templates/adr_report.html:52
+msgid "66 years and over"
+msgstr "Shekaru 66 zuwa sama"
+
+#: frontend/templates/adr_report.html:57
+msgid "Patient's Gender"
+msgstr "Jinsin Mara Lafiya"
+
+#: frontend/templates/adr_report.html:60
+msgid "Please select a gender..."
+msgstr "Da fatan za a zaɓi jinsi..."
+
+#: frontend/templates/adr_report.html:61
+msgid "Male"
+msgstr "Namiji"
+
+#: frontend/templates/adr_report.html:62
+msgid "Female"
+msgstr "Mace"
+
+#: frontend/templates/adr_report.html:63
+msgid "Prefer not to say"
+msgstr "Na fi son kada in faɗa"
+
+#: frontend/templates/adr_report.html:68
+msgid "When did the reaction start?"
+msgstr "Yaushe illar ta fara?"
+
+#: frontend/templates/adr_report.html:73
+msgid "Please describe the side effect(s)"
+msgstr "Da fatan za a bayyana illar (illolin)"
+
+#: frontend/templates/adr_report.html:84
+msgid "Was the patient taking any other medications at the time?"
+msgstr "Shin mara lafiyan yana shan wasu magunguna a lokacin?"
+
+#: frontend/templates/adr_report.html:90
+msgid "List other drugs, vitamins, or supplements. If none, leave blank."
+msgstr ""
+"Jerin wasu magunguna, bitamin, ko ƙarin abinci. Idan babu, a bar wofi."
+
+#: frontend/templates/adr_report.html:96
+msgid "Submit Secure Report"
+msgstr "Aika Rahoto Mai Tsaro"
+
+#: frontend/templates/base.html:344
+msgid "Home"
+msgstr "Babban Shafin"
+
+#: frontend/templates/base.html:347
+msgid "About"
+msgstr "Game da"
+
+#: frontend/templates/base.html:351
+msgid "My Reports"
+msgstr "Rahotanni na"
+
+#: frontend/templates/base.html:356
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: frontend/templates/base.html:361
+msgid "Public DB Manager"
+msgstr "Manajan DB na Jama'a"
+
+#: frontend/templates/base.html:366
+msgid "Hotspot Map"
+msgstr "Taswirar Wuraren Zafi"
+
+#: frontend/templates/base.html:374
+msgid "Language"
+msgstr "Harshe"
+
+#: frontend/templates/base.html:405
+msgid "Admin Logout"
+msgstr "Fita daga Gudanarwa"
+
+#: frontend/templates/base.html:412
+msgid "Welcome,"
+msgstr "Barka da zuwa,"
+
+#: frontend/templates/base.html:420
+msgid "Logout"
+msgstr "Fita"
+
+#: frontend/templates/base.html:429 frontend/templates/login.html:6
+msgid "User Login"
+msgstr "Shiga Mai Amfani"
+
+#: frontend/templates/base.html:437
+msgid "Register"
+msgstr "Yi Rijista"
+
+#: frontend/templates/base.html:477
+msgid "Confirm Action"
+msgstr "Tabbatar da Aiki"
+
+#: frontend/templates/base.html:489
+msgid "Cancel"
+msgstr "Soke"
+
+#: frontend/templates/base.html:496
+msgid "Confirm"
+msgstr "Tabbatar"
+
+#: frontend/templates/base.html:530
+msgid "Session Timeout Warning"
+msgstr "Gargaɗin Ƙarewar Zama"
+
+#: frontend/templates/base.html:532
+msgid ""
+"Your session is about to expire due to inactivity. You will be\n"
+"          logged out in"
+msgstr ""
+"Zaman ka na gab da ƙarewa saboda rashin aiki. Za a fitar da kai a cikin"
+
+#: frontend/templates/base.html:535
+msgid "seconds."
+msgstr "daƙiƙa."
+
+#: frontend/templates/base.html:550
+msgid "Stay Logged In"
+msgstr "Ci gaba da Kasancewa a ciki"
+
+#: frontend/templates/base.html:557
+msgid "Logout Now"
+msgstr "Fita Yanzu"
+
+#: frontend/templates/base.html:571
+msgid "MedGuard — Fighting counterfeit medicine, one scan at a time."
+msgstr "MedGuard — Yaki da magungunan jabu, duba ɗaya a lokaci guda."
+
+#: frontend/templates/base.html:579
+msgid "MedGuard Assistant"
+msgstr "Mataimakin MedGuard"
+
+#: frontend/templates/base.html:584
+msgid ""
+"Hello! How can I help you today? You can ask me how to verify a\n"
+"          drug, how to report a counterfeit, or what to do if you find "
+"one."
+msgstr ""
+"Sannu! Yaya zan iya taimaka maka a yau? Za ka iya tambayata yadda ake "
+"tabbatar da magani, yadda ake bayar da rahoton jabu, ko abin da za a yi "
+"idan ka sami ɗaya."
+
+#: frontend/templates/base.html:593
+msgid "Ask a question..."
+msgstr "Yi tambaya..."
+
+#: frontend/templates/base.html:595
+msgid "Send"
+msgstr "Aika"
+
+#: frontend/templates/base.html:683
+msgid "I am sorry, I am having trouble connecting right now."
+msgstr "Yi haƙuri, ina fuskantar matsalar haɗi a yanzu."
+
+#: frontend/templates/base.html:761
+msgid "Hello! I am the MedGuard Assistant. How can I help?"
+msgstr "Sannu! Ni ne Mataimakin MedGuard. Yaya zan iya taimakawa?"
+
+#: frontend/templates/base.html:764
+msgid "How to report a drug?"
+msgstr "Yadda ake bayar da rahoton magani?"
+
+#: frontend/templates/base.html:768
+msgid "How to verify a drug?"
+msgstr "Yadda ake tabbatar da magani?"
+
+#: frontend/templates/base.html:772
+msgid "Check a batch status"
+msgstr "Duba halin rukuni"
+
+#: frontend/templates/errors/403.html:5
+#: frontend/templates/errors/404.html:5
+msgid "Page Not Found"
+msgstr "Ba a Sami Shafin ba"
+
+#: frontend/templates/errors/403.html:6
+#: frontend/templates/errors/404.html:6
+msgid "The page you are looking for does not exist."
+msgstr "Shafin da kuke nema babu shi."
+
+#: frontend/templates/errors/403.html:7
+#: frontend/templates/errors/404.html:7
+msgid "Go to Homepage"
+msgstr "Je zuwa Babban Shafin"
+
+#: frontend/templates/login.html:16
+#: frontend/templates/register.html:15
+msgid "Email Address"
+msgstr "Adireshin Imel"
+
+#: frontend/templates/login.html:20
+#: frontend/templates/register.html:19
+msgid "Password"
+msgstr "Kalmar Sirri"
+
+#: frontend/templates/login.html:24
+msgid "Sign in"
+msgstr "Shiga"
+
+#: frontend/templates/login.html:27
+msgid "Don't have an account?"
+msgstr "Ba ka da asusu?"
+
+#: frontend/templates/login.html:27
+msgid "Register here"
+msgstr "Yi rijista a nan"
+
+#: frontend/templates/my_reports.html:3
+msgid "My Submitted Reports"
+msgstr "Rahotanni na da na Aika"
+
+#: frontend/templates/my_reports.html:4
+msgid "Here is a history of the counterfeit drug reports you have submitted."
+msgstr "Ga tarihin rahotannin magungunan jabu da ka aika."
+
+#: frontend/templates/my_reports.html:17
+msgid "Regulator Status"
+msgstr "Halin Hukuma"
+
+#: frontend/templates/my_reports.html:30
+msgid "Pending Review"
+msgstr "Ana Jiran Dubawa"
+
+#: frontend/templates/my_reports.html:33
+msgid "Reviewed"
+msgstr "An Duba"
+
+#: frontend/templates/my_reports.html:41
+msgid "You have not submitted any reports yet."
+msgstr "Ba ka aika da wani rahoto ba tukuna."
+
+#: frontend/templates/my_reports.html:68
+msgid "Delete Report"
+msgstr "Share Rahoto"
+
+#: frontend/templates/my_reports.html:69
+msgid "Are you sure you want to delete this report? This action is permanent."
+msgstr "Ka tabbata kana so ka share wannan rahoton? Wannan aikin na dindindin ne."
+
+#: frontend/templates/my_reports.html:86
+msgid "Failed to delete report:"
+msgstr "An kasa share rahoto:"
+
+#: frontend/templates/register.html:6
+msgid "➕ Create Your Account"
+msgstr "➕ Buɗe Asusunka"
+
+#: frontend/templates/register.html:11
+msgid "Full Name"
+msgstr "Cikakken Suna"
+
+#: frontend/templates/register.html:23
+msgid "Create Account"
+msgstr "Buɗe Asusu"
+
+#: frontend/templates/register.html:26
+msgid "Already have an account?"
+msgstr "Ka riga kana da asusu?"
+
+#: frontend/templates/register.html:26
+msgid "Login here"
+msgstr "Shiga a nan"
+
+#: frontend/templates/sms_check.html:4
+msgid "Offline / SMS Verification Simulation"
+msgstr "Kwaikwayon Tabbatarwa ta SMS / Ba tare da Intanet ba"
+
+#: frontend/templates/sms_check.html:6
+msgid ""
+"This simulates sending an SMS with a batch number and receiving a text "
+"reply from the MedGuard system."
+msgstr ""
+"Wannan yana kwaikwayon aikawa da SMS mai lambar rukuni da karɓar amsa "
+"ta rubutu daga tsarin MedGuard."
+
+#: frontend/templates/sms_check.html:13
+msgid "Enter batch number"
+msgstr "Shigar da lambar rukuni"
+
+#: frontend/templates/sms_check.html:16
+msgid "Simulate SMS"
+msgstr "Kwaikwayi SMS"
+
+#: frontend/templates/sms_check.html:22
+msgid "📲 Simulated SMS Reply:"
+msgstr "📲 Amsar SMS da aka Kwaikwaya:"
+
+#: frontend/templates/verify.html:92
+msgid "Batch Verified by MedGuard"
+msgstr "An Tabbatar da Rukuni ta MedGuard"
+
+#: frontend/templates/verify.html:94
+msgid "This is an authentic drug registered in the MedGuard system."
+msgstr "Wannan magani ne na gaske da aka yi rijista a cikin tsarin MedGuard."
+
+#: frontend/templates/verify.html:97
+msgid "Warning: Drug Expired"
+msgstr "Gargaɗi: Maganin ya Kare"
+
+#: frontend/templates/verify.html:99
+msgid ""
+"This is a registered drug, but it has passed its expiry date. Do not use."
+msgstr ""
+"Wannan magani ne da aka yi rijista, amma ranar karewarsa ta wuce. Kada a "
+"yi amfani da shi."
+
+#: frontend/templates/verify.html:102
+msgid "Public Information Found"
+msgstr "An Sami Bayanin Jama'a"
+
+#: frontend/templates/verify.html:104
+msgid ""
+"Disclaimer: This information is from a public database and has "
+"<u>not</u> been independently verified by MedGuard."
+msgstr ""
+"Bayanin Musamman: Wannan bayanin daga tumbun bayanan jama'a ne kuma MedGuard"
+" bai tabbatar da shi da kansa ba."
+
+#: frontend/templates/verify.html:107
+msgid "External Website Link"
+msgstr "Mahaɗin Gidan Yanar Gizo na Waje"
+
+#: frontend/templates/verify.html:109
+msgid "This"
+msgstr "Wannan"
+
+#: frontend/templates/verify.html:109
+msgid ""
+"points to an external website. MedGuard cannot verify its authenticity. "
+"Proceed with caution."
+msgstr ""
+"yana nuni zuwa gidan yanar gizo na waje. MedGuard ba zai iya tabbatar da "
+"sahiĥancinsa ba. A ci gaba da taka tsantsan."
+
+#: frontend/templates/verify.html:113
+msgid "Unregistered Product Code"
+msgstr "Lambar Samfur da Ba a Yi Rijista ba"
+
+#: frontend/templates/verify.html:115
+msgid "This appears to be a standard product"
+msgstr "Wannan ya zama kamar samfur ne na yau da kullun"
+
+#: frontend/templates/verify.html:115
+msgid ""
+", not a MedGuard verification code. MedGuard cannot verify this item, but"
+" it has not been flagged as counterfeit."
+msgstr ""
+", ba lambar tabbatarwa ta MedGuard ba. MedGuard ba zai iya tabbatar da "
+"wannan abu ba, amma ba a yi masa alama a matsayin jabu ba."
+
+#: frontend/templates/verify.html:120
+msgid "Not Found in MedGuard System"
+msgstr "Ba a Same shi a Tsarin MedGuard ba"
+
+#: frontend/templates/verify.html:122
+msgid "is not registered in the MedGuard system. This drug may be counterfeit. Please report it."
+msgstr ""
+"ba a yi rijistarsa a cikin tsarin MedGuard ba. Wannan maganin na iya zama "
+"jabu. Da fatan za a bayar da rahoto."
+
+#: frontend/templates/verify.html:150
+msgid "NAFDAC Status:"
+msgstr "Hali na NAFDAC:"
+
+#: frontend/templates/verify.html:154
+msgid "Details:"
+msgstr "Bayanai:"
+
+#: frontend/templates/verify.html:160
+msgid "The scanned code links to the following address:"
+msgstr "Lambar da aka duba tana da alaƙa da adireshin mai zuwa:"
+
+#: frontend/templates/verify.html:168
+msgid "Proceed to Website"
+msgstr "Ci gaba zuwa Gidan Yanar Gizo"
+
+#: frontend/templates/verify.html:173
+msgid "The scanned"
+msgstr "Wanda aka duba"
+
+#: frontend/templates/verify.html:173
+msgid "contained the following unrecognized data:"
+msgstr "ya ƙunshi bayanan da ba a gane su ba masu zuwa:"
+
+#: frontend/templates/verify.html:180
+msgid "What To Do Next"
+msgstr "Abin da za a yi na gaba"
+
+#: frontend/templates/verify.html:183
+msgid ""
+"<strong>Cross-check with NAFDAC:</strong> You can search for the drug on "
+"the official NAFDAC Greenbook or use their Mobile Authentication Service "
+"(MAS) for certain products."
+msgstr ""
+"<strong>Bincika da NAFDAC:</strong> Za ka iya bincika maganin a kan "
+"Greenbook na NAFDAC ko amfani da Sabis ɗin Tabbatarwa ta Wayar Hannu (MAS)"
+" don wasu samfuran."
+
+#: frontend/templates/verify.html:188
+msgid ""
+"<strong>Report to MedGuard:</strong> If you are suspicious, use the "
+"\"Report Counterfeit\" form on our main page to alert regulators through "
+"our system."
+msgstr ""
+"<strong>Bayar da rahoto ga MedGuard:</strong> Idan kana da shakku, yi "
+"amfani da fom din \"Rahoton Jabu\" a babban shafinmu don faɗakar da hukumomi"
+" ta hanyar tsarinmu."
+
+#: frontend/templates/verify.html:193
+msgid ""
+"<strong>Report Officially to NAFDAC:</strong> For a direct report to the"
+" authorities, you can contact NAFDAC's Pharmacovigilance department via "
+"email at"
+msgstr ""
+"<strong>Bayar da rahoto ga NAFDAC a hukumance:</strong> Don rahoto kai "
+"tsaye ga hukumomi, za ka iya tuntuɓar sashen sa ido kan magunguna na "
+"NAFDAC ta imel a"
+
+#: frontend/templates/verify.html:200
+msgid "Experiencing a Side Effect?"
+msgstr "Kuna Fuskantar Illar Magani?"
+
+#: frontend/templates/verify.html:201
+msgid ""
+"Help keep our medicines safe by reporting any unexpected reactions. Your "
+"contribution is vital for public health."
+msgstr ""
+"Taimaka wajen kiyaye magungunanmu ta hanyar bayar da rahoton duk wata "
+"illar da ba a zata ba. Gudummawarku tana da mahimmanci ga lafiyar jama'a."
+
+#: frontend/templates/verify.html:203
+msgid "Report a Side Effect"
+msgstr "Bayar da Rahoton Illa"
+
+#: frontend/templates/verify.html:208
+msgid "Checked on"
+msgstr "An Duba a"
+
+#: frontend/templates/verify.html:211
+msgid "Scan Another Code"
+msgstr "Duba Wata Lamba"
+
+#: frontend/templates/index.html:105
+msgid "Because your health deserves the truth."
+msgstr "Domin lafiyarka ta cancanci gaskiya."
+
+#: frontend/templates/index.html:106
+msgid "No more guessing — just scanning."
+msgstr "Babu sauran zato — kawai dubawa."
+
+#: frontend/templates/index.html:107
+msgid "Keeping counterfeit meds off the streets."
+msgstr "Kawar da magungunan jabu daga kan tituna."
+
+#: frontend/templates/index.html:108
+msgid "Your pocket pharmacist."
+msgstr "Maganin aljihunka."
+
+#: frontend/templates/index.html:110
+msgid "Batch number is required to report."
+msgstr "Ana buƙatar lambar rukuni don bayar da rahoto."
+
+#: frontend/templates/index.html:111
+msgid "Error submitting report."
+msgstr "Kuskure wajen aika rahoto."
+
+#: frontend/templates/index.html:112
+msgid "Report submitted successfully"
+msgstr "An aika rahoto cikin nasara"
+
+#: frontend/templates/index.html:113
+msgid "Camera access failed. Please check permissions."
+msgstr "Samun damar kamara ya gaza. Da fatan za a duba izini."
+
+#: frontend/templates/index.html:114
+msgid "Please enter a batch number."
+msgstr "Da fatan za a shigar da lambar rukuni."
+
+#: frontend/templates/base.html:683
+msgid "I am sorry, I am having trouble connecting right now."
+msgstr "Yi haƙuri, ina fuskantar matsalar haɗi a yanzu."
+
+#: frontend/templates/base.html:761
+msgid "Hello! I am the MedGuard Assistant. How can I help?"
+msgstr "Sannu! Ni ne Mataimakin MedGuard. Yaya zan iya taimakawa?"
+
+#: frontend/templates/base.html:764
+msgid "How to report a drug?"
+msgstr "Yadda ake bayar da rahoton magani?"
+
+#: frontend/templates/base.html:768
+msgid "How to verify a drug?"
+msgstr "Yadda ake tabbatar da magani?"
+
+#: frontend/templates/base.html:772
+msgid "Check a batch status"
+msgstr "Duba halin rukuni"
+
+#: frontend/templates/index.html:4
+msgid "📷 Scan QR / Barcode"
+msgstr "📷 Duba QR / Barcode"
+
+#: frontend/templates/index.html:8
+msgid "Start Camera"
+msgstr "Fara Kamara"
+
+#: frontend/templates/index.html:10
+msgid "Stop"
+msgstr "Tsaya"
+
+#: frontend/templates/index.html:15
+msgid "🔍 Or Verify by Batch Number"
+msgstr "🔍 Ko Tabbatar da Lamba ta Rukuni"
+
+#: frontend/templates/index.html:21
+msgid "Enter batch number"
+msgstr "Shigar da lambar rukuni"
+
+#: frontend/templates/index.html:25
+msgid "Verify"
+msgstr "Tabbatar"
+
+#: frontend/templates/index.html:34
+msgid "🚨 Report Counterfeit"
+msgstr "🚨 Bayar da Rahoton Jabu"
+
+#: frontend/templates/index.html:39
+msgid "Drug name"
+msgstr "Sunan magani"
+
+#: frontend/templates/index.html:44
+msgid "Batch number"
+msgstr "Lambar rukuni"
+
+#: frontend/templates/index.html:50
+msgid "Location (optional)"
+msgstr "Wuri (na zaɓi)"
+
+#: frontend/templates/index.html:58
+msgid "Note (optional)"
+msgstr "Bayani (na zaɓi)"
+
+#: frontend/templates/index.html:64
+msgid "Report"
+msgstr "Rahoto"
+
+#: frontend/templates/login.html:16
+msgid "Email Address"
+msgstr "Adireshin Imel"
+
+#: frontend/templates/login.html:20
+msgid "Password"
+msgstr "Kalmar Sirri"
+
+#: frontend/templates/login.html:24
+msgid "Sign in"
+msgstr "Shiga"
+
+#: frontend/templates/login.html:27
+msgid "Don't have an account?"
+msgstr "Ba ka da asusu?"
+
+#: frontend/templates/login.html:27
+msgid "Register here"
+msgstr "Yi rijista a nan"

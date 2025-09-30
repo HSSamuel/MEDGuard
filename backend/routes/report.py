@@ -4,7 +4,6 @@ from werkzeug.utils import secure_filename
 from backend.database import get_db
 from datetime import datetime
 from flask_socketio import emit
-from backend.notifications import send_sms_alert, send_email_alert
 
 report_bp = Blueprint("report_api", __name__)
 
@@ -41,7 +40,7 @@ def create_report():
         image_file.save(os.path.join(upload_folder, image_filename))
 
     conn = get_db()
-    # INSERT statement now includes the AI summary
+    # UPDATED: The 'image_analysis_result' column is removed from the INSERT statement.
     conn.execute(
         """
         INSERT INTO reports (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, reported_on, status)
@@ -50,14 +49,6 @@ def create_report():
         (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, datetime.now(), 0)
     )
     conn.commit()
-
-    report_details = {
-        "drug_name": drug_name,
-        "batch_number": batch_number,
-        "location": location
-    }
-    send_sms_alert(report_details)
-    send_email_alert(report_details)
 
     # Emit a WebSocket event to notify connected admin clients
     try:
@@ -108,16 +99,36 @@ def get_reports():
 # =========================
 # POST: Mark a report as Checked
 # =========================
-@report_bp.post("/report/<int:report_id>/mark_checked")
-def mark_report_checked(report_id):
+@report_bp.route("/report/<int:report_id>/status", methods=['POST'])
+def update_report_status(report_id):
+    if not session.get("admin_id"):
+        return jsonify({"error": "Authentication required"}), 401
+
+    data = request.get_json()
+    new_status = data.get("status")
+
+    if not new_status:
+        return jsonify({"error": "New status is required."}), 400
+
     try:
         conn = get_db()
-        conn.execute("UPDATE reports SET status = 1 WHERE id = ?", (report_id,))
+        cursor = conn.execute(
+            "UPDATE reports SET status = ? WHERE id = ?", (new_status, report_id)
+        )
         conn.commit()
-        return jsonify({"success": True})
+
+        if cursor.rowcount == 0:
+            return jsonify({"error": "Report not found"}), 404
+
+        return jsonify(
+            {
+                "message": f"Report #{report_id} status updated to {new_status}.",
+                "new_status": new_status,
+            }
+        )
     except Exception as e:
-        print("Error updating report status:", e)
-        return jsonify({"error": "Failed to update status"}), 500
+        print(f"Error updating report status: {e}")
+        return jsonify({"error": "An internal server error occurred."}), 500
 
 
 # =========================

@@ -1,4 +1,23 @@
 // =========================
+// Reusable Toast Notification
+// =========================
+function showToast(message, isError = false) {
+  const toast = document.createElement("div");
+  toast.className = "toast-notification";
+  if (isError) {
+    toast.classList.add("error");
+  }
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.classList.add("show"), 100);
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => document.body.removeChild(toast), 300);
+  }, 3000);
+}
+
+// =========================
 // Rotating tagline
 // =========================
 const taglines = window.translations.taglines || [
@@ -213,22 +232,32 @@ function sendReportData(
       return res.json();
     })
     .then((data) => {
-      // On success, redirect the user to their reports page
-      window.location.href = "/my-reports";
+      // Show the success toast
+      showToast(
+        window.translations.reportSuccess || "Report submitted successfully"
+      );
+
+      // Wait a moment for the user to see the toast, then redirect
+      setTimeout(() => {
+        window.location.href = "/my-reports";
+      }, 1500); // 1.5 second delay
     })
     .catch((err) => {
       console.error(err);
-      showMessage(
+      // Use the toast for errors as well
+      showToast(
         err.message ||
           window.translations.errorSubmitting ||
           "Error submitting report",
-        "error"
+        true // Mark as an error toast
       );
     })
     .finally(() => {
-      // Re-enable the button in case of an error
-      reportBtn.textContent = "Report";
-      reportBtn.disabled = false;
+      // Re-enable the button only if there was an error
+      if (reportBtn.disabled) {
+        reportBtn.textContent = "Report";
+        reportBtn.disabled = false;
+      }
     });
 }
 
@@ -237,7 +266,11 @@ function sendReportData(
 // =========================
 function showMessage(msg, type) {
   const resultContainer = document.getElementById("result");
-  if (!resultContainer) return;
+  if (!resultContainer) {
+    // Fallback to toast if the old result container is gone
+    showToast(msg, type === "error");
+    return;
+  }
   let colorClass = "";
   if (type === "success") colorClass = "result-valid";
   if (type === "error") colorClass = "result-counterfeit";

@@ -37,10 +37,18 @@ def get_public_db():
 @public_db_admin_bp.route("/public-db", methods=['POST'])
 def update_public_db():
     """API endpoint for the admin panel to save the updated public drug data."""
-    updated_db = request.get_json()
-    if not updated_db:
-        return jsonify({"status": "error", "message": "No data received"}), 400
-    
+    # UPDATED: More robust data handling
+    try:
+        updated_db = request.get_json()
+        if updated_db is None:
+            # Fallback for cases where the header might be incorrect
+            data = request.data
+            if not data:
+                return jsonify({"status": "error", "message": "No data received"}), 400
+            updated_db = json.loads(data)
+    except json.JSONDecodeError:
+        return jsonify({"status": "error", "message": "Invalid data format received"}), 400
+
     if save_public_db(updated_db):
         return jsonify({"status": "success", "message": "Public drug database updated successfully."})
     else:

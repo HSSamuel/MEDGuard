@@ -179,61 +179,81 @@
 {% block scripts %}
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Reusable Toast Notification function ---
+    const showToast = (message, isError = false) => {
+      const toast = document.createElement("div");
+      toast.className = "toast-notification";
+      if (isError) toast.classList.add("error");
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add("show"), 100);
+      setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => document.body.removeChild(toast), 300);
+      }, 3000);
+    };
+
     const drugsTable = document.getElementById('drugs-table');
     const modal = document.getElementById('delete-modal');
     const modalText = document.getElementById('modal-text');
     const cancelBtn = document.getElementById('modal-cancel-btn');
     const confirmBtn = document.getElementById('modal-confirm-btn');
-    let drugToDeleteId = null;
-    let rowToDelete = null;
+    let confirmCallback = null;
 
-    if (drugsTable) {
-        drugsTable.addEventListener('click', (event) => {
-            if (event.target.classList.contains('delete-btn')) {
-                drugToDeleteId = event.target.dataset.id;
-                const drugName = event.target.dataset.name;
-                rowToDelete = event.target.closest('tr');
-                
-                modalText.textContent = `{{ _('Are you sure you want to delete the drug') }} "${drugName}"? {{ _('This action cannot be undone.') }}`;
-                modal.style.display = 'flex';
-            }
-        });
-    }
-
+    const showModal = (onConfirm, drugName) => {
+        modalText.textContent = `{{ _('Are you sure you want to delete the drug') }} "${drugName}"? {{ _('This action cannot be undone.') }}`;
+        confirmCallback = onConfirm;
+        modal.style.display = 'flex';
+    };
+    
     const closeModal = () => {
         modal.style.display = 'none';
-        drugToDeleteId = null;
-        rowToDelete = null;
+        confirmCallback = null;
     };
 
     cancelBtn.addEventListener('click', closeModal);
-
+    
     confirmBtn.addEventListener('click', () => {
-        if (!drugToDeleteId) return;
-
-        fetch(`/admin/drugs/delete/${drugToDeleteId}`, {
-            method: 'DELETE',
-        })
-        .then(response => response.json().then(data => ({ status: response.status, body: data })))
-        .then(({ status, body }) => {
-            if (status === 200) {
-                // You could show a more elegant toast notification here
-                alert(body.message); 
-                if (rowToDelete) {
-                    rowToDelete.remove();
-                }
-            } else {
-                alert('Error: ' + body.error);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while deleting the drug.');
-        })
-        .finally(() => {
-            closeModal();
-        });
+        if (confirmCallback) {
+            confirmCallback();
+        }
+        closeModal();
     });
+
+    // Use event delegation on the table
+    if (drugsTable) {
+        drugsTable.addEventListener('click', (event) => {
+            if (event.target.classList.contains('delete-btn')) {
+                const button = event.target;
+                const drugId = button.dataset.id;
+                const drugName = button.dataset.name;
+                const rowToDelete = button.closest('tr');
+
+                showModal(() => {
+                    fetch(`/admin/drugs/delete/${drugId}`, {
+                        method: 'DELETE',
+                    })
+                    .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                    .then(({ status, body }) => {
+                        if (status === 200) {
+                            // UPDATED: Use toast notification instead of alert
+                            showToast(body.message); 
+                            if (rowToDelete) {
+                                rowToDelete.remove();
+                            }
+                        } else {
+                            // UPDATED: Use toast notification for errors
+                            showToast('Error: ' + body.error, true);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showToast('An error occurred while deleting the drug.', true);
+                    });
+                }, drugName);
+            }
+        });
+    }
 
     // Close modal if clicking on the overlay
     modal.addEventListener('click', (event) => {

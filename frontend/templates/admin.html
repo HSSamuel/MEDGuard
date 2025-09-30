@@ -337,7 +337,6 @@
           <th data-label="Location">{{ _('Location') }}</th>
           <th data-label="Note">{{ _('Note') }}</th>
           <th data-label="Image">{{ _('Image') }}</th>
-          <th data-label="Analysis">{{ _('Analysis') }}</th>
           <th data-label="Date">{{ _('Date') }}</th>
           <th data-label="Reporter">{{ _('Reporter') }}</th>
           <th data-label="Status">{{ _('Status') }}</th>
@@ -346,10 +345,7 @@
       </thead>
       <tbody id="reports-body">
         {% if reports is defined and reports %} {% for report in reports %}
-        <tr
-          class="report-row {% if report.status == 0 %}new{% endif %}"
-          data-id="{{ report.id }}"
-        >
+        <tr class="report-row" data-id="{{ report.id }}">
           <td data-label="ID">{{ report.id }}</td>
           <td data-label="Drug Name">{{ report.drug_name or "-" }}</td>
           <td data-label="Batch">{{ report.batch_number }}</td>
@@ -371,30 +367,16 @@
             </a>
             {% else %} {{ _('No Image') }} {% endif %}
           </td>
-          <td data-label="Analysis">
-            <div class="analysis-container" id="analysis-{{ report.id }}">
-              {% if report.image_analysis_result %}
-              <p>{{ report.image_analysis_result }}</p>
-              {% elif report.image_filename %}
-              <button
-                class="btn btn-outline analyze-btn"
-                data-id="{{ report.id }}"
-              >
-                {{ _('Analyze') }}
-              </button>
-              {% else %} {{ _('N/A') }} {% endif %}
-            </div>
-          </td>
           <td data-label="Date">{{ report.reported_on.split(' ')[0] }}</td>
           <td data-label="Reporter">
             {{ report.submitted_by or "Anonymous" }}
           </td>
           <td data-label="Status">
-            {% if report.status == 0 %}
-            <span class="badge badge-new">{{ _('New') }}</span>
-            {% else %}
-            <span class="badge badge-checked">{{ _('Checked') }}</span>
-            {% endif %}
+            <span
+              class="status-badge status-{{ (report.status or 'new').lower().replace(' ', '-') }}"
+            >
+              {{ report.status or 'New' }}
+            </span>
           </td>
           <td data-label="Actions">
             <button
@@ -408,7 +390,7 @@
         </tr>
         {% endfor %} {% else %}
         <tr>
-          <td colspan="11" style="text-align: center">
+          <td colspan="10" style="text-align: center">
             {{ _('No reports submitted yet.') }}
           </td>
         </tr>
@@ -498,8 +480,9 @@
           <td data-label="Status">
             <span
               class="status-badge status-{{ (report.status or 'new').lower().replace(' ', '-') }}"
-              >{{ report.status or 'New' }}</span
             >
+              {{ report.status or 'New' }}
+            </span>
           </td>
           <td data-label="Actions">
             <button
@@ -550,164 +533,131 @@
       const confirmModalText = document.getElementById("confirm-modal-text");
       const confirmBtn = document.getElementById("confirm-modal-confirm-btn");
       const cancelBtn = document.getElementById("confirm-modal-cancel-btn");
+      let confirmCallback = null;
 
       const showConfirmModal = (title, text, onConfirm) => {
         confirmModalTitle.textContent = title;
         confirmModalText.textContent = text;
+        confirmCallback = onConfirm;
         confirmModal.style.display = "flex";
-
-        const newConfirmBtn = confirmBtn.cloneNode(true);
-        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
-
-        newConfirmBtn.addEventListener("click", () => {
-          onConfirm();
-          hideConfirmModal();
-        });
       };
 
       const hideConfirmModal = () => {
         confirmModal.style.display = "none";
+        confirmCallback = null;
       };
 
       cancelBtn.addEventListener("click", hideConfirmModal);
+      confirmBtn.addEventListener("click", () => {
+        if (confirmCallback) {
+          confirmCallback();
+        }
+        hideConfirmModal();
+      });
 
-      const reportsTable = document.getElementById("reports-table");
-      if (reportsTable) {
-        reportsTable.addEventListener("click", (event) => {
-          // Handle Delete Button Click
-          if (event.target.classList.contains("delete-report-btn")) {
-            const button = event.target;
-            const reportId = button.dataset.id;
-            const row = button.closest("tr");
+      // --- Event Delegation for All Table Actions ---
+      document.body.addEventListener("click", (event) => {
+        const target = event.target;
 
-            showConfirmModal(
-              "Confirm Deletion",
-              `Are you sure you want to delete counterfeit report #${reportId}? This is permanent.`,
-              () => {
-                fetch(`/api/report/${reportId}`, { method: "DELETE" })
-                  .then((response) =>
-                    response
-                      .json()
-                      .then((data) => ({ status: response.status, body: data }))
-                  )
-                  .then(({ status, body }) => {
-                    if (status === 200) {
-                      showToast(body.message);
-                      row.remove();
-                    } else {
-                      throw new Error(body.error);
-                    }
-                  })
-                  .catch((error) =>
-                    showToast(`Failed to delete report: ${error.message}`, true)
-                  );
-              }
-            );
-            return; // Stop further execution
-          }
-
-          // Handle Mark as Checked (by clicking the row)
-          const row = event.target.closest(".report-row");
-          if (row && !event.target.closest("button, a")) {
-            const reportId = row.dataset.id;
-            const statusBadge = row.querySelector(".badge");
-
-            if (statusBadge && statusBadge.classList.contains("badge-new")) {
-              fetch(`/api/report/${reportId}/mark_checked`, { method: "POST" })
-                .then((response) => response.json())
-                .then((data) => {
-                  if (data.success) {
-                    statusBadge.textContent = "Checked";
-                    statusBadge.classList.remove("badge-new");
-                    statusBadge.classList.add("badge-checked");
-                    showToast(`Report #${reportId} marked as checked.`);
+        // --- Counterfeit Report Deletion ---
+        if (target.classList.contains("delete-report-btn")) {
+          const reportId = target.dataset.id;
+          const row = target.closest("tr");
+          showConfirmModal(
+            "Confirm Deletion",
+            `Are you sure you want to delete counterfeit report #${reportId}? This is permanent.`,
+            () => {
+              fetch(`/api/report/${reportId}`, { method: "DELETE" })
+                .then((response) =>
+                  response
+                    .json()
+                    .then((data) => ({ status: response.status, body: data }))
+                )
+                .then(({ status, body }) => {
+                  if (status === 200) {
+                    showToast(body.message);
+                    row.remove();
+                  } else {
+                    throw new Error(body.error);
                   }
                 })
-                .catch((err) =>
-                  console.error("Failed to mark as checked:", err)
+                .catch((error) =>
+                  showToast(`Failed to delete report: ${error.message}`, true)
                 );
             }
-          }
-        });
-      }
+          );
+        }
 
-      // --- ADR Reports Table Actions ---
-      const adrTable = document.getElementById("adr-reports-table");
-      if (adrTable) {
-        adrTable.addEventListener("click", (event) => {
-          // --- ADR Deletion Logic ---
-          if (event.target.classList.contains("adr-delete-btn")) {
-            const button = event.target;
-            const reportId = button.dataset.id;
-            const row = button.closest("tr");
-
-            showConfirmModal(
-              "{{ _('Confirm Deletion') }}",
-              `{{ _('Are you sure you want to delete ADR Report #') }}${reportId}? {{ _('This is permanent.') }}`,
-              () => {
-                fetch(`/api/adr-report/${reportId}`, { method: "DELETE" })
-                  .then((response) =>
-                    response
-                      .json()
-                      .then((data) => ({ status: response.status, body: data }))
+        // --- ADR Report Deletion ---
+        if (target.classList.contains("adr-delete-btn")) {
+          const reportId = target.dataset.id;
+          const row = target.closest("tr");
+          showConfirmModal(
+            "{{ _('Confirm Deletion') }}",
+            `{{ _('Are you sure you want to delete ADR Report #') }}${reportId}? {{ _('This is permanent.') }}`,
+            () => {
+              fetch(`/api/adr-report/${reportId}`, { method: "DELETE" })
+                .then((response) =>
+                  response
+                    .json()
+                    .then((data) => ({ status: response.status, body: data }))
+                )
+                .then(({ status, body }) => {
+                  if (status === 200) {
+                    showToast(body.message);
+                    row.remove();
+                  } else {
+                    throw new Error(body.error);
+                  }
+                })
+                .catch((error) =>
+                  showToast(
+                    `{{ _('Failed to delete report:') }} ${error.message}`,
+                    true
                   )
-                  .then(({ status, body }) => {
-                    if (status === 200) {
-                      showToast(body.message);
-                      row.remove();
-                    } else {
-                      throw new Error(body.error);
-                    }
-                  })
-                  .catch((error) =>
-                    showToast(
-                      `{{ _('Failed to delete report:') }} ${error.message}`,
-                      true
-                    )
-                  );
+                );
+            }
+          );
+        }
+
+        // --- Handle Status Updates for BOTH tables ---
+        if (target.classList.contains("status-badge")) {
+          const badge = target;
+          const row = badge.closest("tr");
+          const reportId = row.dataset.id;
+          const isCounterfeitReport = row.classList.contains("report-row");
+
+          const statuses = ["New", "Under Review", "Resolved"];
+          const currentStatus = badge.textContent.trim();
+          const currentIndex = statuses.indexOf(currentStatus);
+          const nextIndex = (currentIndex + 1) % statuses.length;
+          const newStatus = statuses[nextIndex];
+
+          // Determine the correct API endpoint
+          const apiUrl = isCounterfeitReport
+            ? `/api/report/${reportId}/status`
+            : `/api/adr-report/${reportId}/status`;
+
+          fetch(apiUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: newStatus }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.new_status) {
+                badge.textContent = data.new_status;
+                badge.className = `status-badge status-${data.new_status
+                  .toLowerCase()
+                  .replace(" ", "-")}`;
+                showToast(data.message);
+              } else {
+                throw new Error(data.error);
               }
-            );
-          }
-
-          // --- ADR Status Update Logic ---
-          if (event.target.classList.contains("status-badge")) {
-            const badge = event.target;
-            const reportId = badge.closest("tr").dataset.id;
-
-            const statuses = ["New", "Under Review", "Resolved"];
-            const currentStatus = badge.textContent.trim();
-            const currentIndex = statuses.indexOf(currentStatus);
-            const nextIndex = (currentIndex + 1) % statuses.length;
-            const newStatus = statuses[nextIndex];
-
-            fetch(`/api/adr-report/${reportId}/status`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ status: newStatus }),
             })
-              .then((res) => res.json())
-              .then((data) => {
-                if (data.new_status) {
-                  badge.textContent = data.new_status;
-                  // Remove old status classes
-                  badge.classList.remove(
-                    "status-new",
-                    "status-under-review",
-                    "status-resolved"
-                  );
-                  // Add new status class
-                  badge.classList.add(
-                    `status-${data.new_status.toLowerCase().replace(" ", "-")}`
-                  );
-                  showToast(data.message);
-                } else {
-                  throw new Error(data.error);
-                }
-              })
-              .catch((err) => showToast(`Error: ${err.message}`, true));
-          }
-        });
-      }
+            .catch((err) => showToast(`Error: ${err.message}`, true));
+        }
+      });
     }
 
     // --- Live Clock, Notifications, and other scripts remain here ---
@@ -789,7 +739,6 @@
       { once: true }
     );
 
-    // MODIFIED: This now points to the main dashboard route
     const startInput = document.getElementById("start");
     const endInput = document.getElementById("end");
     const rangeBtn = document.getElementById("range-reports-btn");
@@ -818,7 +767,6 @@
       }
     }
 
-    // --- Socket.IO Integration for Real-Time Notifications ---
     const socket = io.connect(
       location.protocol + "//" + document.domain + ":" + location.port
     );
@@ -830,7 +778,6 @@
     socket.on("new_report", function (msg) {
       console.log("Received new report notification:", msg);
       showToast("A new counterfeit report has been submitted!");
-      // Refresh the new report count immediately
       checkNewReports();
     });
   });

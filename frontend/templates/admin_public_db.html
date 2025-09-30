@@ -6,41 +6,43 @@
 </style>
 
 <div class="panel">
-  <h2>Public Drug Data Manager</h2>
+  <h2>{{ _('Public Drug Data Manager') }}</h2>
   <p class="description-text">
-    View, add, or edit entries in the public drug database. This information is
-    shown to users when a scanned drug is not in the main MedGuard registry.
+    {{ _('View, add, or edit entries in the public drug database. This
+    information is shown to users when a scanned drug is not in the main
+    MedGuard registry.') }}
   </p>
 </div>
 
 <div class="panel">
-  <h3>Current Public Drug List</h3>
+  <h3>{{ _('Current Public Drug List') }}</h3>
   <div style="overflow-x: auto; -webkit-overflow-scrolling: touch">
     <table class="table">
       <thead>
         <tr>
-          <th>Batch Number</th>
-          <th>Drug Name</th>
-          <th>Manufacturer</th>
-          <th>Actions</th>
+          <th>{{ _('Batch Number') }}</th>
+          <th>{{ _('Drug Name') }}</th>
+          <th>{{ _('Manufacturer') }}</th>
+          <th>{{ _('Expiry Date') }}</th>
+          <th>{{ _('Actions') }}</th>
         </tr>
       </thead>
       <tbody id="public-db-table-body"></tbody>
     </table>
   </div>
   <button id="show-form-btn" class="btn btn-yellow" style="margin-top: 20px">
-    ➕ Add New Drug
+    ➕ {{ _('Add New Drug') }}
   </button>
 </div>
 
 <div id="entry-form-panel" class="panel" style="display: none">
-  <h3 id="form-title">Add New Drug Entry</h3>
+  <h3 id="form-title">{{ _('Add New Drug Entry') }}</h3>
   <form id="entry-form">
     <input type="hidden" id="original-batch-key" />
 
     <div style="margin-bottom: 10px">
       <label style="display: block; margin-bottom: 5px"
-        >Batch Number (Unique Key):</label
+        >{{ _('Batch Number (Unique Key):') }}</label
       >
       <input
         type="text"
@@ -51,7 +53,9 @@
       />
     </div>
     <div style="margin-bottom: 10px">
-      <label style="display: block; margin-bottom: 5px">Drug Name:</label>
+      <label style="display: block; margin-bottom: 5px"
+        >{{ _('Drug Name:') }}</label
+      >
       <input
         type="text"
         id="drug-name"
@@ -61,7 +65,9 @@
       />
     </div>
     <div style="margin-bottom: 10px">
-      <label style="display: block; margin-bottom: 5px">Manufacturer:</label>
+      <label style="display: block; margin-bottom: 5px"
+        >{{ _('Manufacturer:') }}</label
+      >
       <input
         type="text"
         id="manufacturer"
@@ -71,7 +77,9 @@
       />
     </div>
     <div style="margin-bottom: 10px">
-      <label style="display: block; margin-bottom: 5px">NAFDAC Status:</label>
+      <label style="display: block; margin-bottom: 5px"
+        >{{ _('NAFDAC Status:') }}</label
+      >
       <input
         type="text"
         id="nafdac-status"
@@ -82,7 +90,7 @@
     </div>
     <div style="margin-bottom: 10px">
       <label style="display: block; margin-bottom: 5px"
-        >Expiry Date (YYYY-MM-DD):</label
+        >{{ _('Expiry Date (YYYY-MM-DD):') }}</label
       >
       <input
         type="date"
@@ -99,10 +107,10 @@
         class="btn"
         style="background-color: #28a745; color: white"
       >
-        Save Entry
+        {{ _('Save Entry') }}
       </button>
       <button type="button" id="cancel-btn" class="btn btn-outline">
-        Cancel
+        {{ _('Cancel') }}
       </button>
     </div>
   </form>
@@ -132,7 +140,6 @@
       }, 3000);
     };
 
-    // --- MODIFIED: Custom Confirmation Modal Logic ---
     const confirmModal = document.getElementById("confirm-modal");
     const confirmModalTitle = document.getElementById("confirm-modal-title");
     const confirmModalText = document.getElementById("confirm-modal-text");
@@ -167,7 +174,7 @@
       tableBody.innerHTML = "";
       if (Object.keys(publicDb).length === 0) {
         tableBody.innerHTML =
-          '<tr><td colspan="4" style="text-align:center;">No entries in the public database.</td></tr>';
+          '<tr><td colspan="5" style="text-align:center;">No entries in the public database.</td></tr>';
         return;
       }
       for (const batchNumber in publicDb) {
@@ -178,6 +185,7 @@
                 <td data-label="Batch Number">${batchNumber}</td>
                 <td data-label="Drug Name">${entry.drug_name || ""}</td>
                 <td data-label="Manufacturer">${entry.manufacturer || ""}</td>
+                <td data-label="Expiry Date">${entry.expiry_date || ""}</td>
                 <td data-label="Actions">
                     <button class="btn edit-btn" data-batch="${batchNumber}">Edit</button>
                     <button class="btn delete-btn" data-batch="${batchNumber}" style="background-color:#dc3545; color:white;">Delete</button>
@@ -230,7 +238,6 @@
       document.querySelectorAll(".delete-btn").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           const batchKey = e.target.dataset.batch;
-          // MODIFIED: Use the custom modal instead of the default confirm()
           showConfirmModal(
             "Confirm Deletion",
             `Are you sure you want to delete the entry for batch "${batchKey}"?`,

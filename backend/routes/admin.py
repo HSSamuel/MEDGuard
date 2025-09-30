@@ -43,7 +43,7 @@ def admin_dashboard():
         filter_type = request.args.get("filter", "").strip()
 
         counterfeit_query = """
-            SELECT r.id, r.drug_name, r.batch_number, r.location, r.note, r.image_filename, r.image_analysis_result,
+            SELECT r.id, r.drug_name, r.batch_number, r.location, r.note, r.image_filename,
                    strftime('%Y-%m-%d %H:%M:%S', r.reported_on) AS reported_on, r.status,
                    u.email AS submitted_by
             FROM reports r
@@ -211,19 +211,27 @@ def admin_drugs():
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 # =========================
-# Delete a registered drug
+# Delete a registered drug (UPDATED)
 # =========================
-@admin_bp.delete("/drugs/<int:drug_id>")
+@admin_bp.delete("/drugs/delete/<int:drug_id>")
 @role_required('regulator')
 def delete_drug(drug_id):
     if not session.get("admin_id"):
         return jsonify({"error": "Authentication required"}), 401
+    
+    conn = get_db()
     try:
-        conn = get_db()
-        conn.execute("DELETE FROM drugs WHERE id = ?", (drug_id,))
+        conn.execute("DELETE FROM adr_reports WHERE drug_id = ?", (drug_id,))
+        cursor = conn.execute("DELETE FROM drugs WHERE id = ?", (drug_id,))
         conn.commit()
-        return jsonify({"success": True, "message": "Drug deleted successfully."})
+
+        if cursor.rowcount == 0:
+            return jsonify({"error": "Drug not found"}), 404
+            
+        return jsonify({"message": "Drug and all associated reports deleted successfully."})
+
     except Exception as e:
+        conn.rollback() # Roll back the transaction on error
         traceback.print_exc()
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 

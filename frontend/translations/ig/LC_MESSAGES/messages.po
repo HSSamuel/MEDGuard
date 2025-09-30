@@ -1,0 +1,1210 @@
+# Igbo translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-09-27 11:42+0100\n"
+"PO-Revision-Date: 2025-09-30 10:00+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ig\n"
+"Language-Team: ig <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: frontend/templates/about.html:68 frontend/templates/base.html:568
+msgid "About MedGuard"
+msgstr "Gbasara MedGuard"
+
+#: frontend/templates/about.html:71
+msgid "Your Partner in Pharmaceutical Safety"
+msgstr "Onye Mmekọ Gị na Nchekwa Ọgwụ"
+
+#: frontend/templates/about.html:77 frontend/templates/base.html:6
+msgid "MedGuard"
+msgstr "MedGuard"
+
+#: frontend/templates/about.html:77
+msgid ""
+"is a comprehensive, multi-faceted public health platform designed with a "
+"singular, critical mission: to build a resilient and transparent "
+"pharmaceutical supply chain in Nigeria. We aim to safeguard public health"
+" by detecting, reporting, and managing counterfeit drugs while also "
+"monitoring the safety of legitimate medications through adverse reaction "
+"reporting."
+msgstr ""
+"bụ usoro ahụike ọha na eze zuru oke, nke nwere ọtụtụ akụkụ nke e mere "
+"maka otu ebumnuche dị oke mkpa: iwu usoro nnyefe ọgwụ na-agbanwe agbanwe na "
+"nke doro anya na Naịjirịa. Ebumnuche anyị bụ ichebe ahụike ọha na eze site "
+"n'ịchọpụta, ịkọ akụkọ, na ijikwa ọgwụ adịgboroja ma na-enyochakwa nchekwa "
+"nke ezigbo ọgwụ site na mkpesa mmeghachi omume ọjọọ."
+
+#: frontend/templates/about.html:80
+msgid "The Silent Epidemic"
+msgstr "Ọrịa na-efe efe nke dị jụụ"
+
+#: frontend/templates/about.html:82
+msgid ""
+"The circulation of counterfeit and substandard drugs is a silent epidemic"
+" with devastating consequences. These fake medications can contain "
+"incorrect ingredients, the wrong dosage, or even toxic substances, "
+"leading to treatment failure, severe health complications, and death. "
+"This threat erodes public trust in our healthcare system, putting every "
+"citizen at risk."
+msgstr ""
+"Mgbasa nke ọgwụ adịgboroja na nke na-erughị eru bụ ọrịa na-efe efe nke "
+"dị jụụ nke nwere nsonaazụ na-ebibi ihe. Ọgwụ adịgboroja ndị a nwere ike "
+"ịnwe ihe ndị na-ezighi ezi, usoro onunu ogwu na-ezighi ezi, ma ọ bụ ọbụna "
+"ihe ndị na-egbu egbu, na-eduga n'ọgwụgwọ ọdịda, nsogbu ahụike siri ike, na "
+"ọnwụ. Ihe iyi egwu a na-emebi ntụkwasị obi ọha na eze na usoro nlekọta "
+"ahụike anyị, na-etinye nwa amaala ọ bụla n'ihe ize ndụ."
+
+#: frontend/templates/about.html:85
+msgid "A Two-Pronged Defense"
+msgstr "Nchedo Abụọ"
+
+#: frontend/templates/about.html:87
+msgid ""
+"MedGuard tackles this challenge with a dual-layered approach, empowering "
+"both the public and regulatory bodies like NAFDAC to become active "
+"guardians of our nation's medicine supply."
+msgstr ""
+"MedGuard na-eji usoro nwere okpukpu abụọ agafe nsogbu a, na-enye ma ọha "
+"na eze na ndị na-ahụ maka nhazi dịka NAFDAC ike ịghọ ndị nche na-arụsi "
+"ọrụ ike nke nnyefe ọgwụ nke mba anyị."
+
+#: frontend/templates/about.html:92
+msgid "Counterfeit Drug Verification:"
+msgstr "Nkwenye Ọgwụ Adịgboroja:"
+
+#: frontend/templates/about.html:92
+msgid ""
+"We provide every Nigerian with simple, powerful tools to instantly verify"
+" the authenticity of their medication. Through QR code scanning and batch"
+" number verification, our platform serves as a frontline defense against "
+"dangerous fakes."
+msgstr ""
+"Anyị na-enye onye Naijiria ọ bụla ngwaọrụ dị mfe ma dị ike iji chọpụta "
+"izi ezi nke ọgwụ ha ozugbo. Site na nyocha koodu QR na nkwenye nọmba "
+"ụyọkọ, ikpo okwu anyị na-eje ozi dị ka nchedo ihu megide adịgboroja dị "
+"ize ndụ."
+
+#: frontend/templates/about.html:95
+msgid "Pharmacovigilance & Safety Monitoring:"
+msgstr "Nleba anya n'ọgwụ & Nleba anya Nchekwa:"
+
+#: frontend/templates/about.html:95
+msgid ""
+"Our mission extends beyond counterfeits. MedGuard provides a direct "
+"channel for the public to report adverse drug reactions (ADRs) to "
+"legitimate medications. This crowdsourced data is critical for post-"
+"market surveillance and ensures that even approved drugs are continuously"
+" monitored for safety."
+msgstr ""
+"Ebumnuche anyị karịrị adịgboroja. MedGuard na-enye ọwa kpọmkwem maka ọha "
+"na eze ịkọ akụkọ mmeghachi omume ọgwụ ọjọọ (ADRs) na ọgwụ ziri ezi. "
+"Nchịkọta data a dị oke mkpa maka nleba anya mgbe ahịa gachara ma na-ahụ "
+"na a na-enyocha ọbụna ọgwụ akwadoro maka nchekwa mgbe niile."
+
+#: frontend/templates/about.html:99
+msgid "Our Core Features"
+msgstr "Atụmatụ Anyị bụ Isi"
+
+#: frontend/templates/about.html:102
+msgid "Instant QR & Batch Verification:"
+msgstr "Nkwenye QR & Nọmba ozugbo:"
+
+#: frontend/templates/about.html:103
+msgid ""
+"Instantly validate a drug's authenticity against a secure, regulator-"
+"managed database using your smartphone camera or by entering a batch "
+"number."
+msgstr ""
+"Nyochaa izi ezi nke ọgwụ ozugbo megide nchekwa data echekwara, nke onye "
+"na-ahụ maka nhazi na-ejikwa site na iji igwefoto ama gị ma ọ bụ tinye "
+"nọmbaụyọkọ."
+
+#: frontend/templates/about.html:106
+msgid "Anonymous Counterfeit Reporting:"
+msgstr "Mkpesa Adịgboroja na-amaghị aha:"
+
+#: frontend/templates/about.html:107
+msgid ""
+"Easily submit reports of suspicious medications, complete with "
+"photographic evidence and location data, to alert authorities in real-"
+"time."
+msgstr ""
+"Nyefee akụkọ gbasara ọgwụ ndị a na-enyo enyo n'ụzọ dị mfe, tinyere ihe "
+"akaebe foto na data ebe, iji mee ka ndị ọchịchị mara ozugbo."
+
+#: frontend/templates/about.html:110
+msgid "Adverse Drug Reaction (ADR) Reporting:"
+msgstr "Mkpesa Mmeghachi omume Ọgwụ Ọjọọ (ADR):"
+
+#: frontend/templates/about.html:111
+msgid ""
+"After verifying a legitimate drug, users can report any unexpected side "
+"effects, contributing vital data to national pharmacovigilance efforts."
+msgstr ""
+"Mgbe ha kwenyesiri ike na ọgwụ ziri ezi, ndị ọrụ nwere ike ịkọ akụkọ "
+"mmetụta ọ bụla a na-atụghị anya ya, na-enye data dị mkpa maka mbọ nleba "
+"anya ọgwụ mba."
+
+#: frontend/templates/about.html:114
+msgid "Offline SMS Functionality:"
+msgstr "Ọrụ SMS na-anọghị n'ịntanetị:"
+
+#: frontend/templates/about.html:115
+msgid ""
+"For citizens without consistent internet access, our system works via "
+"SMS, ensuring that everyone can verify their medication, anytime, "
+"anywhere."
+msgstr ""
+"Maka ụmụ amaala na-enweghị ohere ịntanetị na-agbanwe agbanwe, usoro anyị "
+"na-arụ ọrụ site na SMS, na-ahụ na onye ọ bụla nwere ike nyochaa ọgwụ ha, "
+"n'oge ọ bụla, ebe ọ bụla."
+
+#: frontend/templates/about.html:118
+msgid "Admin Dashboard for Regulators:"
+msgstr "Dashboard nchịkwa maka ndị na-ahụ maka nhazi:"
+
+#: frontend/templates/about.html:119
+msgid ""
+"A powerful, secure dashboard for authorities to view, filter, and manage "
+"all submitted counterfeit and ADR reports, complete with data "
+"visualizations and a live hotspot map."
+msgstr ""
+"Dashboard siri ike, echekwara maka ndị ọchịchị iji lelee, nyochaa, na "
+"jikwaa akụkọ niile gbasara adịgboroja na ADR, tinyere ihe ngosi data na "
+"maapụ ebe nsogbu na-ekpo ọkụ."
+
+#: frontend/templates/about.html:124
+msgid "Return to Home"
+msgstr "Laghachi n'ụlọ"
+
+#: frontend/templates/admin.html:71
+msgid "🛠 Admin — Register New Drug Batch"
+msgstr "🛠 Nchịkwa — Debanye aha ọgwụ ọhụrụ"
+
+#: frontend/templates/admin.html:90
+msgid "Loading time..."
+msgstr "Oge nbudata..."
+
+#: frontend/templates/admin.html:109
+msgid "Session ends in:"
+msgstr "Oge ga-agwụ na:"
+
+#: frontend/templates/admin.html:119
+msgid ""
+"Use this form to register a new drug batch and generate its QR code "
+"instantly."
+msgstr ""
+"Jiri fọm a debanye aha ọgwụ ọhụrụ wee mepụta koodu QR ya ozugbo."
+
+#: frontend/templates/admin.html:124
+msgid "💊 Registered Drugs"
+msgstr "💊 Ọgwụ edebanyere aha"
+
+#: frontend/templates/admin.html:127
+msgid "📱 Simulate SMS"
+msgstr "📱 Mee ka SMS"
+
+#: frontend/templates/admin.html:132
+msgid "📦 Batch Details"
+msgstr "📦 Nkọwa nke Batch"
+
+#: frontend/templates/admin.html:147
+msgid "Close Scanner"
+msgstr "Mechie Skena"
+
+#: frontend/templates/admin.html:166
+msgid "Mfg Date"
+msgstr "Ụbọchị Mmepụta"
+
+#: frontend/templates/admin.html:177
+msgid "Expiry Date"
+msgstr "Ụbọchị njedebe"
+
+#: frontend/templates/admin.html:191
+msgid "Register &amp; Get QR"
+msgstr "Debanye aha & Nweta QR"
+
+#: frontend/templates/admin.html:198
+msgid "📷 Scan to Pre-fill"
+msgstr "📷 Nyochaa iji mejupụta"
+
+#: frontend/templates/admin.html:212
+msgid "📄 Generated QR Code"
+msgstr "📄 Koodu QR emepụtara"
+
+#: frontend/templates/admin.html:213
+msgid "Right-click and save the image below to print or share."
+msgstr "Pịa aka nri wee chekwaa onyonyo dị n'okpuru ka ibipụta ma ọ bụ kesaa."
+
+#: frontend/templates/admin.html:229
+msgid "🚨 Counterfeit Reports"
+msgstr "🚨 Akụkọ adịgboroja"
+
+#: frontend/templates/admin.html:235
+msgid "Today’s Reports"
+msgstr "Akụkọ nke Taa"
+
+#: frontend/templates/admin.html:252
+msgid "View All Reports"
+msgstr "Lelee Akụkọ niile"
+
+#: frontend/templates/admin.html:260
+msgid "🔍 Search reports..."
+msgstr "🔍 Chọọ akụkọ..."
+
+#: frontend/templates/admin.html:266 frontend/templates/admin_drugs.html:110
+#: frontend/templates/adr_report.html:61
+msgid "From:"
+msgstr "Site na:"
+
+#: frontend/templates/admin.html:268 frontend/templates/admin_drugs.html:112
+#: frontend/templates/adr_report.html:66
+msgid "To:"
+msgstr "Ka:"
+
+#: frontend/templates/admin.html:270
+msgid "Filter"
+msgstr "Nyochaa"
+
+#: frontend/templates/admin.html:277 frontend/templates/admin.html:439
+#: frontend/templates/admin_drugs.html:137
+msgid "ID"
+msgstr "ID"
+
+#: frontend/templates/admin.html:278 frontend/templates/admin.html:440
+#: frontend/templates/my_reports.html:12
+msgid "Drug Name"
+msgstr "Aha ọgwụ"
+
+#: frontend/templates/admin.html:279
+msgid "Batch"
+msgstr "Batch"
+
+#: frontend/templates/admin.html:280 frontend/templates/my_reports.html:14
+msgid "Location"
+msgstr "Ebe"
+
+#: frontend/templates/admin.html:281 frontend/templates/my_reports.html:15
+msgid "Note"
+msgstr "Mara"
+
+#: frontend/templates/admin.html:282
+msgid "Image"
+msgstr "Onyonyo"
+
+#: frontend/templates/admin.html:283
+msgid "Analysis"
+msgstr "Nyocha"
+
+#: frontend/templates/admin.html:284
+msgid "Date"
+msgstr "Ụbọchị"
+
+#: frontend/templates/admin.html:285
+msgid "Reporter"
+msgstr "Onye nta akụkọ"
+
+#: frontend/templates/admin.html:286 frontend/templates/admin.html:445
+#: frontend/templates/admin_drugs.html:142
+msgid "Status"
+msgstr "Ọnọdụ"
+
+#: frontend/templates/admin.html:287 frontend/templates/admin.html:446
+#: frontend/templates/admin_drugs.html:144
+#: frontend/templates/my_reports.html:18
+msgid "Actions"
+msgstr "Omume"
+
+#: frontend/templates/admin.html:318
+msgid "No Image"
+msgstr "Enweghị onyonyo"
+
+#: frontend/templates/admin.html:329
+msgid "Analyze"
+msgstr "Nyochaa"
+
+#: frontend/templates/admin.html:332
+msgid "N/A"
+msgstr "N/A"
+
+#: frontend/templates/admin.html:340
+msgid "New"
+msgstr "Ọhụrụ"
+
+#: frontend/templates/admin.html:342
+msgid "Checked"
+msgstr "Elele"
+
+#: frontend/templates/admin.html:347 frontend/templates/admin.html:460
+#: frontend/templates/admin_drugs.html:167
+#: frontend/templates/my_reports.html:47
+msgid "Delete"
+msgstr "Hichapụ"
+
+#: frontend/templates/admin.html:356
+msgid "No reports submitted yet."
+msgstr "Enwebeghị akụkọ edobere."
+
+#: frontend/templates/admin.html:364
+msgid "💊 Adverse Drug Reaction Reports"
+msgstr "💊 Akụkọ mmeghachi omume ọgwụ ọjọọ"
+
+#: frontend/templates/admin.html:373
+msgid "Search by drug, batch, or reaction..."
+msgstr "Chọọ site na ọgwụ, ogbe, ma ọ bụ mmeghachi omume..."
+
+#: frontend/templates/admin.html:388
+msgid "Filter ADR"
+msgstr "Nyochaa ADR"
+
+#: frontend/templates/admin.html:394 frontend/templates/admin_drugs.html:120
+msgid "Export Word"
+msgstr "Mbupụ Okwu"
+
+#: frontend/templates/admin.html:398 frontend/templates/admin_drugs.html:121
+msgid "Export PDF"
+msgstr "Mbupụ PDF"
+
+#: frontend/templates/admin.html:441
+#: frontend/templates/my_reports.html:13
+msgid "Batch Number"
+msgstr "Nọmba Batch"
+
+#: frontend/templates/admin.html:442
+msgid "Patient Info"
+msgstr "Ozi onye ọrịa"
+
+#: frontend/templates/admin.html:443
+msgid "Reaction Description"
+msgstr "Nkọwa mmeghachi omume"
+
+#: frontend/templates/admin.html:444 frontend/templates/my_reports.html:16
+msgid "Report Date"
+msgstr "Ụbọchị akụkọ"
+
+#: frontend/templates/admin.html:471
+msgid "No Adverse Drug Reaction reports match the current filters."
+msgstr "Enweghị akụkọ mmeghachi omume ọgwụ ọjọọ dabara na nzacha dị ugbu a."
+
+#: frontend/templates/admin.html:565
+msgid "Confirm Deletion"
+msgstr "Kwenye nhichapụ"
+
+#: frontend/templates/admin.html:566
+msgid "Are you sure you want to delete ADR Report #"
+msgstr "Ị ji n'aka na ịchọrọ ihichapụ ADR Report #"
+
+#: frontend/templates/admin.html:566
+msgid "? This is permanent."
+msgstr "? Nke a bụ ihe na-adịgide adịgide."
+
+#: frontend/templates/admin.html:579
+msgid "Failed to delete report:"
+msgstr "Ihichapụ akụkọ daa:"
+
+#: frontend/templates/admin.html:640
+msgid "Error checking for new reports:"
+msgstr "Njehie na-enyocha akụkọ ọhụrụ:"
+
+#: frontend/templates/admin.html:665
+msgid "Please select both a start and end date."
+msgstr "Biko họrọ ma ụbọchị mmalite na njedebe."
+
+#: frontend/templates/admin_drugs.html:92
+msgid "Search, filter, or export registered drug batches."
+msgstr "Chọọ, nyochaa, ma ọ bụ bupu ọgwụ edebanyere aha."
+
+#: frontend/templates/admin_drugs.html:95
+msgid "Search by name or batch number"
+msgstr "Chọọ site na aha ma ọ bụ nọmba batch"
+
+#: frontend/templates/admin_drugs.html:97
+msgid "-- All --"
+msgstr "-- Ha niile --"
+
+#: frontend/templates/admin_drugs.html:98
+msgid "Valid"
+msgstr "Dị irè"
+
+#: frontend/templates/admin_drugs.html:99
+msgid "Expired"
+msgstr "Kubiela"
+
+#: frontend/templates/admin_drugs.html:100
+msgid "Expiring Soon"
+msgstr "Na-agwụ n'oge adịghị anya"
+
+#: frontend/templates/admin_drugs.html:102
+msgid "🔍 Search"
+msgstr "🔍 Chọọ"
+
+#: frontend/templates/admin_drugs.html:114
+msgid "📅 Apply"
+msgstr "📅 Tinye"
+
+#: frontend/templates/admin_drugs.html:138
+msgid "Name"
+msgstr "Aha"
+
+#: frontend/templates/admin_drugs.html:139
+msgid "Batch #"
+msgstr "Batch #"
+
+#: frontend/templates/admin_drugs.html:140
+msgid "Manufacturer"
+msgstr "Onye nrụpụta"
+
+#: frontend/templates/admin_drugs.html:143
+msgid "Registered On"
+msgstr "Debanyere aha na"
+
+#: frontend/templates/admin_drugs.html:176
+msgid "No drugs found."
+msgstr "Enweghị ọgwụ achọtara."
+
+#: frontend/templates/admin_drugs.html:184
+msgid "⬅ Prev"
+msgstr "⬅ Gara aga"
+
+#: frontend/templates/admin_drugs.html:186
+msgid "Page"
+msgstr "Ibe"
+
+#: frontend/templates/admin_drugs.html:186
+msgid "of"
+msgstr "nke"
+
+#: frontend/templates/admin_drugs.html:188
+msgid "Next ➡"
+msgstr "Osote ➡"
+
+#: frontend/templates/admin_drugs.html:194
+msgid "⬅ Back to Dashboard"
+msgstr "⬅ Laghachi na Dashboard"
+
+#: frontend/templates/admin_drugs.html:202
+msgid "Are you sure you want to delete this drug?"
+msgstr "Ị ji n'aka na ịchọrọ ihichapụ ọgwụ a?"
+
+#: frontend/templates/admin_drugs.html:221
+msgid "Are you sure you want to delete the drug"
+msgstr "Ị ji n'aka na ịchọrọ ihichapụ ọgwụ ahụ"
+
+#: frontend/templates/admin_drugs.html:221
+msgid "? This action cannot be undone."
+msgstr "? Enweghị ike imegharị ihe a."
+
+#: frontend/templates/admin_login.html:5
+msgid "🔐 Regulator Login"
+msgstr "🔐 Nbanye onye nhazi"
+
+#: frontend/templates/admin_login.html:14
+msgid "Official email"
+msgstr "Email gọọmentị"
+
+#: frontend/templates/admin_login.html:22
+msgid "Show Password"
+msgstr "Gosi okwuntughe"
+
+#: frontend/templates/admin_map.html:3
+msgid "📍 Live Counterfeit Hotspot Map"
+msgstr "📍 Map ebe a na-ere ahịa adịgboroja"
+
+#: frontend/templates/admin_map.html:5
+msgid ""
+"This map displays the real-time locations of all submitted counterfeit "
+"drug reports. Use this intelligence to identify clusters and potential "
+"hotspots for targeted investigation."
+msgstr ""
+"Maapụ a na-egosipụta ebe akụkọ niile gbasara ọgwụ adịgboroja ezigara "
+"ozugbo. Jiri ọgụgụ isi a chọpụta ụyọkọ na ebe ndị nwere ike ịbụ ebe a "
+"na-elekwasị anya maka nyocha ezubere iche."
+
+#: frontend/templates/admin_map.html:44
+msgid "Your session has expired. Please log in again to view the map."
+msgstr "Oge gị agwụla. Biko banye ọzọ ka ịlele maapụ ahụ."
+
+#: frontend/templates/admin_public_db.html:9
+msgid "Public Drug Data Manager"
+msgstr "Njikwa data ọgwụ ọha"
+
+#: frontend/templates/admin_public_db.html:11
+msgid ""
+"View, add, or edit entries in the public drug database. This information"
+" is shown to users when a scanned drug is not in the main MedGuard "
+"registry."
+msgstr ""
+"Lelee, tinye, ma ọ bụ dezie ndenye na nchekwa data ọgwụ ọha. A na-egosi "
+"ndị ọrụ ozi a mgbe ọgwụ a nyochara anọghị na ndekọ MedGuard."
+
+#: frontend/templates/admin_public_db.html:16
+msgid "Current Public Drug List"
+msgstr "Ndepụta ọgwụ ọha dị ugbu a"
+
+#: frontend/templates/admin_public_db.html:22
+msgid "Drug Name"
+msgstr "Aha ọgwụ"
+
+#: frontend/templates/admin_public_db.html:23
+msgid "Manufacturer"
+msgstr "Onye nrụpụta"
+
+#: frontend/templates/admin_public_db.html:30
+msgid "➕ Add New Drug"
+msgstr "➕ Tinye ọgwụ ọhụrụ"
+
+#: frontend/templates/admin_public_db.html:35
+msgid "Add New Drug Entry"
+msgstr "Tinye ndenye ọgwụ ọhụrụ"
+
+#: frontend/templates/admin_public_db.html:41
+msgid "Batch Number (Unique Key):"
+msgstr "Nọmba Batch (Igodo pụrụ iche):"
+
+#: frontend/templates/admin_public_db.html:52
+msgid "Drug Name:"
+msgstr "Aha ọgwụ:"
+
+#: frontend/templates/admin_public_db.html:63
+msgid "Manufacturer:"
+msgstr "Onye nrụpụta:"
+
+#: frontend/templates/admin_public_db.html:74
+msgid "NAFDAC Status:"
+msgstr "Ọnọdụ NAFDAC:"
+
+#: frontend/templates/admin_public_db.html:85
+msgid "Expiry Date (YYYY-MM-DD):"
+msgstr "Ụbọchị njedebe (YYYY-MM-DD):"
+
+#: frontend/templates/admin_public_db.html:98
+msgid "Save Entry"
+msgstr "Chekwa ndenye"
+
+#: frontend/templates/adr_report.html:27
+msgid "Report an Adverse Reaction"
+msgstr "Kọọ mmeghachi omume ọjọọ"
+
+#: frontend/templates/adr_report.html:29
+msgid ""
+"You are reporting a side effect for the following medication. Please "
+"provide as much detail as possible. Your report is anonymous and helps "
+"protect public health."
+msgstr ""
+"Ị na-akọ mmetụta dị n'akụkụ maka ọgwụ na-esonụ. Biko nye nkọwa zuru ezu "
+"dị ka o kwere mee. Akụkọ gị amaghị aha ma na-enyere aka ichebe ahụike ọha."
+
+#: frontend/templates/adr_report.html:34
+msgid "Drug Name:"
+msgstr "Aha ọgwụ:"
+
+#: frontend/templates/adr_report.html:35
+msgid "Batch Number:"
+msgstr "Nọmba Batch:"
+
+#: frontend/templates/adr_report.html:36
+msgid "Manufacturer:"
+msgstr "Onye nrụpụta:"
+
+#: frontend/templates/adr_report.html:43
+msgid "Patient's Age Range"
+msgstr "Ogologo afọ onye ọrịa"
+
+#: frontend/templates/adr_report.html:46
+msgid "Please select an age range..."
+msgstr "Biko họrọ oke afọ..."
+
+#: frontend/templates/adr_report.html:48
+msgid "0 - 17 years"
+msgstr "Afọ 0 - 17"
+
+#: frontend/templates/adr_report.html:49
+msgid "18 - 29 years"
+msgstr "Afọ 18 - 29"
+
+#: frontend/templates/adr_report.html:50
+msgid "30 - 49 years"
+msgstr "Afọ 30 - 49"
+
+#: frontend/templates/adr_report.html:51
+msgid "50 - 65 years"
+msgstr "Afọ 50 - 65"
+
+#: frontend/templates/adr_report.html:52
+msgid "66 years and over"
+msgstr "Afọ 66 gbagowe"
+
+#: frontend/templates/adr_report.html:57
+msgid "Patient's Gender"
+msgstr "Okike onye ọrịa"
+
+#: frontend/templates/adr_report.html:60
+msgid "Please select a gender..."
+msgstr "Biko họrọ okike..."
+
+#: frontend/templates/adr_report.html:61
+msgid "Male"
+msgstr "Nwoke"
+
+#: frontend/templates/adr_report.html:62
+msgid "Female"
+msgstr "Nwanyị"
+
+#: frontend/templates/adr_report.html:63
+msgid "Prefer not to say"
+msgstr "Ọ ka mma ịghara ikwu"
+
+#: frontend/templates/adr_report.html:68
+msgid "When did the reaction start?"
+msgstr "Kedu mgbe mmeghachi omume ahụ malitere?"
+
+#: frontend/templates/adr_report.html:73
+msgid "Please describe the side effect(s)"
+msgstr "Biko kọwaa mmetụta dị n'akụkụ"
+
+#: frontend/templates/adr_report.html:84
+msgid "Was the patient taking any other medications at the time?"
+msgstr "Onye ọrịa ahụ ọ na-aṅụ ọgwụ ọ bụla ọzọ n'oge ahụ?"
+
+#: frontend/templates/adr_report.html:90
+msgid "List other drugs, vitamins, or supplements. If none, leave blank."
+msgstr "Depụta ọgwụ, vitamin, ma ọ bụ mgbakwunye ndị ọzọ. Ọ bụrụ na ọ dịghị, hapụ oghere."
+
+#: frontend/templates/adr_report.html:96
+msgid "Submit Secure Report"
+msgstr "Nyefee akụkọ echekwara"
+
+#: frontend/templates/base.html:344
+msgid "Home"
+msgstr "Ụlọ"
+
+#: frontend/templates/base.html:347
+msgid "About"
+msgstr "Gbasara"
+
+#: frontend/templates/base.html:351
+msgid "My Reports"
+msgstr "Akụkọ m"
+
+#: frontend/templates/base.html:356
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: frontend/templates/base.html:361
+msgid "Public DB Manager"
+msgstr "Njikwa DB ọha"
+
+#: frontend/templates/base.html:366
+msgid "Hotspot Map"
+msgstr "Map Hotspot"
+
+#: frontend/templates/base.html:374
+msgid "Language"
+msgstr "Asụsụ"
+
+#: frontend/templates/base.html:405
+msgid "Admin Logout"
+msgstr "Nbanye nchịkwa"
+
+#: frontend/templates/base.html:412
+msgid "Welcome,"
+msgstr "Nnọọ,"
+
+#: frontend/templates/base.html:420
+msgid "Logout"
+msgstr "Wepụ"
+
+#: frontend/templates/base.html:429 frontend/templates/login.html:6
+msgid "User Login"
+msgstr "Nbanye onye ọrụ"
+
+#: frontend/templates/base.html:437
+msgid "Register"
+msgstr "Debanye aha"
+
+#: frontend/templates/base.html:477
+msgid "Confirm Action"
+msgstr "Kwenye Omume"
+
+#: frontend/templates/base.html:489
+msgid "Cancel"
+msgstr "Kagbuo"
+
+#: frontend/templates/base.html:496
+msgid "Confirm"
+msgstr "Kwenye"
+
+#: frontend/templates/base.html:530
+msgid "Session Timeout Warning"
+msgstr "Ịdọ aka ná ntị oge njedebe"
+
+#: frontend/templates/base.html:532
+msgid ""
+"Your session is about to expire due to inactivity. You will be\n"
+"          logged out in"
+msgstr ""
+"Oge gị na-achọ ịgwụ n'ihi enweghị ọrụ. A ga-apụ gị apụ na"
+
+#: frontend/templates/base.html:535
+msgid "seconds."
+msgstr "sekọnd."
+
+#: frontend/templates/base.html:550
+msgid "Stay Logged In"
+msgstr "Nọrọ na Nbanye"
+
+#: frontend/templates/base.html:557
+msgid "Logout Now"
+msgstr "Wepụ Ugbu a"
+
+#: frontend/templates/base.html:571
+msgid "MedGuard — Fighting counterfeit medicine, one scan at a time."
+msgstr "MedGuard - Na-alụso ọgwụ adịgboroja ọgụ, otu nyocha n'otu oge."
+
+#: frontend/templates/base.html:579
+msgid "MedGuard Assistant"
+msgstr "Onye enyemaka MedGuard"
+
+#: frontend/templates/base.html:584
+msgid ""
+"Hello! How can I help you today? You can ask me how to verify a\n"
+"          drug, how to report a counterfeit, or what to do if you find "
+"one."
+msgstr ""
+"Ndewo! Kedu ka m ga-esi nyere gị aka taa? Ị nwere ike ịjụ m ka m ga-esi "
+"lelee ọgwụ, otu esi akọ akụkọ adịgboroja, ma ọ bụ ihe ị ga-eme ma ọ bụrụ "
+"na ị hụ otu."
+
+#: frontend/templates/base.html:593
+msgid "Ask a question..."
+msgstr "Jụọ ajụjụ..."
+
+#: frontend/templates/base.html:595
+msgid "Send"
+msgstr "Zipu"
+
+#: frontend/templates/base.html:683
+msgid "I am sorry, I am having trouble connecting right now."
+msgstr "Ndo, enwere m nsogbu ijikọ ugbu a."
+
+#: frontend/templates/base.html:761
+msgid "Hello! I am the MedGuard Assistant. How can I help?"
+msgstr "Ndewo! Abụ m onye enyemaka MedGuard. Kedu ka m ga-esi nyere aka?"
+
+#: frontend/templates/base.html:764
+msgid "How to report a drug?"
+msgstr "Kedu otu esi akọ ọgwụ?"
+
+#: frontend/templates/base.html:768
+msgid "How to verify a drug?"
+msgstr "Kedu otu esi enyocha ọgwụ?"
+
+#: frontend/templates/base.html:772
+msgid "Check a batch status"
+msgstr "Lelee ọkwa batch"
+
+#: frontend/templates/errors/403.html:5
+#: frontend/templates/errors/404.html:5
+msgid "Page Not Found"
+msgstr "Ahụghị ibe"
+
+#: frontend/templates/errors/403.html:6
+#: frontend/templates/errors/404.html:6
+msgid "The page you are looking for does not exist."
+msgstr "Ibe ị na-achọ adịghị."
+
+#: frontend/templates/errors/403.html:7
+#: frontend/templates/errors/404.html:7
+msgid "Go to Homepage"
+msgstr "Gaa na ibe mbụ"
+
+#: frontend/templates/login.html:16
+#: frontend/templates/register.html:15
+msgid "Email Address"
+msgstr "Adreesị ozi ịntanetị"
+
+#: frontend/templates/login.html:20
+#: frontend/templates/register.html:19
+msgid "Password"
+msgstr "Okwuntughe"
+
+#: frontend/templates/login.html:24
+msgid "Sign in"
+msgstr "Banye"
+
+#: frontend/templates/login.html:27
+msgid "Don't have an account?"
+msgstr "Enweghị akaụntụ?"
+
+#: frontend/templates/login.html:27
+msgid "Register here"
+msgstr "Debanye aha ebe a"
+
+#: frontend/templates/my_reports.html:3
+msgid "My Submitted Reports"
+msgstr "Akụkọ m edobere"
+
+#: frontend/templates/my_reports.html:4
+msgid "Here is a history of the counterfeit drug reports you have submitted."
+msgstr "Nke a bụ akụkọ ihe mere eme nke akụkọ ọgwụ adịgboroja ị nyefere."
+
+#: frontend/templates/my_reports.html:17
+msgid "Regulator Status"
+msgstr "Ọnọdụ onye nhazi"
+
+#: frontend/templates/my_reports.html:30
+msgid "Pending Review"
+msgstr "Nlebanya na-echere"
+
+#: frontend/templates/my_reports.html:33
+msgid "Reviewed"
+msgstr "Enyochala"
+
+#: frontend/templates/my_reports.html:41
+msgid "You have not submitted any reports yet."
+msgstr "I nyefebeghị akụkọ ọ bụla."
+
+#: frontend/templates/my_reports.html:68
+msgid "Delete Report"
+msgstr "Hichapụ akụkọ"
+
+#: frontend/templates/my_reports.html:69
+msgid "Are you sure you want to delete this report? This action is permanent."
+msgstr "Ị ji n'aka na ịchọrọ ihichapụ akụkọ a? Omume a bụ nke na-adịgide adịgide."
+
+#: frontend/templates/my_reports.html:86
+msgid "Failed to delete report:"
+msgstr "Ihichapụ akụkọ daa:"
+
+#: frontend/templates/register.html:6
+msgid "➕ Create Your Account"
+msgstr "➕ Mepụta Akaụntụ Gị"
+
+#: frontend/templates/register.html:11
+msgid "Full Name"
+msgstr "Aha zuru ezu"
+
+#: frontend/templates/register.html:23
+msgid "Create Account"
+msgstr "Mepụta Akaụntụ"
+
+#: frontend/templates/register.html:26
+msgid "Already have an account?"
+msgstr "Nwere akaụntụ ugbua?"
+
+#: frontend/templates/register.html:26
+msgid "Login here"
+msgstr "Banye ebe a"
+
+#: frontend/templates/sms_check.html:4
+msgid "Offline / SMS Verification Simulation"
+msgstr "Nkwenye n'ịntanetị / SMS"
+
+#: frontend/templates/sms_check.html:6
+msgid ""
+"This simulates sending an SMS with a batch number and receiving a text "
+"reply from the MedGuard system."
+msgstr ""
+"Nke a na-eṅomi izipu SMS nwere nọmba ogbe wee nata nzaghachi ederede sitere "
+"na sistemu MedGuard."
+
+#: frontend/templates/sms_check.html:13
+msgid "Enter batch number"
+msgstr "Tinye nọmba batch"
+
+#: frontend/templates/sms_check.html:16
+msgid "Simulate SMS"
+msgstr "Mee ka SMS"
+
+#: frontend/templates/sms_check.html:22
+msgid "📲 Simulated SMS Reply:"
+msgstr "📲 Nzaghachi SMS emere eme:"
+
+#: frontend/templates/verify.html:92
+msgid "Batch Verified by MedGuard"
+msgstr "Batch nke MedGuard kwadoro"
+
+#: frontend/templates/verify.html:94
+msgid "This is an authentic drug registered in the MedGuard system."
+msgstr "Nke a bụ ọgwụ izizi edebanyere aha na sistemu MedGuard."
+
+#: frontend/templates/verify.html:97
+msgid "Warning: Drug Expired"
+msgstr "Ịdọ aka ná ntị: Ọgwụ agwụla"
+
+#: frontend/templates/verify.html:99
+msgid ""
+"This is a registered drug, but it has passed its expiry date. Do not use."
+msgstr "Nke a bụ ọgwụ edebanyere aha, mana oge ya agwụla. Ejila ya."
+
+#: frontend/templates/verify.html:102
+msgid "Public Information Found"
+msgstr "Achọtara ozi ọha"
+
+#: frontend/templates/verify.html:104
+msgid ""
+"Disclaimer: This information is from a public database and has "
+"<u>not</u> been independently verified by MedGuard."
+msgstr ""
+"Nkwupụta: Ozi a sitere na nchekwa data ọha na MedGuard enyochabeghị ya "
+"n'onwe ya."
+
+#: frontend/templates/verify.html:107
+msgid "External Website Link"
+msgstr "Njikọ weebụsaịtị dị na mpụga"
+
+#: frontend/templates/verify.html:109
+msgid "This"
+msgstr "Nke a"
+
+#: frontend/templates/verify.html:109
+msgid ""
+"points to an external website. MedGuard cannot verify its authenticity. "
+"Proceed with caution."
+msgstr ""
+"na-atụ aka na webụsaịtị dị na mpụga. MedGuard enweghị ike nyochaa izi "
+"ezi ya. Jiri nlezianya gawa."
+
+#: frontend/templates/verify.html:113
+msgid "Unregistered Product Code"
+msgstr "Koodu ngwaahịa edebanyeghị aha"
+
+#: frontend/templates/verify.html:115
+msgid ""
+"This appears to be a standard product"
+msgstr ""
+"Nke a yiri ka ọ bụ ngwaahịa ọkọlọtọ"
+
+#: frontend/templates/verify.html:115
+msgid ""
+", not a MedGuard verification code. MedGuard cannot verify this item, but"
+" it has not been flagged as counterfeit."
+msgstr ""
+", ọ bụghị koodu nkwenye MedGuard. MedGuard enweghị ike nyochaa ihe a, mana "
+"akpọghị ya dị ka adịgboroja."
+
+#: frontend/templates/verify.html:120
+msgid "Not Found in MedGuard System"
+msgstr "Ahụghị na Sistemụ MedGuard"
+
+#: frontend/templates/verify.html:122
+msgid "is not registered in the MedGuard system. This drug may be counterfeit. Please report it."
+msgstr ""
+"edeghị aha na sistemu MedGuard. Ọgwụ a nwere ike ịbụ adịgboroja. Biko kọọ ya."
+
+#: frontend/templates/verify.html:150
+msgid "NAFDAC Status:"
+msgstr "Ọnọdụ NAFDAC:"
+
+#: frontend/templates/verify.html:154
+msgid "Details:"
+msgstr "Nkọwa:"
+
+#: frontend/templates/verify.html:160
+msgid "The scanned code links to the following address:"
+msgstr "Koodu a nyochara na-ejikọta na adreesị a:"
+
+#: frontend/templates/verify.html:168
+msgid "Proceed to Website"
+msgstr "Gaa na Weebụsaịtị"
+
+#: frontend/templates/verify.html:173
+msgid "The scanned"
+msgstr "Nke a nyochara"
+
+#: frontend/templates/verify.html:173
+msgid "contained the following unrecognized data:"
+msgstr "nwere data ndị a amataghị:"
+
+#: frontend/templates/verify.html:180
+msgid "What To Do Next"
+msgstr "Ihe ị ga-eme ọzọ"
+
+#: frontend/templates/verify.html:183
+msgid ""
+"<strong>Cross-check with NAFDAC:</strong> You can search for the drug on "
+"the official NAFDAC Greenbook or use their Mobile Authentication Service "
+"(MAS) for certain products."
+msgstr ""
+"<strong>Lelee na NAFDAC:</strong> Ị nwere ike ịchọ ọgwụ ahụ na akwụkwọ "
+"ndụ akwụkwọ ndụ NAFDAC gọọmentị ma ọ bụ jiri Mobile Authentication Service"
+" (MAS) ha maka ngwaahịa ụfọdụ."
+
+#: frontend/templates/verify.html:188
+msgid ""
+"<strong>Report to MedGuard:</strong> If you are suspicious, use the "
+"\"Report Counterfeit\" form on our main page to alert regulators through "
+"our system."
+msgstr ""
+"<strong>Kọọrọ MedGuard:</strong> Ọ bụrụ na ị na-enyo enyo, jiri fọm "
+"\"Kọọ adịgboroja\" dị na ibe anyị iji mee ka ndị na-achịkwa mara site "
+"na sistemụ anyị."
+
+#: frontend/templates/verify.html:193
+msgid ""
+"<strong>Report Officially to NAFDAC:</strong> For a direct report to the"
+" authorities, you can contact NAFDAC's Pharmacovigilance department via "
+"email at"
+msgstr ""
+"<strong>Kọọrọ NAFDAC n'ihu ọha:</strong> Maka akụkọ kpọmkwem nye ndị "
+"ọchịchị, ị nwere ike ịkpọtụrụ ngalaba Pharmacovigilance nke NAFDAC site "
+"na email na"
+
+#: frontend/templates/verify.html:200
+msgid "Experiencing a Side Effect?"
+msgstr "Na-enwe mmetụta dị n'akụkụ?"
+
+#: frontend/templates/verify.html:201
+msgid ""
+"Help keep our medicines safe by reporting any unexpected reactions. Your "
+"contribution is vital for public health."
+msgstr ""
+"Nyere aka mee ka ọgwụ anyị dị nchebe site n'ịkọ mmeghachi omume ọ bụla a "
+"na-atụghị anya ya. Enyemaka gị dị oke mkpa maka ahụike ọha."
+
+#: frontend/templates/verify.html:203
+msgid "Report a Side Effect"
+msgstr "Kọọ mmetụta dị n'akụkụ"
+
+#: frontend/templates/verify.html:208
+msgid "Checked on"
+msgstr "Elele na"
+
+#: frontend/templates/verify.html:211
+msgid "Scan Another Code"
+msgstr "Nyochaa Koodu ọzọ"
+
+#: frontend/templates/index.html:105
+msgid "Because your health deserves the truth."
+msgstr "N'ihi na ahụike gị kwesịrị eziokwu."
+
+#: frontend/templates/index.html:106
+msgid "No more guessing — just scanning."
+msgstr "Enweghịzi ịkọ nkọ - naanị nyocha."
+
+#: frontend/templates/index.html:107
+msgid "Keeping counterfeit meds off the streets."
+msgstr "Idebe ọgwụ adịgboroja n'okporo ámá."
+
+#: frontend/templates/index.html:108
+msgid "Your pocket pharmacist."
+msgstr "Onye na-ere ọgwụ n'akpa gị."
+
+#: frontend/templates/index.html:110
+msgid "Batch number is required to report."
+msgstr "A chọrọ nọmba batch iji kọọ."
+
+#: frontend/templates/index.html:111
+msgid "Error submitting report."
+msgstr "Njehie na-edobe akụkọ."
+
+#: frontend/templates/index.html:112
+msgid "Report submitted successfully"
+msgstr "Edobere akụkọ nke ọma"
+
+#: frontend/templates/index.html:113
+msgid "Camera access failed. Please check permissions."
+msgstr "Ịnweta igwefoto daa. Biko lelee ikike."
+
+#: frontend/templates/index.html:114
+msgid "Please enter a batch number."
+msgstr "Biko tinye nọmba batch."
+
+#: frontend/templates/base.html:683
+msgid "I am sorry, I am having trouble connecting right now."
+msgstr "Ndo, enwere m nsogbu ijikọ ugbu a."
+
+#: frontend/templates/base.html:761
+msgid "Hello! I am the MedGuard Assistant. How can I help?"
+msgstr "Ndewo! Abụ m onye enyemaka MedGuard. Kedu ka m ga-esi nyere aka?"
+
+#: frontend/templates/base.html:764
+msgid "How to report a drug?"
+msgstr "Kedu otu esi akọ ọgwụ?"
+
+#: frontend/templates/base.html:768
+msgid "How to verify a drug?"
+msgstr "Kedu otu esi enyocha ọgwụ?"
+
+#: frontend/templates/base.html:772
+msgid "Check a batch status"
+msgstr "Lelee ọkwa batch"
+
+#: frontend/templates/index.html:4
+msgid "📷 Scan QR / Barcode"
+msgstr "📷 Nyochaa QR / Barcode"
+
+#: frontend/templates/index.html:8
+msgid "Start Camera"
+msgstr "Malite Igwefoto"
+
+#: frontend/templates/index.html:10
+msgid "Stop"
+msgstr "Kwụsị"
+
+#: frontend/templates/index.html:15
+msgid "🔍 Or Verify by Batch Number"
+msgstr "🔍 Ma ọ bụ nyochaa site na nọmba Batch"
+
+#: frontend/templates/index.html:21
+msgid "Enter batch number"
+msgstr "Tinye nọmba batch"
+
+#: frontend/templates/index.html:25
+msgid "Verify"
+msgstr "Nyochaa"
+
+#: frontend/templates/index.html:34
+msgid "🚨 Report Counterfeit"
+msgstr "🚨 Kọọ adịgboroja"
+
+#: frontend/templates/index.html:39
+msgid "Drug name"
+msgstr "Aha ọgwụ"
+
+#: frontend/templates/index.html:44
+msgid "Batch number"
+msgstr "Nọmba batch"
+
+#: frontend/templates/index.html:50
+msgid "Location (optional)"
+msgstr "Ebe (nhọrọ)"
+
+#: frontend/templates/index.html:58
+msgid "Note (optional)"
+msgstr "Mara (nhọrọ)"
+
+#: frontend/templates/index.html:64
+msgid "Report"
+msgstr "Akụkọ"
+
+#: frontend/templates/login.html:16
+msgid "Email Address"
+msgstr "Adreesị ozi ịntanetị"
+
+#: frontend/templates/login.html:20
+msgid "Password"
+msgstr "Okwuntughe"
+
+#: frontend/templates/login.html:24
+msgid "Sign in"
+msgstr "Banye"
+
+#: frontend/templates/login.html:27
+msgid "Don't have an account?"
+msgstr "Enweghị akaụntụ?"
+
+#: frontend/templates/login.html:27
+msgid "Register here"
+msgstr "Debanye aha ebe a"

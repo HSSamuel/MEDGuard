@@ -61,7 +61,7 @@
 {% endblock %} {% block scripts %}
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    // --- Toast Notification function (re-used from admin) ---
+    // --- Reusable Toast Notification function ---
     const showToast = (message, isError = false) => {
       const toast = document.createElement("div");
       toast.className = "toast-notification";
@@ -75,37 +75,42 @@
       }, 3000);
     };
 
-    // --- Custom Confirmation Modal Logic (re-used from admin) ---
+    // --- Reusable Confirmation Modal Logic ---
     const confirmModal = document.getElementById("confirm-modal");
-    if (confirmModal) {
-      const confirmModalTitle = document.getElementById("confirm-modal-title");
-      const confirmModalText = document.getElementById("confirm-modal-text");
-      const confirmBtn = document.getElementById("confirm-modal-confirm-btn");
-      const cancelBtn = document.getElementById("confirm-modal-cancel-btn");
+    const confirmModalTitle = document.getElementById("confirm-modal-title");
+    const confirmModalText = document.getElementById("confirm-modal-text");
+    const confirmBtn = document.getElementById("confirm-modal-confirm-btn");
+    const cancelBtn = document.getElementById("confirm-modal-cancel-btn");
+    let confirmCallback = null;
 
-      const showConfirmModal = (title, text, onConfirm) => {
-        confirmModalTitle.textContent = title;
-        confirmModalText.textContent = text;
-        confirmModal.style.display = "flex";
+    const showConfirmModal = (title, text, onConfirm) => {
+      if (!confirmModal) return; // Guard clause if modal isn't on the page
+      confirmModalTitle.textContent = title;
+      confirmModalText.textContent = text;
+      confirmCallback = onConfirm; // Store the function to call on confirm
+      confirmModal.style.display = "flex";
+    };
 
-        const newConfirmBtn = confirmBtn.cloneNode(true);
-        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+    const hideConfirmModal = () => {
+      if (confirmModal) confirmModal.style.display = "none";
+      confirmCallback = null;
+    };
 
-        newConfirmBtn.addEventListener("click", () => {
-          onConfirm();
-          hideConfirmModal();
-        });
-      };
+    if (cancelBtn) cancelBtn.addEventListener("click", hideConfirmModal);
+    if (confirmBtn) {
+      confirmBtn.addEventListener("click", () => {
+        if (confirmCallback) {
+          confirmCallback();
+        }
+        hideConfirmModal();
+      });
+    }
 
-      const hideConfirmModal = () => {
-        confirmModal.style.display = "none";
-      };
-
-      cancelBtn.addEventListener("click", hideConfirmModal);
-
-      // --- NEW: Report Deletion Handler for "My Reports" page ---
-      const myReportsTable = document.getElementById("my-reports-table");
+    // --- UPDATED: Report Deletion Handler using Event Delegation ---
+    const myReportsTable = document.getElementById("my-reports-table");
+    if (myReportsTable) {
       myReportsTable.addEventListener("click", (event) => {
+        // We only care about clicks on the delete button
         if (event.target.classList.contains("delete-my-report-btn")) {
           const button = event.target;
           const reportId = button.dataset.id;
@@ -126,6 +131,7 @@
                 .then(({ status, body }) => {
                   if (status === 200) {
                     showToast(body.message);
+                    // Animate and remove the row from the page
                     row.style.transition = "opacity 0.5s ease";
                     row.style.opacity = "0";
                     setTimeout(() => row.remove(), 500);
