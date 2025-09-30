@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
 <style>
-  /* --- Base Card Styles (Unchanged) --- */
+  /* --- Base Card Styles --- */
   .card {
     max-width: 600px;
     margin: 40px auto;
@@ -43,7 +43,7 @@
     color: #555;
   }
 
-  /* --- Details Table (Unchanged) --- */
+  /* --- Details Table --- */
   .details-table {
     width: 100%;
     border-collapse: collapse;
@@ -55,7 +55,7 @@
     border-bottom: 1px solid #eee;
   }
 
-  /* --- General Styles (Unchanged) --- */
+  /* --- General Styles --- */
   .verified-on {
     margin-top: 20px;
     text-align: center;
@@ -162,7 +162,6 @@
       website. MedGuard cannot verify its authenticity. Proceed with caution.')
       }}
     </p>
-
     {% elif status == 'unregistered_product_code' %}
     <div class="status-icon" style="color: #007bff">ℹ️</div>
     <h2 style="color: #007bff">{{ _('Unregistered Product Code') }}</h2>
@@ -170,7 +169,6 @@
       {{ _('This is a standard product, not a MedGuard code. While not flagged
       as counterfeit, we cannot verify it.') }}
     </p>
-
     {% else %} {# This handles 'notfound' and any other case #}
     <div class="status-icon" style="color: #c62828">❌</div>
     <h2 style="color: #c62828">{{ _('Not Found in MedGuard System') }}</h2>
@@ -289,6 +287,13 @@
       >
     </div>
   </div>
+  {% endif %} {% if status == 'valid' %}
+  <div class="next-steps">
+    <h3>Find Nearby Pharmacies</h3>
+    <div id="nearby-pharmacies-list">
+      <p><i>Getting your location to find nearby pharmacies...</i></p>
+    </div>
+  </div>
   {% endif %} {% if blockchain_history %}
   <div class="next-steps">
     <h3>Supply Chain Journey</h3>
@@ -296,7 +301,7 @@
       {% for event in blockchain_history %}
       <li style="position: relative; padding-left: 25px; margin-bottom: 10px">
         <span style="position: absolute; left: 0; top: 0; color: #2ecc71"
-          >&#10004;</span
+          >✔</span
         >
         {{ event }}
       </li>
@@ -313,4 +318,66 @@
     >
   </div>
 </div>
+{% endblock %} {% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const pharmacyContainer = document.getElementById("nearby-pharmacies-list");
+
+    if (pharmacyContainer) {
+      if (!navigator.geolocation) {
+        pharmacyContainer.innerHTML =
+          "<p>Geolocation is not supported by your browser.</p>";
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+
+          fetch(`/api/pharmacies/nearby?lat=${latitude}&lon=${longitude}`)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Could not fetch pharmacy data.");
+              }
+              return response.json();
+            })
+            .then((pharmacies) => {
+              pharmacyContainer.innerHTML = "";
+
+              if (pharmacies && pharmacies.length > 0) {
+                const list = document.createElement("ul");
+                list.style.listStyle = "none";
+                list.style.paddingLeft = "0";
+
+                pharmacies.forEach((p) => {
+                  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;
+                  const item = document.createElement("li");
+                  item.style.marginBottom = "15px";
+                  item.innerHTML = `
+                    <strong>${p.name}</strong> (Rating: ${p.rating})<br>
+                    <small>${p.address}</small><br>
+                    <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer">View on Map</a>
+                  `;
+                  list.appendChild(item);
+                });
+                pharmacyContainer.appendChild(list);
+              } else {
+                pharmacyContainer.innerHTML =
+                  "<p>No pharmacies found within a 5km radius.</p>";
+              }
+            })
+            .catch((error) => {
+              console.error("Error fetching pharmacies:", error);
+              pharmacyContainer.innerHTML =
+                "<p style='color: red;'>An error occurred while trying to find pharmacies.</p>";
+            });
+        },
+        () => {
+          pharmacyContainer.innerHTML =
+            "<p style='color: orange;'>Location permission was denied. Please enable location services in your browser to use this feature.</p>";
+        }
+      );
+    }
+  });
+</script>
 {% endblock %}

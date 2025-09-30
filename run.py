@@ -3,7 +3,8 @@ Convenience launcher for MedGuard.
 Run this from the project root:
     python run.py
 """
-
+from dotenv import load_dotenv
+load_dotenv()
 from backend.app import create_app
 
 if __name__ == "__main__":

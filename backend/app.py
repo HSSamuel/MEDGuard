@@ -50,6 +50,7 @@ from backend.routes.auth import auth_bp
 from backend.routes.adr import adr_bp
 from backend.routes.hotspot import hotspot_bp
 from backend.notifications import mail
+from backend.routes.stores import stores_bp
 
 HAS_ADMIN = True
 
@@ -197,6 +198,7 @@ def create_app():
     app.register_blueprint(public_db_admin_bp, url_prefix="/api")
     app.register_blueprint(auth_bp)
     app.register_blueprint(adr_bp)
+    app.register_blueprint(stores_bp, url_prefix="/api")
     app.register_blueprint(hotspot_bp, url_prefix="/api")
     if HAS_ADMIN:
         app.register_blueprint(admin_bp, url_prefix="/admin")

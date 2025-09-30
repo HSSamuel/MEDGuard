@@ -35,8 +35,8 @@ class Config:
     TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
     TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER")
     
-    # EMDEX API
-    EMDEX_API_KEY = os.getenv("EMDEX_API_KEY", "your_default_key_for_dev")
+    # NEW: Google Maps Platform API Key
+    GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "your_google_api_key_here")
 
     # Email
     MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
