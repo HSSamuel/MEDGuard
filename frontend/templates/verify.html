@@ -166,7 +166,6 @@
     {% elif status == 'unregistered_product_code' %}
     <div class="status-icon" style="color: #007bff">ℹ️</div>
     <h2 style="color: #007bff">{{ _('Unregistered Product Code') }}</h2>
-    <!-- CORRECTED TEXT 1 -->
     <p class="subtle">
       {{ _('This is a standard product, not a MedGuard code. While not flagged
       as counterfeit, we cannot verify it.') }}
@@ -238,7 +237,6 @@
   </div>
   {% endif %} {% if scanned_content %}
   <div style="text-align: center; word-wrap: break-word; color: #333">
-    <!-- CORRECTED TEXT 2 -->
     <p>
       {{ _('The scanned Code contained the following unrecognized data:') }}
     </p>
@@ -290,6 +288,20 @@
         >{{ _('Report a Side Effect') }}</a
       >
     </div>
+  </div>
+  {% endif %} {% if blockchain_history %}
+  <div class="next-steps">
+    <h3>Supply Chain Journey</h3>
+    <ul style="list-style-type: none; padding-left: 0">
+      {% for event in blockchain_history %}
+      <li style="position: relative; padding-left: 25px; margin-bottom: 10px">
+        <span style="position: absolute; left: 0; top: 0; color: #2ecc71"
+          >&#10004;</span
+        >
+        {{ event }}
+      </li>
+      {% endfor %}
+    </ul>
   </div>
   {% endif %}
 

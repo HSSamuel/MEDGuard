@@ -1,10 +1,10 @@
 {% extends "base.html" %} {% block content %}
 <div class="panel">
-  <h2>📍 Live Counterfeit Hotspot Map</h2>
+  <h2>📍 Live and Predicted Counterfeit Hotspot Map</h2>
   <p>
-    This map displays the real-time locations of all submitted counterfeit drug
-    reports. Use this intelligence to identify clusters and potential hotspots
-    for targeted investigation.
+    This map displays the real-time locations of submitted reports (blue markers)
+    and AI-predicted future hotspots (pulsating red markers). Use this
+    intelligence to identify clusters and target investigations proactively.
   </p>
 </div>
 
@@ -15,8 +15,6 @@
 <link
   rel="stylesheet"
   href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-  crossorigin=""
 />
 <style>
   #hotspot-map {
@@ -25,12 +23,36 @@
     border-radius: 8px;
     border: 1px solid #ddd;
   }
+  
+  /* Style for the pulsating predicted hotspots */
+  .predicted-hotspot-marker {
+    background-color: rgba(220, 53, 69, 0.8);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 5px #333;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+    }
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    }
+  }
 </style>
 {% endblock %} {% block scripts %}
 <script
   src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-  crossorigin=""
 ></script>
 
 <script>
@@ -42,47 +64,48 @@
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
-    // --- UPDATED FETCH LOGIC ---
+    // Fetch and display existing report locations (blue markers)
     fetch("{{ url_for('admin_api.get_report_locations') }}")
-      .then((response) => {
-        // NEW: Check if the user is unauthorized (logged out)
-        if (response.status === 401) {
-          // If so, redirect them to the login page
-          alert(
-            "Your session has expired. Please log in again to view the map."
-          );
-          window.location.href = "{{ url_for('admin_login') }}";
-          return; // Stop further processing
-        }
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((locations) => {
-        if (!locations) return; // In case the redirect happened
-
-        if (locations.length === 0) {
-          console.log("No reports with location data to display.");
+        if (!locations || locations.length === 0) {
+          console.log("No existing reports with location data.");
           return;
         }
-
         locations.forEach((report) => {
-          const marker = L.marker([report.latitude, report.longitude]).addTo(
-            map
-          );
+          const marker = L.marker([report.latitude, report.longitude]).addTo(map);
           marker.bindPopup(`
-                    <strong>Drug:</strong> ${report.drug_name || "N/A"}<br>
-                    <strong>Batch:</strong> ${report.batch_number}<br>
-                    <strong>Reported On:</strong> ${new Date(
-                      report.reported_on
-                    ).toLocaleString()}
-                `);
+            <strong>Existing Report</strong><br>
+            <strong>Drug:</strong> ${report.drug_name || "N/A"}<br>
+            <strong>Batch:</strong> ${report.batch_number}<br>
+            <strong>Reported On:</strong> ${new Date(report.reported_on).toLocaleString()}
+          `);
         });
       })
-      .catch((error) => {
-        console.error("Error fetching hotspot data:", error);
-      });
+      .catch((error) => console.error("Error fetching existing reports:", error));
+
+    // Fetch and display predicted hotspots (red pulsating markers)
+    fetch("{{ url_for('hotspot_api.get_predicted_hotspots') }}")
+      .then((response) => response.json())
+      .then((hotspots) => {
+        if (!hotspots || hotspots.length === 0) {
+          console.log("No predicted hotspots available.");
+          return;
+        }
+        hotspots.forEach((spot) => {
+          const icon = L.divIcon({
+            className: 'predicted-hotspot-marker',
+            iconSize: [20, 20]
+          });
+          const marker = L.marker([spot.latitude, spot.longitude], { icon: icon }).addTo(map);
+          marker.bindPopup(`
+            <strong>Predicted Hotspot</strong><br>
+            <strong>Area:</strong> ${spot.area}<br>
+            <strong>Risk Level:</strong> ${spot.risk_level * 100}%
+          `);
+        });
+      })
+      .catch((error) => console.error("Error fetching predicted hotspots:", error));
   });
 </script>
 {% endblock %}

@@ -5,6 +5,7 @@ from backend.database import get_db
 from datetime import datetime, timedelta
 from backend.emdex import get_drug_info_from_emdex
 from math import radians, sin, cos, sqrt, atan2
+from backend.blockchain_utils import query_chaincode
 
 verify_bp = Blueprint("verify", __name__)
 
@@ -64,7 +65,6 @@ def verify_smart_scan(scanned_data):
     anomaly_warning = check_scan_anomalies(conn, data)
     verified_on_str = datetime.now().strftime("%B %d, %Y at %I:%M %p")
     
-    # --- THIS IS THE CORRECTED LINE ---
     row = conn.execute(
         "SELECT id, name AS drug_name, batch_number, mfg_date, expiry_date, manufacturer FROM drugs WHERE batch_number = ?", (data,)
     ).fetchone()
@@ -73,7 +73,18 @@ def verify_smart_scan(scanned_data):
         try:
             expiry_date = datetime.strptime(str(row["expiry_date"]), "%Y-%m-%d").date()
             status = "expired" if expiry_date < datetime.today().date() else "valid"
-            return render_template("verify.html", status=status, batch=row, verified_on=verified_on_str, anomaly_warning=anomaly_warning)
+            
+            blockchain_history = None
+            if status == 'valid':
+                blockchain_history = query_chaincode('query_drug_history', data)
+
+
+            return render_template("verify.html", 
+                                   status=status, 
+                                   batch=row, 
+                                   verified_on=verified_on_str, 
+                                   anomaly_warning=anomaly_warning,
+                                   blockchain_history=blockchain_history) # <-- Pass data to template
         except (ValueError, TypeError):
             return render_template("verify.html", status="notfound", error="Could not parse expiry date.", verified_on=verified_on_str)
 
@@ -91,10 +102,10 @@ def verify_smart_scan(scanned_data):
     if data.isnumeric():
         return render_template(
             "verify.html",
-            status="unregistered_product_code", # MODIFIED: Use the new status
+            status="unregistered_product_code",
             scanned_content=data,
             verified_on=verified_on_str,
-            scan_type='Barcode' # MODIFIED: Specify the scan type
+            scan_type='Barcode'
         )
     else:
         return render_template(
@@ -102,5 +113,5 @@ def verify_smart_scan(scanned_data):
             status="notfound",
             scanned_content=data,
             verified_on=verified_on_str,
-            scan_type='QR code' # MODIFIED: Specify the scan type
+            scan_type='QR code'
         )
