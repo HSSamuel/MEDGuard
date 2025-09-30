@@ -40,13 +40,12 @@ def create_report():
         image_file.save(os.path.join(upload_folder, image_filename))
 
     conn = get_db()
-    # UPDATED: The 'image_analysis_result' column is removed from the INSERT statement.
     conn.execute(
         """
         INSERT INTO reports (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, reported_on, status)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
-        (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, datetime.now(), 0)
+        (user_id, drug_name, batch_number, location, note, image_filename, latitude, longitude, datetime.now(), 'New')
     )
     conn.commit()
 

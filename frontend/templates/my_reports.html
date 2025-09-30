@@ -27,13 +27,13 @@
             {{ report.reported_on.strftime('%Y-%m-%d %H:%M') }}
           </td>
           <td data-label="Regulator Status">
-            {% if report.status == 0 %}
-            <span class="badge" style="background-color: #ffc107; color: #000"
-              >Pending Review</span
-            >
-            {% else %}
+            {% if report.status == 'Resolved' %}
             <span class="badge" style="background-color: #28a745; color: #fff">
               Reviewed</span
+            >
+            {% else %}
+            <span class="badge" style="background-color: #ffc107; color: #000"
+              >Pending Review</span
             >
             {% endif %}
           </td>
