@@ -1,0 +1,18 @@
+mkdir celery_broker
+
+### Step 3: Run the Application (Without Redis)
+
+Now, your application should run without throwing any network errors:
+
+1.  **Start the Celery Worker (using the filesystem broker):**
+    * In a separate terminal, use this command:
+        ```powershell
+        (venv) PS> celery -A backend.celery_init worker --loglevel=info
+            * *(Note: This worker will process tasks, but it will still be slow due to the blocking API calls we discussed.)*
+
+2.  **Start the Flask App:**
+    * In a second terminal:
+        ```powershell
+        (venv) PS> python run.py
+        
+This configuration guarantees that the application runs locally by eliminating the external Redis dependency, while keeping the functionality that requires background processing (emails, image analysis) working via the file system.

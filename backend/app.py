@@ -34,6 +34,7 @@ from flask_babel import Babel
 from flask_socketio import SocketIO
 
 # --- Application-Specific Imports ---
+from backend.celery_init import celery_app
 from backend.config import get_config
 from backend.database import init_db, get_db, close_db
 from backend.models import get_admin_by_email
@@ -47,10 +48,11 @@ from backend.routes.nafdac_api import nafdac_api_bp
 from backend.routes.parser import parser_bp
 from backend.routes.public_db_admin import public_db_admin_bp
 from backend.routes.auth import auth_bp
+from backend.routes.analysis import analysis_bp
 from backend.routes.adr import adr_bp
-from backend.routes.hotspot import hotspot_bp
-from backend.notifications import mail
 from backend.routes.stores import stores_bp
+from backend.routes.hotspot import hotspot_bp # <--- NEW IMPORT
+from backend.notifications import mail
 
 HAS_ADMIN = True
 
@@ -82,6 +84,9 @@ def create_app():
     )
     app.config.from_object(cfg)
     
+    # Update Celery config with Flask app config
+    celery_app.conf.update(app.config)
+
     socketio = SocketIO(app)
 
     app.config['LANGUAGES'] = ['en', 'yo', 'ha', 'ig'] # English, Yorùbá, Hausa, Igbo
@@ -197,9 +202,10 @@ def create_app():
     app.register_blueprint(parser_bp, url_prefix="/api")
     app.register_blueprint(public_db_admin_bp, url_prefix="/api")
     app.register_blueprint(auth_bp)
+    app.register_blueprint(analysis_bp, url_prefix="/api")
     app.register_blueprint(adr_bp)
     app.register_blueprint(stores_bp, url_prefix="/api")
-    app.register_blueprint(hotspot_bp, url_prefix="/api")
+    app.register_blueprint(hotspot_bp, url_prefix="/api") # <--- NEW REGISTRATION
     if HAS_ADMIN:
         app.register_blueprint(admin_bp, url_prefix="/admin")
 

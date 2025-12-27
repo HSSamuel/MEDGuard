@@ -3,8 +3,6 @@
 **MedGuard** is a full-stack web application designed to detect, report, and manage counterfeit drugs in Nigeria.  
 It provides a comprehensive public health platform with a user-friendly interface for citizens and a powerful admin dashboard for regulators to ensure a resilient and transparent pharmaceutical supply chain.
 
----
-
 ## ✨ Key Features
 
 ### Multi-Platform Verification

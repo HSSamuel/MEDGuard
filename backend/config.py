@@ -25,7 +25,7 @@ class Config:
     # Paths for frontend
     TEMPLATES_DIR: Path = BASE_DIR / "frontend" / "templates"
     STATIC_DIR: Path = BASE_DIR / "frontend" / "static"
-    TRANSLATIONS_DIR: Path = BASE_DIR / "frontend" / "translations" # <-- ADD THIS LINE
+    TRANSLATIONS_DIR: Path = BASE_DIR / "frontend" / "translations"
 
     # Logging
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
@@ -35,8 +35,8 @@ class Config:
     TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
     TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER")
     
-    # NEW: Google Maps Platform API Key
-    GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "your_google_api_key_here")
+    # EMDEX API
+    EMDEX_API_KEY = os.getenv("EMDEX_API_KEY", "your_default_key_for_dev")
 
     # Email
     MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
@@ -44,6 +44,10 @@ class Config:
     MAIL_USE_TLS = os.getenv('MAIL_USE_TLS', 'true').lower() == 'true'
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
+    
+    # CELERY & REDIS CONFIG - DISABLE BROKER/BACKEND TO PREVENT CONNECTION ERRORS
+    CELERY_BROKER_URL = 'filesystem://' # Use filesystem broker (non-persistent)
+    CELERY_RESULT_BACKEND = None        # Disable result backend
 
     
 class ProdConfig(Config):
